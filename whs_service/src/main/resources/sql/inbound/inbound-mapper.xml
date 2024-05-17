@@ -3,7 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.InboundMapper">
-    <insert id="approveInbound" useGeneratedKeys="true" keyProperty="inboundID">
+    <!-- 입고 정보 조회 -->
+    <!-- INB_TB의 한 데이터를 PK로 조회, 입고 승인과 입고 확정 때 쓰인다 -->
+    <select id="findByInboundIB" resultType="inboundDto">
+        <!--        select-->
+        <!--        *-->
+        <!--        from-->
+        <!--        tbl_category-->
+        <!--        where-->
+        <!--        ref_category_code is not null-->
+    </select>
+
+    <!-- 입고 승인 -->
+    <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
+    <select id="findLocateItemCnt" resultType="inboundDto">
+<!--        select-->
+<!--        *-->
+<!--        from-->
+<!--        tbl_category-->
+<!--        where-->
+<!--        ref_category_code is not null-->
+    </select>
+    <!-- INB_TB에 JSON 데이터 넣기 -->
+    <insert id="insertInboundToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
         <!-- insert into
         tbl_menu
         values (
@@ -11,14 +33,17 @@
         )
         -->
     </insert>
-    <insert id="insertInboundToGBG" useGeneratedKeys="true" keyProperty="inboundDto">
-        <!-- insert into
-        tbl_menu
-        values (
-        null, #{menuName}, #{menuPrice}, #{categoryCode}, #{orderableStatus}
-        )
-        -->
+
+    <!-- 입고 검수 -->
+    <!-- GBG_TB에 state가 2,3인 불량 제품을 insert -->
+    <insert id="insertInboundToGBG" useGeneratedKeys="true" keyProperty="GBG_PK">
+<!--        insert into-->
+<!--        tbl_menu-->
+<!--        values (-->
+<!--        null, #{menuName}, #{menuPrice}, #{categoryCode}, #{orderableStatus}-->
+<!--        )-->
     </insert>
+    <!-- INB_TB에서 불량 제품을 뺀 수량 update -->
     <update id="updateInboundCnt">
 <!--        update-->
 <!--        tbl_menu-->
@@ -30,31 +55,4 @@
 <!--        where-->
 <!--        menu_code = #{menuCode}-->
     </update>
-    <select id="findAllCategory" resultType="categoryDto">
-<!--        select-->
-<!--        *-->
-<!--        from-->
-<!--        tbl_category-->
-<!--        where-->
-<!--        ref_category_code is not null-->
-    </select>
-    <!--
-    <select id="findMenuOrderable" resultType="menuDto">
-        select
-        *
-        from
-        tbl_menu
-        where
-        orderable_status = 'Y'
-    </select>
-    <select id="findMenuOrderableByCategoryCode" resultType="menuDto">
-        select
-        *
-        from
-        tbl_menu
-        where
-        category_code = #{categoryCode}
-        and orderable_status = 'Y'
-    </select>
-    -->
 </mapper>

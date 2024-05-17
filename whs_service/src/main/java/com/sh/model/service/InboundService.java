@@ -8,14 +8,21 @@ import static com.sh.common.MyBatisTemplate.getSqlSession;
 
 public class InboundService {
 
-    public int approveInbound(InboundDto inboundDto) {
-        /*
-        // 양희윤 작업 시작
-        SqlSession sqlSession = getSqlSession();
-        InboundDto inboundDto = sqlSession.getMapper(inboundMapper.)
+    // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
+    // INB_TB의 한 데이터를 INB_ID_PK로 조회
+    public InboundDto findByInboundID(int inboundID) {
+        return null;
+    }
 
-        // 양희윤 작업 끝
-        */
+    // 입고 승인
+    // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
+    public int findLocateItemCnt() {
+        return 0;
+    }
+
+    // 입고 승인
+    // INB_TB에 JSON 데이터 넣기
+    public int insertInboundToINB(InboundDto inboundDto) {
         return 0;
     }
 
@@ -54,10 +61,4 @@ public class InboundService {
             sqlSession.close();
         }
     }
-
-    public void showInboundResult(InboundDto inboundDto) {
-
-    }
 }
-
-
