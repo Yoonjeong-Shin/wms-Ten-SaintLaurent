@@ -2,9 +2,8 @@ package com.sh.model.service;
 
 import com.sh.model.dao.LocateMapper;
 import com.sh.model.dao.SupervisionMapper;
-import com.sh.model.dto.ItemDto;
+import com.sh.model.dto.SearchItemDto;
 import com.sh.model.dto.LocateDto;
-import com.sh.model.dto.SupervisionDto;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
@@ -15,10 +14,10 @@ public class SupervisionService {
 
     // 조회 시작
     // 화장품 정보 전체 조회
-    public List<ItemDto> searchItemInfo() {
+    public List<SearchItemDto> searchItemInfo() {
         SqlSession sqlSession = getSqlSession();
         SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
-        List<ItemDto> list = superMapper.searchItemInfo();
+        List<SearchItemDto> list = superMapper.searchItemInfo();
         sqlSession.close();
         return list;
     }

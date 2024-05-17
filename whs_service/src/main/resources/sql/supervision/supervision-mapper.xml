@@ -21,5 +21,41 @@
             it.item_nm = #{itemNm}
     </select>
     
-    <insert id="insertItem" useGeneratedKeys="true" keyProperty=""
+    <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemIdPk">
+        insert into
+            item_tb
+        values (
+            null, #{itemNm}, #{itemCat}, #{itemVol}
+        )
+    </insert>
+
+    <insert id="insertDetailItem" useGeneratedKeys="true" keyProperty="itemDetailPk">
+        insert into
+            item_detail_tb
+        values (
+            null, #{itemIdPk}, #{itemDetailStatus}, #{locateIdPk}, #{itemDetailExpirationDt}, #{itemDetailSerialNum}
+        )
+    </insert>
+    
+    <select id="searchItemCat" resultType="int">
+        select
+            count(*)
+        from
+            item_cat_tb
+        where
+            item_cat_nm = #{itemCatNm}
+    </select>
+
+<!--    <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">-->
+<!--        insert into-->
+<!--            item_cat_tb-->
+<!--        values (-->
+<!--            null, #{itemCatNm}-->
+<!--        )-->
+<!--    </insert>-->
+
+<!--    <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">-->
+<!--        INSERT INTO item_cat_tb (ITEM_CAT_NM)-->
+<!--        VALUES (#{itemCatNm})-->
+<!--    </insert>-->
 </mapper>

@@ -1,8 +1,7 @@
 package com.sh.controller;
 
-import com.sh.model.dto.ItemDto;
+import com.sh.model.dto.SearchItemDto;
 import com.sh.model.dto.LocateDto;
-import com.sh.model.dto.SupervisionDto;
 import com.sh.model.service.SupervisionService;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public class SupervisionController {
 
     // 화장품의 모든 정보
     public void searchItemInfo() {
-        List<ItemDto> list = superService.searchItemInfo();
+        List<SearchItemDto> list = superService.searchItemInfo();
         System.out.println(list);
     }
 
