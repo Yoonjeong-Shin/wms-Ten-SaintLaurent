@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.model.dao.SupervisionMapper">
+    <select id="searchItemInfo" resultType="itemDto">
+        select
+            *
+        from
+            item_tb it right join item_detail_tb idt
+                using (ITEM_ID_PK)
+    </select>
+
+    <select id="searchItemCnt" resultType="int">
+        select
+            count(*)
+        from
+            item_tb it right join item_detail_tb idt
+                using (ITEM_ID_PK)
+        where
+            it.item_nm = #{itemNm}
+    </select>
+    
+    <insert id="insertItem" useGeneratedKeys="true" keyProperty=""
+</mapper>
