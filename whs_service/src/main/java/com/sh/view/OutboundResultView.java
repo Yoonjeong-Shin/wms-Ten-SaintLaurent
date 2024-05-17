@@ -34,11 +34,11 @@ public class OutboundResultView {
             System.out.printf("%s\t%s\t%s\n", "CustomerName", "CustomerAddress", "orderDetail");
             System.out.println("-----------------------------------------------");
             for (PurchaseListDto purchaseListDto : list) {
-                System.out.printf("%s\t%s\t%s\n",
-                        orderDto.getCustomerName(),
-                        orderDto.getCustomerAdr(),
-                        orderDto.getOrderDetailDtoList()
-                );
+//                System.out.printf("%s\t%s\t%s\n",
+//                        orderDto.getCustomerName(),
+//                        orderDto.getCustomerAdr(),
+//                        orderDto.getOrderDetailDtoList()
+//                );
             }
             System.out.println("-----------------------------------------------");
         }
