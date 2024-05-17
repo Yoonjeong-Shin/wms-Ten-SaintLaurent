@@ -11,33 +11,34 @@
         )
         -->
     </insert>
-
-    <!--
-    <update id="updateMenu">
-        update
+    <insert id="insertInboundToGBG" useGeneratedKeys="true" keyProperty="inboundDto">
+        <!-- insert into
         tbl_menu
-        set
-        menu_name = #{menuName},
-        menu_price = #{menuPrice},
-        category_code = #{categoryCode},
-        orderable_status = #{orderableStatus}
-        where
-        menu_code = #{menuCode}
+        values (
+        null, #{menuName}, #{menuPrice}, #{categoryCode}, #{orderableStatus}
+        )
+        -->
+    </insert>
+    <update id="updateInboundCnt">
+<!--        update-->
+<!--        tbl_menu-->
+<!--        set-->
+<!--        menu_name = #{menuName},-->
+<!--        menu_price = #{menuPrice},-->
+<!--        category_code = #{categoryCode},-->
+<!--        orderable_status = #{orderableStatus}-->
+<!--        where-->
+<!--        menu_code = #{menuCode}-->
     </update>
-    <delete id="deleteMenu">
-        delete from
-        tbl_menu
-        where
-        menu_code = #{menuCode}
-    </delete>
     <select id="findAllCategory" resultType="categoryDto">
-        select
-        *
-        from
-        tbl_category
-        where
-        ref_category_code is not null
+<!--        select-->
+<!--        *-->
+<!--        from-->
+<!--        tbl_category-->
+<!--        where-->
+<!--        ref_category_code is not null-->
     </select>
+    <!--
     <select id="findMenuOrderable" resultType="menuDto">
         select
         *
