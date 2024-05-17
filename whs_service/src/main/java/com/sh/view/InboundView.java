@@ -22,7 +22,7 @@ public class InboundView {
         0. 종료
         =========================
         입력 : """;
-        System.out.println(menu);
+        System.out.print(menu);
         String choice = sc.next();
         switch (choice) {
             case "1" : inboundController.findByInbId(inputInbId()); break;
