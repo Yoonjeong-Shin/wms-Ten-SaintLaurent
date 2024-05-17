@@ -14,8 +14,15 @@ public class InboundController {
     }
 
     // 입고 검수
-    public void checkInbound(int inboundID){
-        inboundService.checkInbound(inboundID);
+    // GBG_TB에 state가 2,3인 불량 제품을 insert
+    public void insertInboundToGBG(InboundDto inboundDto){
+        inboundService.insertInboundToGBG(inboundDto);
+    }
+
+    // 입고 검수
+    // INB_TB에서 불량 제품을 뺀 수량 update
+    public void updateInboundCnt(InboundDto inboundDto){
+        inboundService.updateInboundCnt(inboundDto);
     }
 
     // 입고 확정

@@ -3,7 +3,6 @@ package com.sh.model.dto;
 import lombok.*;
 
 import java.math.BigInteger;
-import java.util.Objects;
 
 @Data
 @Getter
