@@ -75,14 +75,14 @@ public class SupervisionView {
 ////        showItemNm();
 //        return sc.nextInt();
 //    }
-    private String searchItem() {
-        System.out.println("화장품 아이디를 입력하세요.");
-//        showItemNm();
-        return sc.nextLine();
+    private int searchItem() {
+        showItemNm();
+        System.out.print("화장품 아이디를 입력하세요. : ");
+        return sc.nextInt();
     }
 
     // 화장품 ID와 이름 보여주는 메소드
-//    private void showItemNm() {
-//        superController
-//    }
+    private void showItemNm() {
+        superController.searchItemIdNNm();
+    }
 }

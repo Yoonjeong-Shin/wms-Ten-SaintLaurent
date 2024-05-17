@@ -9,7 +9,7 @@
         from
             locate_tb
         where
-            locate_item_cnt is null
+            locate_item_cnt = 0
     </select>
 
     <select id="searchItemLpn" resultType="locateDto">

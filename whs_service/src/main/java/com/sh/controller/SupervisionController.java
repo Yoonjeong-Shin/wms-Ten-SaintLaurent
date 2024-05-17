@@ -1,8 +1,10 @@
 package com.sh.controller;
 
+import com.sh.model.dto.ItemDto;
 import com.sh.model.dto.SearchItemDto;
 import com.sh.model.dto.LocateDto;
 import com.sh.model.service.SupervisionService;
+import com.sh.view.SupervisionResultView;
 
 import java.util.List;
 
@@ -16,14 +18,14 @@ public class SupervisionController {
     }
 
     // 찾고자 하는 화장품의 개수
-    public void searchItemCnt(String itemName) {
-        int itemcnt = superService.searchItemCnt(itemName);
+    public void searchItemCnt(int itemId) {
+        int itemcnt = superService.searchItemCnt(itemId);
         System.out.println(itemcnt);
     }
 
     // 화장품이 저장된 공간 체크
-    public void searchItemLpn(String itemName) {
-        LocateDto locateDto = superService.searchItemLpn(itemName);
+    public void searchItemLpn(int itemId) {
+        LocateDto locateDto = superService.searchItemLpn(itemId);
         System.out.println(locateDto);
     }
 
@@ -31,5 +33,11 @@ public class SupervisionController {
     public void searchLpn() {
         List<LocateDto> list = superService.searchLpn();
         System.out.println(list);
+    }
+
+    // 화장품 ID와 화장품 이름 조회 후 보여주기
+    public void searchItemIdNNm() {
+        List<ItemDto> list = superService.searchItemIdNNm();
+        SupervisionResultView.displayItemIdNNm(list);
     }
 }
