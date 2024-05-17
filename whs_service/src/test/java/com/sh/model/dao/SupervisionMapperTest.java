@@ -106,9 +106,9 @@ class SupervisionMapperTest {
     @Test
     void searchItemCnt() {
         // given
-        String itemNm = "Lotion";
+        int itemId = 1;
         // when
-        int cnt = superMapper.searchItemCnt(itemNm);
+        int cnt = superMapper.searchItemCnt(itemId);
         System.out.println(cnt);
         // then
         assertThat(cnt)
