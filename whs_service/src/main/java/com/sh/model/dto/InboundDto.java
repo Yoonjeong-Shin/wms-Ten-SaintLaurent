@@ -3,9 +3,8 @@ package com.sh.model.dto;
 import lombok.*;
 
 import java.math.BigInteger;
-import java.util.Date;
+import java.time.LocalDate;
 
-@Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,11 +21,11 @@ public class InboundDto {
     private int inbItemVol; // 제품 용량
     private int inbItemPrice; // 제품 단가
     private int inbItemCnt; // 제품 수량
-    private Date inbItemExpirationDt; // 제품 유통기한
+    private LocalDate inbItemExpirationDt; // 제품 유통기한
     private String itemSerialNum; // 각 화장품마다 고유한 시리얼 번호
     private int state; // 화장품 상태
 
-    public InboundDto(BigInteger inbIdPk, BigInteger selIdPk, BigInteger facIdPk, BigInteger whsIdPk, BigInteger inbItemIdPk, int inbItemCatPk, String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, Date inbItemExpirationDt) {
+    public InboundDto(BigInteger inbIdPk, BigInteger selIdPk, BigInteger facIdPk, BigInteger whsIdPk, BigInteger inbItemIdPk, int inbItemCatPk, String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, LocalDate inbItemExpirationDt) {
         this.inbIdPk = inbIdPk;
         this.selIdPk = selIdPk;
         this.facIdPk = facIdPk;
