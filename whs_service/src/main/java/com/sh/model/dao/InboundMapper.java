@@ -8,7 +8,7 @@ public interface InboundMapper {
     InboundDto findByInboundID(int inboundID); // INB_TB의 한 데이터를 INB_ID_PK로 조회
 
     // 입고 승인
-    int findLocateItemCnt(); // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
+    int findEmptyLocate(); // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
     int insertInboundToINB(InboundDto inboundDto); // INB_TB에 JSON 데이터 넣기
 
     // 입고 검수
