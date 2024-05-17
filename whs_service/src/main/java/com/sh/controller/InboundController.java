@@ -10,6 +10,7 @@ public class InboundController {
 
     // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
     // INB_TB의 한 데이터를 INB_ID_PK로 조회
+
     public void findByInboundID(int inboundID) {
         inboundService.findByInboundID(inboundID);
     }
@@ -17,7 +18,7 @@ public class InboundController {
     // 입고 승인
     // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
     public void findLocateItemCnt() {
-        inboundService.findLocateItemCnt();
+//        inboundService.findLocateItemCnt();
     }
 
     // 입고 승인

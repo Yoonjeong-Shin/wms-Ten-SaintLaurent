@@ -10,19 +10,24 @@ import java.util.Objects;
 import java.util.Scanner;
 
 class whsServerThread extends Thread {
-    private Socket socket;
-
+    private final Socket socket;
+    public static int testInt;
+    public static final Object lock = new Object();
     public whsServerThread(Socket socket) {
         this.socket = socket;
     }
 
     @Override
     public void run() {
-        synchronized (whsServerThread.class) { // 동기화 블록 시작
+        { // 동기화 블록 시작
             try {
                 System.out.println("=> 클라이언트 연결 승인!");
                 InputStream in0 = socket.getInputStream();
                 OutputStream out0 = socket.getOutputStream();
+                for(int i = 0; i < 5; ++i){
+                    testInt++;
+                }
+                System.out.println(testInt);
 
                 Scanner in = new Scanner(in0);
                 PrintStream out = new PrintStream(out0);
