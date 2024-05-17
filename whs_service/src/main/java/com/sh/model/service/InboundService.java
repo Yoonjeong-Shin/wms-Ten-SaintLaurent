@@ -11,6 +11,13 @@ import static com.sh.common.MyBatisTemplate.getSqlSession;
 public class InboundService {
 
     public int approveInbound(InboundDto inboundDto) {
+        /*
+        // 양희윤 작업 시작
+        SqlSession sqlSession = getSqlSession();
+        InboundDto inboundDto = sqlSession.getMapper(inboundMapper.)
+
+        // 양희윤 작업 끝
+        */
         return 0;
     }
 
@@ -22,3 +29,5 @@ public class InboundService {
 
     }
 }
+
+
