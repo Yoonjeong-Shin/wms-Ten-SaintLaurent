@@ -7,7 +7,9 @@ import java.math.BigInteger;
 import java.util.Scanner;
 
 public class InboundView {
-
+    public static void main(String[] args) {
+        new InboundView().inboundMenu();
+    }
     private InboundController inboundController = new InboundController();
     private Scanner sc = new Scanner(System.in);
 
@@ -26,7 +28,7 @@ public class InboundView {
         String choice = sc.next();
         switch (choice) {
             case "1" : inboundController.findByInbId(inputInbId()); break;
-//            case "2" : inboundController.findEmptyLocate(); break;
+            case "2" : inboundController.findEmptyLocate(); break;
 //            case "3" : inboundController.insertInbToINB(); break;
 //            case "4" : inboundController.insertInbToGbg(inputGbg()); break;
 //            case "5" : inboundController.updateInbCnt(inputInbCntUpdated()); break;
