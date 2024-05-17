@@ -2,6 +2,7 @@ package com.sh.model.service;
 
 import com.sh.model.dao.LocateMapper;
 import com.sh.model.dao.SupervisionMapper;
+import com.sh.model.dto.ItemDto;
 import com.sh.model.dto.SearchItemDto;
 import com.sh.model.dto.LocateDto;
 import org.apache.ibatis.session.SqlSession;
@@ -23,19 +24,19 @@ public class SupervisionService {
     }
 
     // 특정 화장품의 총 개수 조회
-    public int searchItemCnt(String itemName) {
+    public int searchItemCnt(int itemId) {
         SqlSession sqlSession = getSqlSession();
         SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
-        int itemCnt = superMapper.searchItemCnt(itemName);
+        int itemCnt = superMapper.searchItemCnt(itemId);
         sqlSession.close();
         return itemCnt;
     }
 
     // 특정 화장품의 lpn 조회
-    public LocateDto searchItemLpn(String itemName) {
+    public LocateDto searchItemLpn(int itemId) {
         SqlSession sqlSession = getSqlSession();
         LocateMapper locateMapper = sqlSession.getMapper(LocateMapper.class);
-        LocateDto locateDto = locateMapper.searchItemLpn(itemName);
+        LocateDto locateDto = locateMapper.searchItemLpn(itemId);
         sqlSession.close();
         return locateDto;
     }
@@ -49,4 +50,11 @@ public class SupervisionService {
         return list;
     }
     // 조회 끝
+    public List<ItemDto> searchItemIdNNm() {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        List<ItemDto> list = superMapper.searchItemIdNNm();
+        sqlSession.close();
+        return list;
+    }
 }

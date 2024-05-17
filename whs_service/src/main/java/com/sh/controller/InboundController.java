@@ -12,7 +12,7 @@ public class InboundController {
     // INB_TB의 한 데이터를 INB_ID_PK로 조회
 
     public void findByInboundID(int inboundID) {
-        inboundService.findByInboundID(inboundID);
+//        inboundService.findByInboundID(inboundID);
     }
 
     // 입고 승인

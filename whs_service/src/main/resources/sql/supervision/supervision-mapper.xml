@@ -18,7 +18,14 @@
             item_tb it right join item_detail_tb idt
                 using (ITEM_ID_PK)
         where
-            it.item_nm = #{itemNm}
+            it.item_id_pk = #{itemIdPk}
+    </select>
+
+    <select id="searchItemIdNNm" resultType="itemDto">
+        select
+            *
+        from
+            item_tb
     </select>
     
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemIdPk">
@@ -46,9 +53,6 @@
             item_cat_nm = #{itemCatNm}
     </select>
 
-    <!-- useGeneratedKeys=true를 통해 auto_increment값을 가져온다. 전달된 객체 menuDto#menuCode에 대입 -->
-    <!-- keyProperty가 직접 넣어주는 것이 아니라 setMenuCode를 사용하여 값 대입 -->
-
     <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">
         insert into
             item_cat_tb
@@ -56,9 +60,4 @@
             null, #{itemCatNm}
         )
     </insert>
-
-<!--    <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">-->
-<!--        INSERT INTO item_cat_tb (ITEM_CAT_NM)-->
-<!--        VALUES (#{itemCatNm})-->
-<!--    </insert>-->
 </mapper>

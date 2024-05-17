@@ -10,7 +10,7 @@ import java.util.List;
 public interface SupervisionMapper {
     List<SearchItemDto> searchItemInfo();
 
-    int searchItemCnt(String itemName);
+    int searchItemCnt(int itemId);
 
     int insertItem(ItemDto itemDto);
 
@@ -21,4 +21,6 @@ public interface SupervisionMapper {
 
     // 화장품 카테고리에 새로 추가
     int insertCatItem(ItemCatDto itemCatDto);
+
+    List<ItemDto> searchItemIdNNm();
 }
