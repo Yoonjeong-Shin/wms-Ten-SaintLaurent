@@ -8,12 +8,6 @@ import static com.sh.common.MyBatisTemplate.getSqlSession;
 
 public class InboundService {
 
-    // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
-    // INB_TB의 한 데이터를 INB_ID_PK로 조회
-    public InboundDto findByInboundID(int inboundID) {
-        return null;
-    }
-
     // 입고 승인
     // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
     public int findEmptyLocate() {
@@ -26,14 +20,25 @@ public class InboundService {
         return 0;
     }
 
+    /* 지영 작업 시작 */
+
+    // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
+    // INB_TB의 한 데이터의 모든 정보를 INB_ID_PK로 조회
+    public InboundDto findByInbId(int inbIdPk) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        InboundDto inboundDto = inboundMapper.findByInbId(inbIdPk);
+        sqlSession.close();
+        return inboundDto;
+    }
+
     // 입고 검수
-    // GBG_TB에 state가 2,3인 불량 제품을 insert
-    public int insertInboundToGBG(InboundDto inboundDto) {
+    public int insertInbToGbg(InboundDto inboundDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
         try {
             // dao 메세지 전달
-            int result = inboundMapper.insertInboundToGBG(inboundDto);
+            int result = inboundMapper.insertInbToGbg(inboundDto);
             sqlSession.commit();
             return result;
         } catch (Exception e) {
@@ -44,14 +49,12 @@ public class InboundService {
         }
     }
 
-    // 입고 검수
-    // INB_TB에서 불량 제품을 뺀 수량 update
-    public int updateInboundCnt(InboundDto inboundDto) {
+    public int insertInbToGbgDetail(InboundDto inboundDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
         try {
             // dao 메세지 전달
-            int result = inboundMapper.updateInboundCnt(inboundDto);
+            int result = inboundMapper.insertInbToGbgDetail(inboundDto);
             sqlSession.commit();
             return result;
         } catch (Exception e) {
@@ -61,4 +64,22 @@ public class InboundService {
             sqlSession.close();
         }
     }
+
+    public int updateInbCnt(InboundDto inboundDto) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        try {
+            // dao 메세지 전달
+            int result = inboundMapper.updateInbCnt(inboundDto);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    /* 지영 작업 끝 */
 }

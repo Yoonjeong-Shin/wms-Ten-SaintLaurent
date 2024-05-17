@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.InboundMapper">
-
     <!-- 입고 승인 -->
     <!-- 빈 로케이트 찾기 -->
     <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
@@ -16,18 +15,6 @@
         locate_item_cnt = 0
     </select>
 
-    <!-- 입고 정보 조회 -->
-    <!-- INB_TB의 한 데이터를 PK로 조회, 입고 승인과 입고 확정 때 쓰인다 -->
-    <select id="findByInboundID" resultType="inboundDto">
-        select
-            *
-        from
-            inb_tb
-        where
-            inb_id_pk = #{inboundID}
-    </select>
-
-
     <!-- INB_TB에 JSON 데이터 넣기 -->
     <insert id="insertInboundToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
         <!-- insert into
@@ -38,22 +25,45 @@
         -->
     </insert>
 
+    <!-- 지영 작업 시작 -->
+
+    <!-- 입고 정보 조회 -->
+    <!-- INB_TB의 한 데이터의 모든 정보를 PK로 조회, 입고 승인과 입고 확정 때 쓰인다 -->
+    <select id="findByInbId" resultType="inboundDto">
+        select
+            *
+        from
+            inb_tb
+        where
+            INB_ID_PK = #{inbIdPk}
+    </select>
+
     <!-- 입고 검수 -->
     <!-- GBG_TB에 state가 2,3인 불량 제품을 insert -->
-    <insert id="insertInboundToGBG" useGeneratedKeys="true" keyProperty="GBG_PK">
+    <insert id="insertInbToGbg" useGeneratedKeys="true" keyProperty="GBG_PK">
         insert into
             gbg_tb
         values (
-        null, #{ITEMNM}, #{ITEMCAT}, #{ITEMVOL}
+        null, #{itemNm}, #{itemCat}, #{itemVol}
+        )
+    </insert>
+    <!-- GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert -->
+    <insert id="insertInbToGbgDetail" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_SERIAL_NUM">
+        insert into
+            gbg_detail_tb
+        values (
+        null, #{itemPk}, #{itemState}
         )
     </insert>
     <!-- INB_TB에서 불량 제품을 뺀 수량 update -->
-    <update id="updateInboundCnt">
+    <update id="updateInbCnt">
         update
             inb_tb
         set
-            INB_ITEM_CNT = #{INBITEMCNT}
+            INB_ITEM_CNT = #{inbItemCnt}
         where
-           ITEM_CAT_PK  = #{ITEMCATPK}
+           ITEM_CAT_PK  = #{itemCatPk}
     </update>
+
+    <!-- 지영 작업 끝 -->
 </mapper>
