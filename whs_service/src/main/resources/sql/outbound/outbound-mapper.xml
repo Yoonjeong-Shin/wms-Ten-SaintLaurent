@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sh.model.dao.OutboundMapper">
+    <select id="searchOutbound" resultType="com.sh.model.dto.OrderDto">
+        SELECT
+        o.outb_id_pk AS outboundId,
+        o.order_dt AS orderDate,
+        c.cus_nm AS customerName,
+        c.cus_adr AS customerAddress,
+        d.outb_detail_pk AS outboundDetailId,
+        d.item_nm AS itemName,
+        d.outb_picking_cnt AS pickingCount
+        FROM
+        OUTB_TB o
+        JOIN CUS_TB c ON o.cus_fk = c.cus_id_pk
+        JOIN OUTB_DETAIL_TB d ON o.outb_id_pk = d.outb_id_fk
+        ORDER BY
+        o.order_dt DESC;
+    </select>
+
+
+    <select id="printOutBoundReport" resultType="com.sh.model.dto.PurchaseListDto">
+        SELECT
+        o.outb_id_pk AS outboundId,
+        o.order_dt AS orderDate,
+        c.cus_nm AS customerName,
+        c.cus_adr AS customerAddress,
+        s.SEL_ORDER_ID_PK AS selOrderId,
+        d.SEL_ORDER_PROD_NM AS product,
+        d.SEL_ORDER_DETAIL_CNT
+        FROM
+        OUTB_TB o
+        JOIN CUS_TB c ON o.cus_fk = c.cus_id_pk
+        JOIN SEL_ORDER_TB s ON s.SEL_ORDER_ID_PK = o.CUS_FK
+        JOIN SEL_ORDER_DETAIL_TB d ON s.SEL_ORDER_ID_PK = d.SEL_ORDER_FK
+        ORDER BY
+        o.order_dt DESC;
+    </select>
+
+    <insert id="assignCart">
+        INSERT INTO OUT_CART_TB (OUT_CART_ID_PK, OUTB_DETAIL_FK, OUTB_CART_CAPACITY)
+        VALUES (#{outboundDetailId}, #{outboundDetailFk}, #{cartCapacity});
+    </insert>
+
+
+
+</mapper>
