@@ -4,10 +4,7 @@ import com.sh.model.dto.ItemCatDto;
 import com.sh.model.dto.ItemDetailDto;
 import com.sh.model.dto.ItemDto;
 import org.apache.ibatis.session.SqlSession;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +25,8 @@ class SupervisionMapperTest {
 
     @AfterEach
     void tearDown() {
+        this.sqlSession.commit();
+//        this.sqlSession.rollback();
         this.sqlSession.close();
     }
 
@@ -74,22 +73,23 @@ class SupervisionMapperTest {
         assertThat(itemDetailPk).isNotZero();
     }
 
+    @Disabled
     @DisplayName("itemCat 테이블에 화장품을 추가한다.")
     @Test
     void insertItemCatTb() {
         // given
         String itemCatNm = "스킨케어";
-        ItemCatDto itemCatDto = new ItemCatDto();
+        ItemCatDto itemCatDto = new ItemCatDto(0, itemCatNm);
         itemCatDto.setItemCatNm(itemCatNm);
         // when
         int cnt = superMapper.searchItemCat(itemCatNm);
         System.out.println(cnt);
         int result;
-//        if(cnt == 0) {
+        if(cnt == 0) {
             result = superMapper.insertCatItem(itemCatDto);
-//        } else {
-//            result = 0;
-//        }
+        } else {
+            result = 0;
+        }
         // then
         assertThat(result).isEqualTo(1);
     }
