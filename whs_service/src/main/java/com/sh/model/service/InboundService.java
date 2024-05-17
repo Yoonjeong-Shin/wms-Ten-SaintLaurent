@@ -16,7 +16,7 @@ public class InboundService {
 
     // 입고 승인
     // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
-    public int findLocateItemCnt() {
+    public int findEmptyLocate() {
         return 0;
     }
 

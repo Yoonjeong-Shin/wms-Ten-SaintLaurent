@@ -3,6 +3,19 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.InboundMapper">
+
+    <!-- 입고 승인 -->
+    <!-- 빈 로케이트 찾기 -->
+    <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
+    <select id="findEmptyLocate" resultType="inboundDto">
+        select
+        locate_id_pk
+        from
+        locate_tb
+        where
+        locate_item_cnt = 0
+    </select>
+
     <!-- 입고 정보 조회 -->
     <!-- INB_TB의 한 데이터를 PK로 조회, 입고 승인과 입고 확정 때 쓰인다 -->
     <select id="findByInboundID" resultType="inboundDto">
@@ -11,19 +24,10 @@
         from
             inb_tb
         where
-            INB_ID_PK = #{INBIDPK}
+            inb_id_pk = #{inboundID}
     </select>
 
-    <!-- 입고 승인 -->
-    <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
-    <select id="findLocateItemCnt" resultType="inboundDto">
-<!--        select-->
-<!--        *-->
-<!--        from-->
-<!--        tbl_category-->
-<!--        where-->
-<!--        ref_category_code is not null-->
-    </select>
+
     <!-- INB_TB에 JSON 데이터 넣기 -->
     <insert id="insertInboundToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
         <!-- insert into
