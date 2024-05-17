@@ -3,6 +3,7 @@ package com.sh.view;
 import com.sh.controller.OutboundController;
 import com.sh.model.dto.OutboundDto;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class OutboundView {
@@ -25,8 +26,8 @@ public class OutboundView {
             String choice = sc.next();
             switch (choice) {
                 case "1" : outboundController.searchOutbound(); break;
-                case "2" : outboundController.writeOutBoundReport(inputOutboundReport()); break;
-                case "3" : outboundController.assignCart(); break;
+                case "2" : outboundController.printOutBoundReport(); break;
+                case "3" : outboundController.assignCart(inputCart()); break;
                 case "4" : outboundController.OutboundPicking(); break;
                 case "5" : outboundController.checkOutbound();break;
                 case "0" : return;
@@ -36,18 +37,8 @@ public class OutboundView {
         }
     }
 
-    private OutboundDto inputOutboundReport() {
-        System.out.println("> ✏✏✏ 출고지시서 작성입니다. ✏✏✏");
-        System.out.println("> 출고번호 : ");
-        int menuCode = sc.nextInt();
-        System.out.println("> 메뉴명 : ");
-        String menuName = sc.next();
-        System.out.println("> 메뉴가격 : ");
-        int menuPrice = sc.nextInt();
-        System.out.println("> 카테고리코드 : ");
-        int categoryCode = sc.nextInt();
-        System.out.println("> 주문가능여부(Y/N) : ");
-        String orderableStatus = String.valueOf(sc.next().toUpperCase().charAt(0));
-        return new OutboundDto(menuCode, menuName, menuPrice, categoryCode, orderableStatus);
+    private OutboundDto inputCart() {
+        System.out.println("> ✏✏✏ 출고서 정보에 따라 카트를 할당합니다. ✏✏✏");
+        return null;
     }
 }

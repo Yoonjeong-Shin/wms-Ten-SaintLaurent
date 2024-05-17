@@ -14,7 +14,7 @@ public class PurchaseListDto {
     private int orderNum;
     private List<ItemDto> itemDto;
     private int userId;
-    private int outboundNum;
+    private int outboundId;
     private Date orderDate;
 
     public int getOrderNum() {
@@ -41,12 +41,12 @@ public class PurchaseListDto {
         this.userId = userId;
     }
 
-    public int getOutboundNum() {
-        return outboundNum;
+    public int getOutboundId() {
+        return outboundId;
     }
 
-    public void setOutboundNum(int outboundNum) {
-        this.outboundNum = outboundNum;
+    public void setOutboundId(int outboundId) {
+        this.outboundId = outboundId;
     }
 
     public Date getOrderDate() {

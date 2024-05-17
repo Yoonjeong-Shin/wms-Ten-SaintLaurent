@@ -6,10 +6,14 @@ import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class SupervisionView {
+    public static void main(String[] args) {
+        new SupervisionView().itemMenu();
+    }
     private SupervisionController superController = new SupervisionController();
 
     Scanner sc = new Scanner(System.in);
 
+    // 화장품 관리 메뉴
     public void itemMenu() {
         System.out.print("""
         --------------------------------
@@ -21,8 +25,11 @@ public class SupervisionView {
         : """);
         String choice = sc.next();
         switch (choice) {
+            // 조회
             case "1" : inputCase(); break;
+            // 상품 추가
             case "2" : break;
+            // 폐기
             case "3" : break;
             default:
                 System.out.println("잘못 선택하였습니다. 다시 선택해주세요.");
@@ -31,23 +38,26 @@ public class SupervisionView {
 
     // 상품관리 > 조회
     private void inputCase() {
-        System.out.println("""
+        System.out.print("""
         ✨ 무엇을 조회하실건가요? ✨
-        1. 화장품 정보
-        2. 로케이션 정보
+        1. 화장품 전체 정보 조회
+        2. 화장품 수량
+        3. 화장품 위치
+        4. 로케이션 공간 체크
         : """);
         String num = sc.next();
         switch (num) {
             case "1" :
-//                System.out.println("""
-//                ✨ 무엇을 조회하실건가요? ✨
-//                1. 화장품 입고 정보(이름 조회해서 그 이름의 화장품이 있는지 체크, 적재위치도 보여줌)
-//                2. 화장품 수량 조회(이름 조회해서 해당 화장품 재고 얼마나 있나 조회)
-//                : """);
-//                searchItem(num);
+                superController.searchItemInfo();
                 break;
             case "2" :
-                searchLpn();
+                superController.searchItemCnt(searchItem());
+                break;
+            case "3" :
+                superController.searchItemLpn(searchItem());
+                break;
+            case "4" :
+                superController.searchLpn();
                 break;
             default:
                 System.out.println("잘못 입력했습니다. (inputCase)");
@@ -55,17 +65,24 @@ public class SupervisionView {
     }
 
     // 로케이션 비어있는 공간 조회
-    private void searchLpn() {
-        superController.searchLpn();
+//    private void searchLpn() {
+//        superController.searchLpn();
+//    }
+
+    // 화장품 이름 정보 받음
+//    private int searchItem() {
+//        System.out.println("화장품 아이디를 입력하세요.");
+////        showItemNm();
+//        return sc.nextInt();
+//    }
+    private String searchItem() {
+        System.out.println("화장품 아이디를 입력하세요.");
+//        showItemNm();
+        return sc.nextLine();
     }
 
-//    private void searchItem(String num) {
-//        System.out.println("화장품 이름을 입력하세요.");
-//        switch (num) {
-//            case "1" : superController.searchItemInfo(sc.next()); break;
-//            case "2" : superController.searchItemInfo(sc.next()); break;
-//            default:
-//                System.out.println("잘못 입력 (searchItem)");
-//        }
+    // 화장품 ID와 이름 보여주는 메소드
+//    private void showItemNm() {
+//        superController
 //    }
 }
