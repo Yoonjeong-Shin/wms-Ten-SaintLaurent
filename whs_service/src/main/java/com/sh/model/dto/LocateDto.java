@@ -10,7 +10,7 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocateDto {
-    private BigInteger id;
-    private int itemCnt;
-    private String lpnCode;
+    private BigInteger locateIdPk;
+    private int locateItemCnt;
+    private String locateLpnCode;
 }

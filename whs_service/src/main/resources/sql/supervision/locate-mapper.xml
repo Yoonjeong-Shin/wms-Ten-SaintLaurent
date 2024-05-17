@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.model.dao.LocateMapper">
+    <select id="searchLpn" resultType="locateDto">
+        select
+            *
+        from
+            locate_tb
+        where
+            locate_item_cnt is null
+    </select>
+
+    <select id="searchItemLpn" resultType="locateDto">
+        select
+            *
+        from
+            locate_tb lt join item_detail_tb
+                using (locate_id_pk)
+        where
+            item_id_pk = #{itemIdPk}
+    </select>
+</mapper>

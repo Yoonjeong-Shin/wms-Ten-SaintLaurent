@@ -24,5 +24,7 @@
         </environment>
     </environments>
     <mappers>
+        <mapper resource="sql/supervision/locate-mapper.xml"/>
+        <mapper resource="sql/supervision/supervision-mapper.xml"/>
     </mappers>
 </configuration>
