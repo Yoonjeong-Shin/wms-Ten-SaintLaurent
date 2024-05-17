@@ -46,13 +46,16 @@
             item_cat_nm = #{itemCatNm}
     </select>
 
-<!--    <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">-->
-<!--        insert into-->
-<!--            item_cat_tb-->
-<!--        values (-->
-<!--            null, #{itemCatNm}-->
-<!--        )-->
-<!--    </insert>-->
+    <!-- useGeneratedKeys=true를 통해 auto_increment값을 가져온다. 전달된 객체 menuDto#menuCode에 대입 -->
+    <!-- keyProperty가 직접 넣어주는 것이 아니라 setMenuCode를 사용하여 값 대입 -->
+
+    <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">
+        insert into
+            item_cat_tb
+        values (
+            null, #{itemCatNm}
+        )
+    </insert>
 
 <!--    <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">-->
 <!--        INSERT INTO item_cat_tb (ITEM_CAT_NM)-->
