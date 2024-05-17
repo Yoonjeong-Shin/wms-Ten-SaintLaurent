@@ -4,6 +4,7 @@ import com.sh.model.dao.OutboundMapper;
 import com.sh.model.dto.OrderDto;
 import com.sh.model.dto.OutboundDto;
 import com.sh.model.dto.PurchaseListDto;
+import lombok.Synchronized;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
