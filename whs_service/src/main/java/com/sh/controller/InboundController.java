@@ -11,7 +11,6 @@ public class InboundController {
     // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
     public void findLocateItemCnt() {
         inboundService.findEmptyLocate();
-
     }
 
     // 입고 승인
