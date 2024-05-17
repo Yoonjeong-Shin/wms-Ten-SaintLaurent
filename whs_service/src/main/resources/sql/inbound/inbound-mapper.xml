@@ -5,13 +5,13 @@
 <mapper namespace="com.sh.model.dao.InboundMapper">
     <!-- 입고 정보 조회 -->
     <!-- INB_TB의 한 데이터를 PK로 조회, 입고 승인과 입고 확정 때 쓰인다 -->
-    <select id="findByInboundIB" resultType="inboundDto">
-        <!--        select-->
-        <!--        *-->
-        <!--        from-->
-        <!--        tbl_category-->
-        <!--        where-->
-        <!--        ref_category_code is not null-->
+    <select id="findByInboundID" resultType="inboundDto">
+        select
+            *
+        from
+            inb_tb
+        where
+            INB_ID_PK = #{INBIDPK}
     </select>
 
     <!-- 입고 승인 -->
@@ -37,22 +37,19 @@
     <!-- 입고 검수 -->
     <!-- GBG_TB에 state가 2,3인 불량 제품을 insert -->
     <insert id="insertInboundToGBG" useGeneratedKeys="true" keyProperty="GBG_PK">
-<!--        insert into-->
-<!--        tbl_menu-->
-<!--        values (-->
-<!--        null, #{menuName}, #{menuPrice}, #{categoryCode}, #{orderableStatus}-->
-<!--        )-->
+        insert into
+            gbg_tb
+        values (
+        null, #{ITEMNM}, #{ITEMCAT}, #{ITEMVOL}
+        )
     </insert>
     <!-- INB_TB에서 불량 제품을 뺀 수량 update -->
     <update id="updateInboundCnt">
-<!--        update-->
-<!--        tbl_menu-->
-<!--        set-->
-<!--        menu_name = #{menuName},-->
-<!--        menu_price = #{menuPrice},-->
-<!--        category_code = #{categoryCode},-->
-<!--        orderable_status = #{orderableStatus}-->
-<!--        where-->
-<!--        menu_code = #{menuCode}-->
+        update
+            inb_tb
+        set
+            INB_ITEM_CNT = #{INBITEMCNT}
+        where
+           ITEM_CAT_PK  = #{ITEMCATPK}
     </update>
 </mapper>
