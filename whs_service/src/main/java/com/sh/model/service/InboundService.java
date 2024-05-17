@@ -9,11 +9,16 @@ import java.util.List;
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 
 public class InboundService {
-    public List<InboundDto> insertInbound() {
-        SqlSession sqlSession = getSqlSession();
-        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
-        List<InboundDto> list = inboundMapper.insertInbound();
-        sqlSession.close();
-        return list;
+
+    public int approveInbound(InboundDto inboundDto) {
+        return 0;
+    }
+
+    public int checkInbound(int inboundID) {
+        return 0;
+    }
+
+    public void showInboundResult(InboundDto inboundDto) {
+
     }
 }
