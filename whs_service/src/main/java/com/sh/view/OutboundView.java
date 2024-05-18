@@ -30,7 +30,7 @@ public class OutboundView {
                 case "1" : outboundController.searchOutbound(); break;
                 case "2" : outboundController.printOutBoundReport(); break;
                 case "3" : outboundController.assignCart(inputCart()); break;
-                case "4" : outboundController.outboundPicking(); break;
+//                case "4" : outboundController.outboundPicking(); break;
 //                case "5" : outboundController.checkOutbound();break;
 //                case "6" : outboundController.confirmOutbound();break;
                 case "7" : outboundController.updateOutCnt(updateItemCnt());break;

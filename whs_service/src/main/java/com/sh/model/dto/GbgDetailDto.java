@@ -5,8 +5,6 @@ import lombok.*;
 import java.math.BigInteger;
 
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GbgDetailDto {
