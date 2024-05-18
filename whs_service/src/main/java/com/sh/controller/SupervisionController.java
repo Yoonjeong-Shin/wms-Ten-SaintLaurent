@@ -25,8 +25,8 @@ public class SupervisionController {
 
     // 화장품이 저장된 공간 체크
     public void searchItemLpn(int itemPk) {
-        LocateDto locateDto = superService.searchItemLpn(itemPk);
-        System.out.println(locateDto);
+        List<LocateDto> list = superService.searchItemLpn(itemPk);
+        System.out.println(list);
     }
 
     // 로케이션 빈공간 체크
