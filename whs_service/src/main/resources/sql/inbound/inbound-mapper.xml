@@ -19,7 +19,7 @@
     <!-- INB_TB에 JSON 데이터 넣기 -->
     <insert id="insertInbToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
         insert into
-            tbl_menu
+            inb_tb
         values (
             null, #{selPk}, #{facPk}, #{whsPk}, #{inbItemPk}, #{inbItemCatPk}, #{inbItemNM}, #{inbItemVol}, #{inbItemPrice}, #{inbItemCnt}, #{inbItemExpirationDt}
         )
