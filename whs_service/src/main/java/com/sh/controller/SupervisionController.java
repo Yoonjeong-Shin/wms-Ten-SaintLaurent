@@ -18,15 +18,15 @@ public class SupervisionController {
     }
 
     // 찾고자 하는 화장품의 개수
-    public void searchItemCnt(int itemId) {
-        int itemcnt = superService.searchItemCnt(itemId);
+    public void searchItemCnt(int itemPk) {
+        int itemcnt = superService.searchItemCnt(itemPk);
         System.out.println(itemcnt);
     }
 
     // 화장품이 저장된 공간 체크
-    public void searchItemLpn(int itemId) {
-        LocateDto locateDto = superService.searchItemLpn(itemId);
-        System.out.println(locateDto);
+    public void searchItemLpn(int itemPk) {
+        List<LocateDto> list = superService.searchItemLpn(itemPk);
+        System.out.println(list);
     }
 
     // 로케이션 빈공간 체크

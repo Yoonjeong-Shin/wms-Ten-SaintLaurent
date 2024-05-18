@@ -28,12 +28,26 @@ public class SupervisionView {
             // 조회
             case "1" : inputCase(); break;
             // 상품 추가
-            case "2" : break;
+            case "2" : insertItem(); break;
             // 폐기
-            case "3" : break;
+            case "3" : deleteItem(); break;
             default:
                 System.out.println("잘못 선택하였습니다. 다시 선택해주세요.");
         }
+    }
+
+    private void insertItem() {
+        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
+
+        // 있다 > 그럼 존재하는 적재 공간에 여유가 되는가
+        // 된다 > 해당 공간 여유되는만큼만 적재 > 다음 로케이션에 적재
+        // 안된다 > 다음 로케이션에 적재
+
+        // 없다 > 빈 로케이션 조회
+    }
+
+    private void deleteItem() {
+        //
     }
 
     // 상품관리 > 조회
@@ -65,9 +79,10 @@ public class SupervisionView {
     }
 
     // 로케이션 비어있는 공간 조회
-//    private void searchLpn() {
-//        superController.searchLpn();
-//    }
+    private void searchLpn() {
+        // 창고 번호 넘겨줘야함
+        superController.searchLpn();
+    }
 
     // 화장품 이름 정보 받음
 //    private int searchItem() {

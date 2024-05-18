@@ -1,5 +1,6 @@
 package com.sh.controller;
 
+import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 import com.sh.model.service.InboundService;
 import com.sh.view.InboundResultView;
@@ -39,13 +40,9 @@ public class InboundController {
     }
 
     // 입고 검수
-    // GBG_TB에 state가 2,3인 불량 제품을 insert
-    public void insertInbToGbg(InboundDto inboundDto){
-        inboundService.insertInbToGbg(inboundDto);
-    }
     // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
-    public void insertInbToGbgDetail(InboundDto inboundDto){
-        inboundService.insertInbToGbgDetail(inboundDto);
+    public void insertInbToGbgDetail(GbgDetailDto gbgDetailDto){
+        inboundService.insertInbToGbgDetail(gbgDetailDto);
     }
 
     // 입고 검수

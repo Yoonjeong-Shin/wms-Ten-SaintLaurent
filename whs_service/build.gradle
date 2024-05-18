@@ -23,6 +23,10 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.1'
     testImplementation 'org.assertj:assertj-core:3.25.3'
+
+    // JSON
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'org.json:json:20210307'
 }
 
 test {

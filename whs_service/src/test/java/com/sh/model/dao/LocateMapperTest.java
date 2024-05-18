@@ -35,6 +35,7 @@ class LocateMapperTest {
         List<LocateDto> list = locateMapper.searchLpn();
         System.out.println(list);
         // then
+        // 비어있는 공간이 없을 시 에러 발생
         assertThat(list)
                 .isNotNull()
                 .isNotEmpty();
@@ -44,9 +45,9 @@ class LocateMapperTest {
     @Test
     void searchItemLpn() {
         // given
-        String id = "1";
+        int itemPk = 1;
         // when
-        LocateDto locateDto = locateMapper.searchItemLpn(id);
+        List<LocateDto> locateDto = locateMapper.searchItemLpn(itemPk);
         System.out.println(locateDto);
         // then
         assertThat(locateDto)

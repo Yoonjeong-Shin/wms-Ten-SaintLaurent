@@ -1,5 +1,6 @@
 package com.sh.model.dao;
 
+import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 
 public interface InboundMapper {
@@ -15,8 +16,7 @@ public interface InboundMapper {
     // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
     InboundDto findByInbId(int inbIdPk); // INB_TB의 한 데이터의 모든 정보를 INB_ID_PK로 조회
     // 입고 검수
-    int insertInbToGbg(InboundDto inboundDto); // GBG_TB에 state가 2,3인 불량 제품을 insert
-    int insertInbToGbgDetail(InboundDto inboundDto); // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
+    int insertInbToGbgDetail(GbgDetailDto gbgDetailDto); // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
     int updateInbCnt(InboundDto inboundDto); // INB_TB에서 불량 제품을 뺀 수량 update
 
     /* 지영 작업 끝 */
