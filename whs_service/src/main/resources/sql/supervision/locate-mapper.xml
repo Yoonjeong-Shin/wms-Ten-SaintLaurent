@@ -18,8 +18,8 @@
         select
             *
         from
-            locate_tb lt join item_detail_tb
-                using (locate_pk)
+            locate_tb lt join item_detail_tb idt
+                on lt.locate_pk = idt.locate_pk
         where
             item_pk = #{itemPk}
     </select>

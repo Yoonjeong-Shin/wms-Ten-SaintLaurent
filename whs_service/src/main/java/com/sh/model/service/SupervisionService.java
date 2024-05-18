@@ -33,12 +33,12 @@ public class SupervisionService {
     }
 
     // 특정 화장품의 lpn 조회
-    public LocateDto searchItemLpn(int itemPk) {
+    public List<LocateDto> searchItemLpn(int itemPk) {
         SqlSession sqlSession = getSqlSession();
         LocateMapper locateMapper = sqlSession.getMapper(LocateMapper.class);
-        LocateDto locateDto = locateMapper.searchItemLpn(itemPk);
+        List<LocateDto> list = locateMapper.searchItemLpn(itemPk);
         sqlSession.close();
-        return locateDto;
+        return list;
     }
 
     // 로케이션 빈공간 조회
