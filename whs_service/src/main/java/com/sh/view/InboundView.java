@@ -1,16 +1,21 @@
 package com.sh.view;
 
 import com.sh.controller.InboundController;
+import com.sh.model.Repository.InboundRepository;
+import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
+import com.sh.model.dto.json.InbJsonDto;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class InboundView {
     public static void main(String[] args) {
         new InboundView().inboundMenu();
     }
-    private InboundController inboundController = new InboundController();
     private Scanner sc = new Scanner(System.in);
+    private InboundController inboundController = new InboundController();
+    private InboundRepository inboundRepository = new InboundRepository();
 
     public void inboundMenu() {
         String menu = """
@@ -29,7 +34,7 @@ public class InboundView {
             case "1" : inboundController.findByInbId(inputInbId()); break;
             case "2" : inboundController.findEmptyLocate(); break;
 //            case "3" : inboundController.insertInbToINB(); break;
-//            case "4" : inboundController.insertInbToGbg(inputGbgDetail()); break;
+            case "4" : inboundController.insertInbToGbgDetail(inputGbgDetail()); break;
 //            case "5" : inboundController.updateInbCnt(inputInbCntUpdated()); break;
             case "0" : return;
             default:
@@ -52,20 +57,23 @@ public class InboundView {
 
     // 입고 검수
     // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
-    private InboundDto inputGbgDetail() {
-        // InbItemInfo.json에서 state 읽어오기
+    private GbgDetailDto inputGbgDetail() {
+        // inbItemDto json에서 state 읽어오기
+        List<InbJsonDto> inbDefectiveList = inboundRepository.readInb();
 
-        return new InboundDto();
+
+
+        return new GbgDetailDto();
     }
 
     // 입고 검수
     // INB_TB에서 불량 제품을 뺀 수량 update
     private InboundDto inputInbCntUpdated() {
-        // InbItemInfo.json에 있는 데이터에서 itemsDetail의 state 읽어오기
+        // inbItemDto json에 있는 데이터에서 itemsDetail의 state 읽어오기
 
         // if(state != 1)인 것만 카운트하기 -> state가 2,3인 불량품
 
-        // state가 2,3인 InbItemDto.json에 있는 데이터와 같은 INB_TB 데이터에서 INB_ITEM_CNT-- 하기
+        // state가 2,3인 inbItemDto json에 있는 데이터와 같은 INB_TB 데이터에서 INB_ITEM_CNT-- 하기
 
         return new InboundDto();
     }
