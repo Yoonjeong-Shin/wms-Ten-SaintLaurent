@@ -9,6 +9,8 @@
         from
             locate_tb
         where
+            <!-- 처음 창고 시스템 들어올때 몇번 창고인지 체크한 값으로도 조회 -->
+            <!-- 예) 몇번 창고에 재고가 0개인 로케이션 검색이 되도록 구현 -->
             locate_item_cnt = 0
     </select>
 
@@ -17,8 +19,8 @@
             *
         from
             locate_tb lt join item_detail_tb
-                using (locate_id_pk)
+                using (locate_pk)
         where
-            item_id_pk = #{itemIdPk}
+            item_pk = #{itemPk}
     </select>
 </mapper>

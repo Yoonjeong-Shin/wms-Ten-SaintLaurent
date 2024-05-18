@@ -10,7 +10,8 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocateDto {
-    private BigInteger locateIdPk;
+    private long locatePk;
     private int locateItemCnt;
     private String locateLpnCode;
+    private long whsPk;
 }

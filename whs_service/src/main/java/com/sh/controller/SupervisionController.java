@@ -18,14 +18,14 @@ public class SupervisionController {
     }
 
     // 찾고자 하는 화장품의 개수
-    public void searchItemCnt(int itemId) {
-        int itemcnt = superService.searchItemCnt(itemId);
+    public void searchItemCnt(int itemPk) {
+        int itemcnt = superService.searchItemCnt(itemPk);
         System.out.println(itemcnt);
     }
 
     // 화장품이 저장된 공간 체크
-    public void searchItemLpn(int itemId) {
-        LocateDto locateDto = superService.searchItemLpn(itemId);
+    public void searchItemLpn(int itemPk) {
+        LocateDto locateDto = superService.searchItemLpn(itemPk);
         System.out.println(locateDto);
     }
 
