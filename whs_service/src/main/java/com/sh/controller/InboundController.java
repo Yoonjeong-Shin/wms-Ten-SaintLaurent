@@ -21,8 +21,8 @@ public class InboundController {
 
     // 입고 승인
     // INB_TB에 JSON 데이터 넣기
-    public void insertInboundToINB(InboundDto inboundDto) {
-        inboundService.insertInboundToINB(inboundDto);
+    public void insertInbToINB(InboundDto inboundDto) {
+        inboundService.insertInbToINB(inboundDto);
     }
 
     /* 지영 작업 시작 */

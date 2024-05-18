@@ -9,7 +9,7 @@ public interface InboundMapper {
 
     // 빈 창고가 있는지 확인
     int findEmptyLocate();
-    int insertInboundToINB(InboundDto inboundDto); // INB_TB에 JSON 데이터 넣기
+    int insertInbToINB(InboundDto inboundDto); // INB_TB에 JSON 데이터 넣기
 
     /* 지영 작업 시작 */
 

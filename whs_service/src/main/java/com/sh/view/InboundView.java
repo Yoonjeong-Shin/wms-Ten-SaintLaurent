@@ -7,6 +7,7 @@ import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 import com.sh.model.dto.json.InbJsonDto;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class InboundView {
     private Scanner sc = new Scanner(System.in);
     private InboundController inboundController = new InboundController();
     private InboundRepository inboundRepository = new InboundRepository();
+    private List<InbJsonDto> inbJsonList = new ArrayList<>(inboundRepository.readInb());
 
     public void inboundMenu() {
         String menu = """
@@ -35,7 +37,7 @@ public class InboundView {
         switch (choice) {
             case "1" : inboundController.findByInbId(inputInbId()); break;
             case "2" : inboundController.findEmptyLocate(); break;
-//            case "3" : inboundController.insertInbToINB(); break;
+//            case "3" : inboundController.insertInbToINB(inputInb()); break;
 //            case "4" : inboundController.insertInbToGbgDetail(inputGbgDetail()); break;
 //            case "5" : inboundController.updateInbCnt(inputInbCntUpdated()); break;
             case "0" : return;
@@ -44,11 +46,26 @@ public class InboundView {
         }
     }
 
-    // 입고 승인
-    // JSON에서 읽어와 INB_TB에 넣기
-
-
     /* 지영 작업 시작 */
+
+    // 입고 승인 - JSON에서 읽어와 Inb_TB에 넣기
+    // 쿼리에 전달하는 객체는 무조건 1개여야 하는데 여러 객체를 한 번에 테이블에 어떻게 넣어야 할지 힘들다.
+    private InboundDto inputInb() {
+        InboundDto inboundDto = new InboundDto();
+        String inbItemNM;
+        int inbItemVol;
+        int inbItemPrice;
+        int inbItemCnt;
+        LocalDate inbItemExpirationDt;
+        for (int i=0; i<inbJsonList.size(); i++) {
+            inbItemNM = inbJsonList.get(i).getItemName();
+            inbItemVol = inbJsonList.get(i).getVol();
+            inbItemPrice = inbJsonList.get(i).getPrice();
+            inbItemCnt = inbJsonList.get(i).getItemCount();
+            inbItemExpirationDt = inbJsonList.get(i).getExpirationDate();
+        }
+        return null;
+    }
 
     // 입고 정보 조회
     // INB_TB의 한 데이터의 모든 정보를 INB_ID_PK로 조회 (입고 승인과 입고 확정 때 쓰인다)
@@ -58,15 +75,20 @@ public class InboundView {
     }
 
     // 입고 검수 - GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
+    // 쿼리에 전달하는 객체는 무조건 1개여야 하는데 여러 객체를 한 번에 테이블에 어떻게 넣어야 할지 힘들다.
     private GbgDetailDto inputGbgDetail() {
-//        List<InbJsonDto> inbJsonList = new ArrayList<>(inboundRepository.readInb());
-//        InbDetailJsonDto inbDetailJsonDto = new InbDetailJsonDto();
-//        // json에서 itemsDetail의 state가 2,3인 불량품 정보만 읽어오기 if(state != 1)
-//        for(InbJsonDto inbJsonDto : inbJsonList) {
-//            if (inbDetailJsonDto.getState() != 1)
-//                return new GbgDetailDto(inbDetailJsonDto.getState());
-//        }
-        return null;
+        GbgDetailDto gbgDetailDto = new GbgDetailDto();
+
+        // json에서 itemsDetail의 state가 2,3인 불량품 정보만 읽어오기 if(state != 1)
+        for (int i=0; i<inbJsonList.size(); i++) {
+            for(int j=0; j<inbJsonList.get(i).getItemsDetail().size(); j++) {
+                if (inbJsonList.get(i).getItemsDetail().get(j).getState() != 1) {
+                    gbgDetailDto = new GbgDetailDto(inbJsonList.get(i).getItemsDetail().get(j).getState(), inbJsonList.get(i).getItemsDetail().get(j).getItemSerialNum());
+                    InboundResultView.displayDefective(gbgDetailDto);
+                }
+            }
+        }
+        return gbgDetailDto;
     }
 
     // 입고 검수 - INB_TB에서 불량 제품을 뺀 수량 update
