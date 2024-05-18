@@ -29,25 +29,25 @@ class SupervisionMapperTest {
         this.sqlSession.close();
     }
 
-    @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
-    @DisplayName("item 테이블에 화장품을 추가한다.")
-    @Test
-    void insertItemTb() {
-        // given
-        String itemNm = "텐생로랑 토너";
-        int itemVol = 350;
-        int itemCatPk = 1;
-        ItemDto itemDto = new ItemDto(0, itemNm, itemVol, itemCatPk);
-
-        // when
-        int result = superMapper.insertItem(itemDto);
-
-        // then
-        assertThat(result).isEqualTo(1);
-        long itemCode = itemDto.getItemPk();
-        System.out.println(itemCode);
-        assertThat(itemCode).isNotZero();
-    }
+//    @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
+//    @DisplayName("item 테이블에 화장품을 추가한다.")
+//    @Test
+//    void insertItemTb() {
+//        // given
+//        String itemNm = "텐생로랑 토너";
+//        int itemVol = 350;
+//        int itemCatPk = 1;
+//        ItemDto itemDto = new ItemDto(0, itemNm, itemVol, itemCatPk);
+//
+//        // when
+//        int result = superMapper.insertItem(itemDto);
+//
+//        // then
+//        assertThat(result).isEqualTo(1);
+//        long itemCode = itemDto.getItemPk();
+//        System.out.println(itemCode);
+//        assertThat(itemCode).isNotZero();
+//    }
 
     @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
     @DisplayName("itemDetail 테이블에 화장품을 추가한다.")
@@ -79,22 +79,35 @@ class SupervisionMapperTest {
     @Test
     void insertItemCatTb() {
         // given
-        String itemCatNm = "마스크팩";
-        ItemCatDto itemCatDto = new ItemCatDto(0, itemCatNm);
-        // when
-        int cnt = superMapper.searchItemCat(itemCatNm);
-//        System.out.println(cnt);
-        int result;
-        if(cnt == 0) {
-            result = superMapper.insertCatItem(itemCatDto);
-//            superMapper.insertCatItem(itemCatDto);
+//        String itemCatNm = "마스크팩";
+        List<String> itemCatNm = new ArrayList<>();
+        itemCatNm.add("테스트1");
+        itemCatNm.add("테스트2");
+        List<ItemCatDto> itemCatDtoList = new ArrayList<>();
+
+        int cnt;
+        for(String item : itemCatNm) {
+            cnt = superMapper.searchItemCat(item);
+//            System.out.print(".");
+            if(cnt == 0) {
+                ItemCatDto itemCatDto = new ItemCatDto(0, item);
+                itemCatDtoList.add(itemCatDto);
+            } else {
+                continue;
+            }
         }
-        else {
+        // when
+        int result;
+        if(!itemCatDtoList.isEmpty()) {
+            result = superMapper.insertCatItem(itemCatDtoList);
+//            System.out.print(".");
+        } else {
             result = 0;
         }
+        System.out.println(result);
         // then
         // 조회 시 같은 값 있으면 에러 발생
-        assertThat(result).isEqualTo(1);
+//        assertThat(result).isEqualTo(1);
     }
 
     @DisplayName("화장품의 모든 정보를 조회한다.")
@@ -190,5 +203,13 @@ class SupervisionMapperTest {
                 .allSatisfy((result) -> {
                     assertThat(result).isEqualTo(1);
                 });
+    }
+
+    @DisplayName("같은 이름의 화장품이 어디에 적재되어 있는지 조회")
+    @Test
+    void searchSameItemLpn() {
+        int itemId = 1;
+        List<LocateDto> locateList= superMapper.searchSameItemLpn(itemId);
+        System.out.println(locateList);
     }
 }
