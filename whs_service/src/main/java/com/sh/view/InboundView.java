@@ -1,11 +1,13 @@
 package com.sh.view;
 
 import com.sh.controller.InboundController;
-import com.sh.model.Repository.InboundRepository;
+import com.sh.model.dto.json.InbDetailJsonDto;
+import com.sh.model.repository.InboundRepository;
 import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 import com.sh.model.dto.json.InbJsonDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,7 +25,7 @@ public class InboundView {
         1. 입고 정보 조회
         2. 창고 빈공간 조회
         3. 입고 정보 추가
-        4. 폐기 상품 추가
+        4. 추가한 폐기 상품 조회
         5. 폐기 수량 제외한 입고 정보 조회
         0. 종료
         =========================
@@ -34,7 +36,7 @@ public class InboundView {
             case "1" : inboundController.findByInbId(inputInbId()); break;
             case "2" : inboundController.findEmptyLocate(); break;
 //            case "3" : inboundController.insertInbToINB(); break;
-            case "4" : inboundController.insertInbToGbgDetail(inputGbgDetail()); break;
+//            case "4" : inboundController.insertInbToGbgDetail(inputGbgDetail()); break;
 //            case "5" : inboundController.updateInbCnt(inputInbCntUpdated()); break;
             case "0" : return;
             default:
@@ -55,23 +57,21 @@ public class InboundView {
         return sc.nextInt();
     }
 
-    // 입고 검수
-    // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
+    // 입고 검수 - GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
     private GbgDetailDto inputGbgDetail() {
-        // inbItemDto json에서 state 읽어오기
-        List<InbJsonDto> inbDefectiveList = inboundRepository.readInb();
-
-
-
-        return new GbgDetailDto();
+//        List<InbJsonDto> inbJsonList = new ArrayList<>(inboundRepository.readInb());
+//        InbDetailJsonDto inbDetailJsonDto = new InbDetailJsonDto();
+//        // json에서 itemsDetail의 state가 2,3인 불량품 정보만 읽어오기 if(state != 1)
+//        for(InbJsonDto inbJsonDto : inbJsonList) {
+//            if (inbDetailJsonDto.getState() != 1)
+//                return new GbgDetailDto(inbDetailJsonDto.getState());
+//        }
+        return null;
     }
 
-    // 입고 검수
-    // INB_TB에서 불량 제품을 뺀 수량 update
+    // 입고 검수 - INB_TB에서 불량 제품을 뺀 수량 update
     private InboundDto inputInbCntUpdated() {
-        // inbItemDto json에 있는 데이터에서 itemsDetail의 state 읽어오기
-
-        // if(state != 1)인 것만 카운트하기 -> state가 2,3인 불량품
+        // json에서 itemsDetail의 state가 2,3인 불량품
 
         // state가 2,3인 inbItemDto json에 있는 데이터와 같은 INB_TB 데이터에서 INB_ITEM_CNT-- 하기
 
