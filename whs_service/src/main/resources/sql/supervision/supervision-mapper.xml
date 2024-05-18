@@ -31,9 +31,10 @@
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemPk">
         insert into
             item_tb
-        values (
-            null, #{itemNm}, #{itemVol}, #{itemCatPk}
-        )
+        values
+            <foreach collection="list" item="item" separator=",">
+                (null, #{item.itemNm}, #{item.itemVol}, #{item.itemCatPk})
+            </foreach>
     </insert>
 
     <insert id="insertDetailItem" useGeneratedKeys="true" keyProperty="itemDetailPk">
@@ -56,9 +57,10 @@
     <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">
         insert into
             item_cat_tb
-        values (
-            null, #{itemCatNm}
-        )
+        values
+            <foreach collection="list" item="item" separator=",">
+                (null, #{item.itemCatNm})
+            </foreach>
     </insert>
 
     <select id="searchDefItem" resultType="itemDetailDto">
@@ -108,4 +110,32 @@
         where
             item_detail_pk = #{itemDetailPk}
     </delete>
+
+    <select id="searchCheckItemNm" resultType="int">
+        select
+            count(*)
+        from
+            item_tb
+        where
+            item_nm = #{itemNm}
+    </select>
+
+    <select id="searchItemId" resultType="long">
+        select
+            item_pk
+        from
+            item_tb
+        where
+            item_nm = #{itemNm}
+    </select>
+
+    <select id="searchSameItemLpn" resultType="locateDto">
+        select
+            *
+        from
+            item_detail_tb idt left join locate_tb lt
+                using (LOCATE_PK)
+        where
+            ITEM_PK = #{itemPk}
+    </select>
 </mapper>
