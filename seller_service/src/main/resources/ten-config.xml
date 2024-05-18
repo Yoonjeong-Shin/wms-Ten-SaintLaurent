@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!-- mapper.xml에서 실제 클래스이름 대신 별칭을 사용할 수 있다. -->
+    <typeAliases>
+        <!--        <typeAlias type="com.sh.menu.model.dto.MenuDto" alias="menuDto"></typeAlias>-->
+        <!-- 지정한 패키지 하위의 모든 클래스를 소문자로 시작하는 별칭으로 등록한다. -->
+        <package name="com.sh"/>
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://mysql.coffit.today/tensellerdb"/>
+                <property name="username" value="tenseller"/>
+                <property name="password" value="tenseller"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="sql/inbound/selInboundOrderMapper.xml"/>
+
+        <mapper resource="sql/inbound/selOutboundOrderMapper.xml"/>
+    </mappers>
+</configuration>

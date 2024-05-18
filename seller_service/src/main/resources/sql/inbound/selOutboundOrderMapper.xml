@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.model.dao.SelOutboundOrderMapper">
+
+    <resultMap id="selOutboundOrderResultMap" type="com.sh.model.SelOutboundOrder">
+        <id column="SEL_OUTB_ORDER_PK" property="id"/>
+        <result column="SEL_OUTB_ORDER_SELLER_NM" property="sellerName"/>
+        <result column="SEL_OUTB_ORDER_CAT" property="category"/>
+        <result column="SEL_OUTB_ORDER_ITEM_NM" property="itemName"/>
+        <result column="SEL_OUTB_ORDER_VOL" property="volume"/>
+        <result column="SEL_OUTB_ORDER_EXPIRATION_DT" property="expirationDate"/>
+        <result column="SEL_OUTB_ORDER_PRICE" property="price"/>
+        <result column="SEL_OUTB_ORDER_PROD_CNT" property="productCount"/>
+    </resultMap>
+
+    <select id="findAllOutboundOrders" resultMap="selOutboundOrderResultMap">
+        select * from tensellerdb.SEL_OUTB_ORDER_TB;
+    </select>
+
+</mapper>

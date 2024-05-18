@@ -36,7 +36,7 @@ class SupervisionMapperTest {
     @Test
     void insertItemTb() {
         // given
-        String itemNm = "텐생로랑 토너";
+        String itemNm = "텐생로랑 토너6";
         int itemVol = 350;
         int itemCatPk = 1;
         ItemDto itemDto = new ItemDto(0, itemNm, itemVol, itemCatPk);
