@@ -3,15 +3,20 @@ package com.sh.controller;
 import com.sh.model.dto.InboundDto;
 import com.sh.model.service.InboundService;
 import com.sh.view.InboundResultView;
+import org.w3c.dom.ls.LSOutput;
 
 public class InboundController {
     private InboundService inboundService = new InboundService();
 
+    // 양희윤 작업 시작
     // 입고 승인
     // LOCATE_TB에서 LOCATE_ITEM_CNT 찾기
-    public void findLocateItemCnt() {
-        inboundService.findEmptyLocate();
+    public void findEmptyLocate() {
+        int result = inboundService.findEmptyLocate();
+        System.out.println(result == 0 ? "빈 공간이 없습니다":"빈 공간이 있습니다");
+        // locate_id받아와서 LPN위치까지 추가해줘야하남..
     }
+    // 양희윤 작업 끝
 
     // 입고 승인
     // INB_TB에 JSON 데이터 넣기

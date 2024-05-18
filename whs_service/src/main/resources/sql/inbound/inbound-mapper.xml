@@ -6,13 +6,13 @@
     <!-- 입고 승인 -->
     <!-- 빈 로케이트 찾기 -->
     <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
-    <select id="findEmptyLocate" resultType="inboundDto">
+    <select id="findEmptyLocate" resultType="int">
         select
-        locate_id_pk
+            count(*)
         from
-        locate_tb
+            locate_tb
         where
-        locate_item_cnt = 0
+            LOCATE_ITEM_CNT = 0;
     </select>
 
     <!-- INB_TB에 JSON 데이터 넣기 -->
