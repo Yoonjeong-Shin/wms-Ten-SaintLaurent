@@ -18,8 +18,11 @@ public class OutboundView {
         3. 카트 할당
         4. 출고 목록 픽킹
         5. 출고 상품 검수
+<<<<<<< Updated upstream
         6. 출고 확정
         7. 출고 후 재고 반영 
+=======
+>>>>>>> Stashed changes
         0. 종료
         =====================
         입력 : """;
@@ -30,10 +33,15 @@ public class OutboundView {
                 case "1" : outboundController.searchOutbound(); break;
                 case "2" : outboundController.printOutBoundReport(); break;
                 case "3" : outboundController.assignCart(inputCart()); break;
+<<<<<<< Updated upstream
                 case "4" : outboundController.outboundPicking(); break;
 //                case "5" : outboundController.checkOutbound();break;
 //                case "6" : outboundController.confirmOutbound();break;
                 case "7" : outboundController.updateOutCnt(updateItemCnt());break;
+=======
+                case "4" : outboundController.OutboundPicking(); break;
+                case "5" : outboundController.checkOutbound();break;
+>>>>>>> Stashed changes
                 case "0" : return;
                 default:
                     System.out.println("잘못 입력하셨습니다.");
@@ -41,10 +49,13 @@ public class OutboundView {
         }
     }
 
+<<<<<<< Updated upstream
     private OutboundDto updateItemCnt() {
         return null;
     }
 
+=======
+>>>>>>> Stashed changes
     private OutboundDto inputCart() {
         System.out.println("> ✏✏✏ 출고서 정보에 따라 카트를 할당합니다. ✏✏✏");
         return null;

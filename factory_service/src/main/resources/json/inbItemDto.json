@@ -1,0 +1,455 @@
+[
+  {
+    "sellerName": "쿠팡",
+    "sellerLoc" : "서울",
+    "factoryName": "(주)아몰레퍼시픽",
+    "factoryLoc" : "서울",
+    "cat": "클렌징",
+    "itemName":"화산송이 클렌징",
+    "vol": 150,
+    "price": 6500,
+    "itemCount": 5,
+    "expirationDate":"2024-09-14",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "화산송이 클렌징-A01-001-231102-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "화산송이 클렌징-A01-001-231102-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "화산송이 클렌징-A01-001-231102-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "화산송이 클렌징-A01-002-240201-0001",
+        "state" : "2"
+      },
+      {
+        "itemSerialNum" : "화산송이 클렌징-A01-002-240201-0002",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "11번가",
+    "sellerLoc" : "서울",
+    "factoryName": "(주)아몰레퍼시픽",
+    "factoryLoc" : "경기",
+    "cat": "선케어",
+    "itemName":"톤업 노세범 선스크린",
+    "vol": 60,
+    "price": 24000,
+    "itemCount": 3,
+    "expirationDate":"2024-05-25",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "톤업 노세범 선스크린-A02-001-230501-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "톤업 노세범 선스크린-A02-001-20230501-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "톤업 노세범 선스크린-A02-001-20210501-0003",
+        "state" : "3"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "지마켓",
+    "sellerLoc" : "경기",
+    "factoryName": "(주)아몰레퍼시픽",
+    "factoryLoc" : "인천",
+    "cat": "스킨케어",
+    "itemName":"물광 로션",
+    "vol": 500,
+    "price": 23500,
+    "itemCount": 10,
+    "expirationDate":"2026-05-16",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "물광 로션-A03-001-240128-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-001-240128-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-001-240128-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-001-240128-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-001-240128-0005",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-002-240315-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-002-240315-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-002-240315-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-002-240315-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "물광 로션-A03-002-240315-0005",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "네이쳐리퍼블릭",
+    "sellerLoc" : "인천",
+    "factoryName": "(주)티디에스팜",
+    "factoryLoc" : "서울",
+    "cat": "팩",
+    "itemName":"에센셜 마스크팩",
+    "vol": 24,
+    "price": 3500,
+    "itemCount": 5,
+    "expirationDate":"2026-05-17",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "에센셜 마스크팩-B01-001-240117-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "에센셜 마스크팩-B01-001-240117-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "에센셜 마스크팩-B01-001-240117-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "에센셜 마스크팩-B01-001-240117-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "에센셜 마스크팩-B01-001-240117-0005",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "배민",
+    "sellerLoc" : "서울",
+    "factoryName": "(주)티디에스팜",
+    "factoryLoc" : "서울",
+    "cat": "향수",
+    "itemName":"시그니쳐 퍼퓸",
+    "vol": 50,
+    "price": 60000,
+    "itemCount": 3,
+    "expirationDate":"2026-06-01",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "시그니쳐 퍼퓸-B01-001-20230601-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시그니쳐 퍼퓸-B01-001-20230601-0002",
+        "state" : "2"
+      },
+      {
+        "itemSerialNum" : "시그니쳐 퍼퓸-B01-001-20230601-0003",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "이마트",
+    "sellerLoc" : "서울",
+    "factoryName": "(주)티디에스팜",
+    "factoryLoc" : "경기",
+    "cat": "헤어케어",
+    "itemName":"두피 클리닉 샴푸",
+    "vol": 300,
+    "price": 18000,
+    "itemCount": 5,
+    "expirationDate":"2026-05-01",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "두피 클리닉 샴푸-C02-001-20230501-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "두피 클리닉 샴푸-C02-001-20230501-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "두피 클리닉 샴푸-C02-001-20230501-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "두피 클리닉 샴푸-C02-001-20230501-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "두피 클리닉 샴푸-C02-001-20230501-0005",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "이마트",
+    "sellerLoc" : "서울",
+    "factoryName": "(주)텐텐화장품",
+    "factoryLoc" : "서울",
+    "cat": "팩",
+    "itemName":"히알루론산 마스크팩",
+    "vol": 27,
+    "price": 2500,
+    "itemCount": 10,
+    "expirationDate":"2025-07-06",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0005",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0006",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0007",
+        "state" : "2"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-001-230706-0008",
+        "state" : "2"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-002-230706-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "히알루론산 마스크팩-C01-002-230706-0002",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "이마트",
+    "sellerLoc" : "인천",
+    "factoryName": "(주)텐텐화장품",
+    "factoryLoc" : "인천",
+    "cat": "메이크업",
+    "itemName":"피스 아이섀도우",
+    "vol": 8,
+    "price": 8000,
+    "itemCount": 5,
+    "expirationDate":"2024-10-12",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "피스 아이섀도우-C03-001-20221012-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "피스 아이섀도우-C03-001-20221012-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "피스 아이섀도우-C03-001-20221012-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "피스 아이섀도우-C03-001-20221012-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "피스 아이섀도우-C03-001-20221012-0005",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "현대백화점",
+    "sellerLoc" : "서울",
+    "factoryName": "(주)텐텐화장품",
+    "factoryLoc" : "경기",
+    "cat": "메이크업",
+    "itemName":"무스 리퀴드 아이라이너",
+    "vol": 1,
+    "price": 11000,
+    "itemCount": 10,
+    "expirationDate":"2026-11-04",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0005",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0006",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0007",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0008",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-001-20231104-0009",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "무스 리퀴드 아이라이너-C02-02-20231104-0001",
+        "state" : "1"
+      }
+    ]
+  },
+
+  {
+    "sellerName": "현대백화점",
+    "sellerLoc" : "경기",
+    "factoryName": "(주)티디에스팜",
+    "factoryLoc" : "서울",
+    "cat": "바디케어",
+    "itemName":"시카 바디워시",
+    "vol": 340,
+    "price": 20000,
+    "itemCount": 20,
+    "expirationDate":"2026-07-05",
+    "itemsDetail": [
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0002",
+        "state" : "2"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0004",
+        "state" : "2"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0005",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0006",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0007",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0008",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0009",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-001-20241012-0010",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0001",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0002",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0003",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0004",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0005",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0006",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0007",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0008",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0009",
+        "state" : "1"
+      },
+      {
+        "itemSerialNum" : "시카 바디워시-B01-002-20241012-0010",
+        "state" : "1"
+      }
+    ]
+  }
+]
