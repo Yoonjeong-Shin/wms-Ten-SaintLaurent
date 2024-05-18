@@ -6,7 +6,7 @@ import com.sh.model.dto.PurchaseListDto;
 import com.sh.model.service.OutboundService;
 import com.sh.view.OutboundResultView;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class OutboundController {
@@ -33,49 +33,38 @@ public class OutboundController {
 
     public void assignCart(OutboundDto outboundDto){
         int result = outboundService.assignCart(outboundDto);
-        OutboundResultView.displayResult("카트 할당", result);
+        OutboundResultView.displayAssignCart(result);
     }
 
-    public void OutboundPicking(){
-        try {
-            List<OutboundDto> list = outboundService.OutboundPicking();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void outboundPicking(){
+//        try {
+//            List<OutboundDto> list = outboundService.outboundPicking();
+//            OutboundResultView.displayPickingCount(list);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public void checkOutbound(){
-        try {
-            boolean result = outboundService.checkOutbound();
-            OutboundResultView.displayResult("출고 검수", result ? 1 : 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    public void checkOutbound(OutboundDto outboundDto){
+//        try {
+//            int result = outboundService.checkOutbound(outboundDto);
+//            OutboundResultView.displayResult("출고 검수", result ? 1 : 0);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void confirmOutbound(){
+//        try {
+//            int result = outboundService.confirmOutbound();
+//            OutboundResultView.displayResult("출고 확정", result ? 1 : 0);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public void confirmOutbound(){
-        try {
-            boolean result = outboundService.confirmOutbound();
-            OutboundResultView.displayResult("출고 확정", result ? 1 : 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void rejectPicking(){
-        try {
-            boolean result = outboundService.rejectPicking();
-            OutboundResultView.displayResult("픽킹 취소", result ? 1 : 0);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void rejectCheck(){try {
-        List<OutboundDto> list = outboundService.rejectcheck();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
+    public void updateOutCnt(OutboundDto outboundDto) {
+        int result = outboundService.updateOutCnt(outboundDto);
+        OutboundResultView.displayOutCntResult("출고 후 재고수량", result);
     }
 }

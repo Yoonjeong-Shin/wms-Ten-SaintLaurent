@@ -11,26 +11,19 @@ import java.util.List;
 @AllArgsConstructor
 
 public class PurchaseListDto {
-    private int orderNum;
-    private List<ItemDto> itemDto;
+    private int orderId;
     private int userId;
+    private List<ItemDto> itemDto;
+    private int pickCnt;
     private int outboundId;
-    private Date orderDate;
+    private Date outboundDate;
 
-    public int getOrderNum() {
-        return orderNum;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setOrderNum(int orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public List<ItemDto> getItemDto() {
-        return itemDto;
-    }
-
-    public void setItemDto(List<ItemDto> itemDto) {
-        this.itemDto = itemDto;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getUserId() {
@@ -41,6 +34,22 @@ public class PurchaseListDto {
         this.userId = userId;
     }
 
+    public List<ItemDto> getItemDto() {
+        return itemDto;
+    }
+
+    public void setItemDto(List<ItemDto> itemDto) {
+        this.itemDto = itemDto;
+    }
+
+    public int getPickCnt() {
+        return pickCnt;
+    }
+
+    public void setPickCnt(int pickCnt) {
+        this.pickCnt = pickCnt;
+    }
+
     public int getOutboundId() {
         return outboundId;
     }
@@ -49,11 +58,11 @@ public class PurchaseListDto {
         this.outboundId = outboundId;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
+    public Date getOutboundDate() {
+        return outboundDate;
     }
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
+    public void setOutboundDate(Date outboundDate) {
+        this.outboundDate = outboundDate;
     }
 }
