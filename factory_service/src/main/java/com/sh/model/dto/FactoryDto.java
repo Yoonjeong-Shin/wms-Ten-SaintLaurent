@@ -2,6 +2,7 @@ package com.sh.model.dto;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class FactoryDto {
     private String itemCat;
     private String itemNm;
     private int itemVol;
-    private Date expirationDate;
+    private LocalDate expirationDate;
     private int itemPrice;
     private int prodCnt;
     private String field;

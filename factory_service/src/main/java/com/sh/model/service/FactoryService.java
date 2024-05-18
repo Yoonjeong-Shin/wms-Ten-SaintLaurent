@@ -15,6 +15,7 @@ public class FactoryService {
         FactoryMapper factoryMapper = sqlSession.getMapper(FactoryMapper.class);
         List<FactoryDto> list = factoryMapper.searchFactory();
         sqlSession.close();
+
         return list;
     }
 

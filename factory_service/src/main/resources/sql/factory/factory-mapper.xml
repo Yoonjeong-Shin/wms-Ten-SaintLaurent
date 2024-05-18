@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.sh.model.dao.FactoryMapper">
     <resultMap id="FactoryDtoResultMap" type="com.sh.model.dto.FactoryDto">
         <id property="itemId" column="FAC_ITEM_PK"/>
@@ -14,7 +13,6 @@
         <result property="itemPrice" column="FAC_ITEM_PRICE"/>
         <result property="prodCnt" column="FAC_ITEM_PROD_CNT"/>
         <result property="field" column="Field"/>
-
         <collection property="factoryDto2" ofType="com.sh.model.dto.FactoryDto2">
             <id property="serialNum" column="ITEM_DETAIL_SERIAL_NUM"/>
             <result property="itemState" column="ITEM_STATE"/>
@@ -41,5 +39,4 @@
         ORDER BY
         f.FAC_ITEM_PK DESC;
     </select>
-
 </mapper>
