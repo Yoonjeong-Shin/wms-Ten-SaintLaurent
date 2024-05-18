@@ -1,4 +1,4 @@
-package com.sh.model.Repository;
+package com.sh.model.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -9,12 +9,11 @@ import com.sh.model.dto.json.InbJsonDto;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class InboundRepository {
     private List<InbJsonDto> inbList;
-    private static final String JSON_FILE_PATH = "wms-Ten-SaintLaurent/src/main/resources/json/inbItemDto.json";
+    private static final String JSON_FILE_PATH = "whs_service/src/main/resources/json/inbItemDto.json";
 
     public InboundRepository() {
         inbList = readInbFromJson();
@@ -33,7 +32,7 @@ public class InboundRepository {
             }
             // JSON 문자열을 Inbound 리스트로 변환
             return parseJsonToInbList(jsonString.toString());
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -55,7 +54,7 @@ public class InboundRepository {
             int vol = inbJsonObject.get("vol").getAsInt();
             int price = inbJsonObject.get("price").getAsInt();
             int itemCount = inbJsonObject.get("itemCount").getAsInt();
-            LocalDate expirationDate = LocalDate.parse(inbJsonObject.get("date").getAsString());
+            LocalDate expirationDate = LocalDate.parse(inbJsonObject.get("expirationDate").getAsString());
             List<InbDetailJsonDto> itemsDetail = parseItemsDetail(inbJsonObject.getAsJsonArray("itemsDetail"));
             InbJsonDto inbJsonDto = new InbJsonDto(sellerName, sellerLoc, factoryName, factoryLoc, cat, itemName, vol, price, itemCount, expirationDate, itemsDetail);
             inbList.add(inbJsonDto);
