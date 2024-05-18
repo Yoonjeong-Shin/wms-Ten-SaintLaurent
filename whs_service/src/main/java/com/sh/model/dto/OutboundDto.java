@@ -11,24 +11,24 @@ import java.util.List;
 @AllArgsConstructor
 
 public class OutboundDto {
-    private int itemCount;
-    private int cartNum;
+    private int itemCnt;
+    private int cartId;
     private List<PurchaseListDto> purchaseListDto;
 
-    public int getItemCount() {
-        return itemCount;
+    public int getCartId() {
+        return cartId;
     }
 
-    public void setItemCount(int itemCount) {
-        this.itemCount = itemCount;
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
-    public int getCartNum() {
-        return cartNum;
+    public int getItemCnt() {
+        return itemCnt;
     }
 
-    public void setCartNum(int cartNum) {
-        this.cartNum = cartNum;
+    public void setItemCnt(int itemCnt) {
+        this.itemCnt = itemCnt;
     }
 
     public List<PurchaseListDto> getPurchaseListDto() {

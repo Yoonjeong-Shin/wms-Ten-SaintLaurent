@@ -13,6 +13,7 @@ import java.util.List;
 
 public class InboundRepository {
     private List<InbJsonDto> inbList;
+    private List<InbDetailJsonDto> itemsDetailList;
     private static final String JSON_FILE_PATH = "whs_service/src/main/resources/json/inbItemDto.json";
 
     public InboundRepository() {
@@ -64,7 +65,7 @@ public class InboundRepository {
     }
 
     private List<InbDetailJsonDto> parseItemsDetail(JsonArray itemsDetailArray) {
-        List<InbDetailJsonDto> itemsDetailList = new ArrayList<>();
+        itemsDetailList = new ArrayList<>();
         for (int i = 0; i < itemsDetailArray.size(); i++) {
             JsonObject itemsDetailObject = itemsDetailArray.get(i).getAsJsonObject();
             String itemSerialNum = itemsDetailObject.get("itemSerialNum").getAsString();
@@ -78,5 +79,10 @@ public class InboundRepository {
     // inbItemDto json 데이터 모두 읽어오기
     public List<InbJsonDto> readInb() {
         return new ArrayList<>(inbList);
+    }
+
+    // inbItemDto json 데이터 중 itemsDetailList 읽어오기
+    public List<InbDetailJsonDto> readInbDetail() {
+        return new ArrayList<>(itemsDetailList);
     }
 }

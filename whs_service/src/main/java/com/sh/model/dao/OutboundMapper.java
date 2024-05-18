@@ -11,9 +11,8 @@ public interface OutboundMapper {
     List<PurchaseListDto> printOutBoundReport();
     int assignCart(OutboundDto outboundDto);
     List<OutboundDto> OutboundPicking();
-    boolean checkOutbound();
-    boolean confirmOutbound();
-    boolean rejectPicking();
-    List<OutboundDto> rejectCheck();
+    int checkOutbound(OutboundDto outboundDto);
+    int confirmOutbound();
+    int updateOutCnt(OutboundDto inboundDto);
 
 }

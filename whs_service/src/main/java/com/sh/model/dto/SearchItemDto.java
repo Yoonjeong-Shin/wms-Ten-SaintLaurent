@@ -14,10 +14,10 @@ public class SearchItemDto {
     private long itemPk;
     private String itemNM;
     private int itemVol;
-    private String itemCatPk;
+    private int itemCatPk;
     private long itemDetailPk;
     private String itemDetailSerialNum;
     private int itemDetailStatus;
-    private int locatePk;
+    private long locatePk;
     private LocalDate itemDetailExpirationDt;
 }

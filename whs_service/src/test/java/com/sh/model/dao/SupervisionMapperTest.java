@@ -3,8 +3,6 @@ package com.sh.model.dao;
 import com.sh.model.dto.*;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,7 +11,6 @@ import java.util.List;
 
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class SupervisionMapperTest {
     SqlSession sqlSession;
@@ -32,6 +29,7 @@ class SupervisionMapperTest {
         this.sqlSession.close();
     }
 
+    @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
     @DisplayName("item 테이블에 화장품을 추가한다.")
     @Test
     void insertItemTb() {
@@ -51,6 +49,7 @@ class SupervisionMapperTest {
         assertThat(itemCode).isNotZero();
     }
 
+    @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
     @DisplayName("itemDetail 테이블에 화장품을 추가한다.")
     @Test
     void insertDetailItemTb() {
@@ -58,7 +57,7 @@ class SupervisionMapperTest {
         long itemPk = 1;
         int itemDetailStatus = 1;
         long locatePk = 4;
-        String lpn = String.format("%03d",locatePk) + "001";
+        String lpn = String.format("%03d",locatePk) + "-001";
         LocalDate itemDetailExpirationDt = LocalDate.now();
         String date = itemDetailExpirationDt.format(DateTimeFormatter.ofPattern("yyMMdd"));
         String itemDetailSerialNum = itemPk + "_" + lpn + "-" + date + "-0001"; // 화장품 ID(숫자) + 창고 ID-LPN + 유통기한 + 제조번호
@@ -75,12 +74,12 @@ class SupervisionMapperTest {
         assertThat(itemDetailPk).isNotZero();
     }
 
-    @Disabled
+    @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
     @DisplayName("itemCat 테이블에 화장품을 추가한다.")
     @Test
     void insertItemCatTb() {
         // given
-        String itemCatNm = "스킨케어";
+        String itemCatNm = "마스크팩";
         ItemCatDto itemCatDto = new ItemCatDto(0, itemCatNm);
         // when
         int cnt = superMapper.searchItemCat(itemCatNm);
@@ -88,10 +87,13 @@ class SupervisionMapperTest {
         int result;
         if(cnt == 0) {
             result = superMapper.insertCatItem(itemCatDto);
-        } else {
+//            superMapper.insertCatItem(itemCatDto);
+        }
+        else {
             result = 0;
         }
         // then
+        // 조회 시 같은 값 있으면 에러 발생
         assertThat(result).isEqualTo(1);
     }
 
@@ -100,7 +102,22 @@ class SupervisionMapperTest {
     void searchItemInfo() {
         // given
         // when
+        List<SearchItemDto> itemInfo = superMapper.searchItemInfo();
+//        System.out.println(itemInfo);
         // then
+        assertThat(itemInfo)
+                .isNotNull()
+                .isNotEmpty()
+                .allSatisfy((item) -> {
+                   assertThat(item.getItemPk()).isNotNegative();
+                   assertThat(item.getItemNM()).isNotNull();
+                   assertThat(item.getItemVol()).isNotZero().isPositive();
+                   assertThat(item.getItemCatPk()).isNotNegative();
+                   assertThat(item.getItemDetailPk()).isNotNegative();
+                   assertThat(item.getItemDetailSerialNum()).isNotNull();
+                   assertThat(item.getItemDetailStatus()).isNotZero().isNotNegative();
+                   assertThat(item.getLocatePk()).isNotNegative();
+                });
     }
 
     @DisplayName("한 화장품의 개수를 조회한다.")
@@ -127,6 +144,7 @@ class SupervisionMapperTest {
 //        System.out.println(itemDetail);
 
         // then
+        // 데이터 안에 정상이 있으면 에러 발생
         assertThat(itemDetail)
                 .isNotNull()
                 .isNotEmpty()

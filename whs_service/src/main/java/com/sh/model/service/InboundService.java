@@ -19,13 +19,25 @@ public class InboundService {
         return result;
     }
 
+    /* 지영 작업 시작 */
+
     // 입고 승인
     // INB_TB에 JSON 데이터 넣기
-    public int insertInboundToINB(InboundDto inboundDto) {
-        return 0;
+    public int insertInbToINB(InboundDto inboundDto) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        try {
+            // dao 메세지 전달
+            int result = inboundMapper.insertInbToINB(inboundDto);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            sqlSession.close();
+        }
     }
-
-    /* 지영 작업 시작 */
 
     // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
     // INB_TB의 한 데이터의 모든 정보를 INB_ID_PK로 조회
