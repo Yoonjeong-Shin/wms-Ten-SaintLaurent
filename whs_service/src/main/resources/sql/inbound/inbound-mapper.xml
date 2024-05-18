@@ -39,14 +39,6 @@
     </select>
 
     <!-- 입고 검수 -->
-    <!-- GBG_TB에 state가 2,3인 불량 제품을 insert -->
-    <insert id="insertInbToGbg" useGeneratedKeys="true" keyProperty="GBG_PK">
-        insert into
-            gbg_tb
-        values (
-        null, #{itemNm}, #{itemCat}, #{itemVol}
-        )
-    </insert>
     <!-- GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert -->
     <insert id="insertInbToGbgDetail" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_SERIAL_NUM">
         insert into

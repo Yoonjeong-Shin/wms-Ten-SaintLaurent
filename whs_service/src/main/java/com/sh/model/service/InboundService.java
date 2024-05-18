@@ -37,22 +37,6 @@ public class InboundService {
     }
 
     // 입고 검수
-    public int insertInbToGbg(InboundDto inboundDto) {
-        SqlSession sqlSession = getSqlSession();
-        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
-        try {
-            // dao 메세지 전달
-            int result = inboundMapper.insertInbToGbg(inboundDto);
-            sqlSession.commit();
-            return result;
-        } catch (Exception e) {
-            sqlSession.rollback();
-            throw new RuntimeException(e);
-        } finally {
-            sqlSession.close();
-        }
-    }
-
     public int insertInbToGbgDetail(InboundDto inboundDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);

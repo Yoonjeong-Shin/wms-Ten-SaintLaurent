@@ -10,16 +10,18 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GbgDetailDto {
-    private BigInteger itemDetailSerialNum; // 화장품 시리얼 번호
-    private BigInteger itemPk; // 화장품 ID
-    private BigInteger itemState; // 화장품 상태
+    private BigInteger gbgDetailPk; // 폐기 ID
+    private BigInteger itemIdPk; // 화장품 ID
+    private int itemState; // 화장품 상태
+    private String gbgSerialNum; // 화장품 시리얼 번호
 
     @Override
     public String toString() {
         return "GbgDetailDto{" +
-                "itemDetailSerialNum=" + itemDetailSerialNum +
-                ", itemPk=" + itemPk +
+                "gbgDetailPk=" + gbgDetailPk +
+                ", itemIdPk=" + itemIdPk +
                 ", itemState=" + itemState +
+                ", gbgSerialNum='" + gbgSerialNum + '\'' +
                 '}';
     }
 }

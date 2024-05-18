@@ -3,7 +3,6 @@ package com.sh.view;
 import com.sh.controller.InboundController;
 import com.sh.model.dto.InboundDto;
 
-import java.math.BigInteger;
 import java.util.Scanner;
 
 public class InboundView {
@@ -30,7 +29,7 @@ public class InboundView {
             case "1" : inboundController.findByInbId(inputInbId()); break;
             case "2" : inboundController.findEmptyLocate(); break;
 //            case "3" : inboundController.insertInbToINB(); break;
-//            case "4" : inboundController.insertInbToGbg(inputGbg()); break;
+//            case "4" : inboundController.insertInbToGbg(inputGbgDetail()); break;
 //            case "5" : inboundController.updateInbCnt(inputInbCntUpdated()); break;
             case "0" : return;
             default:
@@ -52,15 +51,9 @@ public class InboundView {
     }
 
     // 입고 검수
-    // GBG_TB에 state가 2,3인 불량 제품을 insert
-    private InboundDto inputGbg() {
-        // InbIntoItemDetailDto.json에서 state 읽어오기
-
-        return new InboundDto();
-    }
     // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
     private InboundDto inputGbgDetail() {
-        // InbIntoItemDetailDto.json에서 state 읽어오기
+        // InbItemInfo.json에서 state 읽어오기
 
         return new InboundDto();
     }
@@ -68,7 +61,7 @@ public class InboundView {
     // 입고 검수
     // INB_TB에서 불량 제품을 뺀 수량 update
     private InboundDto inputInbCntUpdated() {
-        // InbIntoItemDto.json에 있는 데이터에서 itemsDetail의 state 읽어오기
+        // InbItemInfo.json에 있는 데이터에서 itemsDetail의 state 읽어오기
 
         // if(state != 1)인 것만 카운트하기 -> state가 2,3인 불량품
 

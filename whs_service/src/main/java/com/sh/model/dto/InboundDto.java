@@ -22,22 +22,6 @@ public class InboundDto {
     private int inbItemPrice; // 제품 단가
     private int inbItemCnt; // 제품 수량
     private LocalDate inbItemExpirationDt; // 제품 유통기한
-    private String itemSerialNum; // 각 화장품마다 고유한 시리얼 번호
-    private int state; // 화장품 상태
-
-    public InboundDto(BigInteger inbIdPk, BigInteger selIdPk, BigInteger facIdPk, BigInteger whsIdPk, BigInteger inbItemIdPk, int inbItemCatPk, String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, LocalDate inbItemExpirationDt) {
-        this.inbIdPk = inbIdPk;
-        this.selIdPk = selIdPk;
-        this.facIdPk = facIdPk;
-        this.whsIdPk = whsIdPk;
-        this.inbItemIdPk = inbItemIdPk;
-        this.inbItemNM = inbItemNM;
-        this.inbItemCatPk = inbItemCatPk;
-        this.inbItemVol = inbItemVol;
-        this.inbItemPrice = inbItemPrice;
-        this.inbItemCnt = inbItemCnt;
-        this.inbItemExpirationDt = inbItemExpirationDt;
-    }
 
     @Override
     public String toString() {
@@ -52,9 +36,7 @@ public class InboundDto {
                 ", inbItemVol=" + inbItemVol +
                 ", inbItemPrice=" + inbItemPrice +
                 ", inbItemCnt=" + inbItemCnt +
-                ", inbItemExpirationDt=" + inbItemExpirationDt +
-                ", itemSerialNum='" + itemSerialNum + '\'' +
-                ", state=" + state +
-                '}';
+                ", inbItemExpirationDt=" + inbItemExpirationDt
+                ;
     }
 }
