@@ -35,7 +35,7 @@
         from
             inb_tb
         where
-            INB_ID_PK = #{inbIdPk}
+            INB_PK = #{inbPk}
     </select>
 
     <!-- 입고 검수 -->
@@ -44,7 +44,7 @@
         insert into
             gbg_detail_tb
         values (
-        null, #{itemPk}, #{itemState}
+        null, #{itemPk}, #{itemState}, #{gbgSerialNum}
         )
     </insert>
     <!-- INB_TB에서 불량 제품을 뺀 수량 update -->
@@ -54,7 +54,7 @@
         set
             INB_ITEM_CNT = #{inbItemCnt}
         where
-           ITEM_CAT_PK  = #{itemCatPk}
+           INB_ITEM_CAT_PK  = #{inbItemCatPk}
     </update>
 
     <!-- 지영 작업 끝 -->

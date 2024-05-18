@@ -1,6 +1,7 @@
 package com.sh.model.service;
 
 import com.sh.model.dao.InboundMapper;
+import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 import org.apache.ibatis.session.SqlSession;
 
@@ -37,12 +38,12 @@ public class InboundService {
     }
 
     // 입고 검수
-    public int insertInbToGbgDetail(InboundDto inboundDto) {
+    public int insertInbToGbgDetail(GbgDetailDto gbgDetailDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
         try {
             // dao 메세지 전달
-            int result = inboundMapper.insertInbToGbgDetail(inboundDto);
+            int result = inboundMapper.insertInbToGbgDetail(gbgDetailDto);
             sqlSession.commit();
             return result;
         } catch (Exception e) {
