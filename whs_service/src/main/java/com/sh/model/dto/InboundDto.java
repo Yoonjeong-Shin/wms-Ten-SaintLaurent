@@ -2,7 +2,6 @@ package com.sh.model.dto;
 
 import lombok.*;
 
-import java.math.BigInteger;
 import java.time.LocalDate;
 
 @Data
@@ -11,11 +10,11 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class InboundDto {
-    private BigInteger inbIdPk; // 입고 ID
-    private BigInteger selIdPk; // 유통업체 ID
-    private BigInteger facIdPk; // 제조업체 ID
-    private BigInteger whsIdPk; // 창고 ID
-    private BigInteger inbItemIdPk; // 화장품 ID
+    private long inbIdPk; // 입고 ID
+    private long selIdPk; // 유통업체 ID
+    private long facIdPk; // 제조업체 ID
+    private long whsIdPk; // 창고 ID
+    private long inbItemIdPk; // 화장품 ID
     private String inbItemNM; // 화장품 제품명
     private int inbItemCatPk; // 제품 품목 ID
     private int inbItemVol; // 제품 용량
