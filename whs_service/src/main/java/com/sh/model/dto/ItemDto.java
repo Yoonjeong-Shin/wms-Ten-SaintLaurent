@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDto {
-    private long itemIdPk;
+    private long itemPk;
     private String itemNm;
-    private int itemCat;
     private int itemVol;
+    private int itemCatPk;
 }

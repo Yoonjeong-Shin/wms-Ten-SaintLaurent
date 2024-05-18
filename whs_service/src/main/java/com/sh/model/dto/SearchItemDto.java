@@ -11,13 +11,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SearchItemDto {
-    private BigInteger itemIdPk;
+    private long itemPk;
     private String itemNM;
-    private String itemCat;
     private int itemVol;
-    private BigInteger itemDetailPk;
-    private int itemDetailStatus;
-    private int locateIdPk;
-    private LocalDate itemDetailExpirationDt;
+    private String itemCatPk;
+    private long itemDetailPk;
     private String itemDetailSerialNum;
+    private int itemDetailStatus;
+    private int locatePk;
+    private LocalDate itemDetailExpirationDt;
 }

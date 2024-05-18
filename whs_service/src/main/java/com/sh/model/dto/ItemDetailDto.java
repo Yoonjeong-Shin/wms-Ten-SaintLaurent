@@ -11,9 +11,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class ItemDetailDto {
     private long itemDetailPk;
-    private long itemIdPk;
-    private int itemDetailStatus;
-    private long locateIdPk;
-    private LocalDate itemDetailExpirationDt;
     private String itemDetailSerialNum;
+    private long itemPk;
+    private int itemDetailStatus;
+    private long locatePk;
+    private LocalDate itemDetailExpirationDt;
 }

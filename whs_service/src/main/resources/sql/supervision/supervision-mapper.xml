@@ -8,7 +8,7 @@
             *
         from
             item_tb it right join item_detail_tb idt
-                using (ITEM_ID_PK)
+                using (ITEM_PK)
     </select>
 
     <select id="searchItemCnt" resultType="int">
@@ -16,9 +16,9 @@
             count(*)
         from
             item_tb it right join item_detail_tb idt
-                using (ITEM_ID_PK)
+                using (ITEM_PK)
         where
-            it.item_id_pk = #{itemIdPk}
+            it.item_pk = #{itemPk}
     </select>
 
     <select id="searchItemIdNNm" resultType="itemDto">
@@ -32,7 +32,7 @@
         insert into
             item_tb
         values (
-            null, #{itemNm}, #{itemCat}, #{itemVol}
+            null, #{itemNm}, #{itemVol}, #{itemCatPk}
         )
     </insert>
 
@@ -40,7 +40,7 @@
         insert into
             item_detail_tb
         values (
-            null, #{itemIdPk}, #{itemDetailStatus}, #{locateIdPk}, #{itemDetailExpirationDt}, #{itemDetailSerialNum}
+            null, #{itemDetailSerialNum}, #{itemPk}, #{itemDetailStatus}, #{locatePk}, #{itemDetailExpirationDt}
         )
     </insert>
     
@@ -60,4 +60,52 @@
             null, #{itemCatNm}
         )
     </insert>
+
+    <select id="searchDefItem" resultType="itemDetailDto">
+        select
+            *
+        from
+            item_detail_tb
+        where
+            ITEM_DETAIL_STATUS in (2, 3)
+        or
+            <![CDATA[
+                datediff(ITEM_DETAIL_EXPIRATION_DT, now()) < 60;
+            ]]>
+    </select>
+
+<!--    <select id="searchItemTb" resultType="itemDto">-->
+<!--        select-->
+<!--            *-->
+<!--        from-->
+<!--            item_tb-->
+<!--        where-->
+<!--            item_id_pk in-->
+<!--            <foreach collection="list" item="itemId" open="(" separator="," close=")">-->
+<!--                #{itemId}-->
+<!--            </foreach>-->
+<!--    </select>-->
+
+<!--    <insert id="insertGbg">-->
+<!--        insert into-->
+<!--            gbg_tb-->
+<!--        values (-->
+<!--            #{gbgPk}, #{itemNm}, #{ItemVol}, #{itemCatPk}-->
+<!--        )-->
+<!--    </insert>-->
+
+    <insert id="insertGbgDetail" useGeneratedKeys="true" keyProperty="gbgDetailPk">
+        insert into
+            gbg_detail_tb
+        values (
+            null, #{itemPk}, #{itemState}, #{gbgSerialNum}
+        )
+    </insert>
+
+    <delete id="deleteDetailItem">
+        delete from
+            item_detail_tb
+        where
+            item_detail_pk = #{itemDetailPk}
+    </delete>
 </mapper>

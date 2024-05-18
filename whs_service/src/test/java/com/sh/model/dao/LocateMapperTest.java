@@ -44,9 +44,9 @@ class LocateMapperTest {
     @Test
     void searchItemLpn() {
         // given
-        String id = "1";
+        int itemPk = 1;
         // when
-        LocateDto locateDto = locateMapper.searchItemLpn(id);
+        LocateDto locateDto = locateMapper.searchItemLpn(itemPk);
         System.out.println(locateDto);
         // then
         assertThat(locateDto)
