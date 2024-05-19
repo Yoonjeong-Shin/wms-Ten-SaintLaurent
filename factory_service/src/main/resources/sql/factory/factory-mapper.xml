@@ -3,40 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.FactoryMapper">
-    <resultMap id="FactoryDtoResultMap" type="com.sh.model.dto.FactoryDto">
-        <id property="itemId" column="FAC_ITEM_PK"/>
-        <result property="sellerNm" column="FAC_ITEM_SELLER_NM"/>
-        <result property="itemCat" column="FAC_ITEM_CAT"/>
-        <result property="itemNm" column="FAC_ITEM_NM"/>
-        <result property="itemVol" column="FAC_ITEM_VOL"/>
-        <result property="expirationDate" column="FAC_ITEM_EXPIRATION_DT"/>
-        <result property="itemPrice" column="FAC_ITEM_PRICE"/>
-        <result property="prodCnt" column="FAC_ITEM_PROD_CNT"/>
-        <result property="field" column="Field"/>
-        <collection property="factoryDto2" ofType="com.sh.model.dto.FactoryDto2">
-            <id property="serialNum" column="ITEM_DETAIL_SERIAL_NUM"/>
-            <result property="itemState" column="ITEM_STATE"/>
-            <result property="itemId" column="FAC_ITEM_PK"/>
+    <resultMap id="FactoryDtoResultMap" type="com.sh.model.dto.json.InbJsonDto">
+        <result property="sellerName" column="FAC_ITEM_SELLER_NM"/>
+        <result property="sellerLoc" column="SEL_LOC"/>
+        <result property="factoryName" column="FAC_NAME"/>
+        <result property="factoryLoc" column="FAC_LOC"/>
+        <result property="cat" column="ITEM_CAT"/>
+        <result property="itemName" column="ITEM_NM"/>
+        <result property="vol" column="ITEM_VOL"/>
+        <result property="price" column="ITEM_PRICE"/>
+        <result property="itemCount" column="ITEM_CNT"/>
+        <result property="expirationDate" column="ITEM_EXP"/>
+        <!-- itemsDetail에 대한 컬렉션 매핑 -->
+        <collection property="itemsDetail" ofType="com.sh.model.dto.json.InbDetailJsonDto">
+            <result property="itemSerialNum" column="ITEM_SIRIAL"/>
+            <result property="state" column="ITEM_STATE"/>
         </collection>
     </resultMap>
+
     <select id="searchFactory" resultMap="FactoryDtoResultMap">
+        <![CDATA[
         SELECT
-        f.FAC_ITEM_PK,
-        f.FAC_ITEM_SELLER_NM,
-        f.FAC_ITEM_CAT,
-        f.FAC_ITEM_NM,
-        f.FAC_ITEM_VOL,
-        f.FAC_ITEM_EXPIRATION_DT,
-        f.FAC_ITEM_PRICE,
-        f.FAC_ITEM_PROD_CNT,
-        f.Field,
-        d.ITEM_DETAIL_SERIAL_NUM,
-        d.ITEM_STATE
+            facItem.FAC_ITEM_SELLER_NM,
+            facItem.SEL_LOC,
+            facItem.FAC_NAME,
+            facItem.FAC_LOC,
+            facItem.ITEM_CAT,
+            facItem.ITEM_NM,
+            facItem.ITEM_VOL,
+            facItem.ITEM_PRICE,
+            facItem.ITEM_CNT,
+            facItem.ITEM_EXP,
+            facDetail.ITEM_SIRIAL,
+            facDetail.ITEM_STATE
         FROM
-        fac_item_tb f
-        LEFT JOIN
-        fac_item_detail_tb d ON f.FAC_ITEM_PK = d.FAC_ITEM_PK
-        ORDER BY
-        f.FAC_ITEM_PK DESC;
+            FAC_ITEM_TB facItem
+        JOIN
+            FAC_ITEM_DETAIL_TB facDetail ON facItem.FAC_ITEM_PK = facDetail.FAC_ITEM_PK
+        ]]>
     </select>
 </mapper>

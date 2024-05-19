@@ -1,6 +1,12 @@
 package com.sh;
 
-import com.sh.model.service.SelOutboundService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sh.model.dto.json.InbJsonDto;
+import com.sh.model.service.FactoryService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +16,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+import java.time.LocalDate;
 public class OutboundReqMain {
     static int id = 0;
     private static final int SERVER_PORT = 8889;
@@ -18,8 +24,7 @@ public class OutboundReqMain {
     public static void main(String[] args) throws Exception {
         // 키보드에서 데이터를 읽는 스캐너 객체 준비
 // 1) 접속할 서버 주소 입력 받기
-        SelOutboundService service = new SelOutboundService();
-
+        FactoryService factoryService = new FactoryService();
         String serverAddress = "localhost";
         List<Socket> sockets= new ArrayList<Socket>();
         // 2) 각 클라이언트별 스레드 생성 및 실행
@@ -38,9 +43,19 @@ public class OutboundReqMain {
                     PrintStream printer = new PrintStream(out);
 
                     // 6) 키보드 입력 및 서버 전송
-                    String message = "apiNm#selOutbOrder#" + service.findAllOutboundOrders();
-                    printer.println("\n"+message);
-                    System.out.println(message);
+                    ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
+                    String message;
+                    try {
+                        // JSON 문자열로 변환
+                        String jsonString = objectMapper.writeValueAsString(factoryService.searchFactory());
+                        message = "apiNm#facOutbOrder#: " + jsonString;
+                        printer.println("\n"+message);
+                        System.out.println(jsonString);
+                    } catch (JsonProcessingException e) {
+                        e.printStackTrace();
+                    }
+
                     System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버에 메시지 전송 완료!");
 
                     // 7) 서버 응답 수신 및 출력
@@ -76,4 +91,4 @@ public class OutboundReqMain {
             }
         }
     }
-}
+    }

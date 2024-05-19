@@ -1,5 +1,7 @@
 package com.sh.model.dto.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -8,8 +10,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class InbJsonDto {
     private String sellerName;
     private String sellerLoc;
@@ -23,20 +23,4 @@ public class InbJsonDto {
     private LocalDate expirationDate;
     List<InbDetailJsonDto> itemsDetail;
 
-    @Override
-    public String toString() {
-        return "InbJsonDto{" +
-                "sellerName='" + sellerName + '\'' +
-                ", sellerLoc='" + sellerLoc + '\'' +
-                ", factoryName='" + factoryName + '\'' +
-                ", factoryLoc='" + factoryLoc + '\'' +
-                ", cat='" + cat + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", vol=" + vol +
-                ", price=" + price +
-                ", itemCount=" + itemCount +
-                ", expirationDate=" + expirationDate +
-                ", itemsDetail=" + itemsDetail +
-                '}';
-    }
 }
