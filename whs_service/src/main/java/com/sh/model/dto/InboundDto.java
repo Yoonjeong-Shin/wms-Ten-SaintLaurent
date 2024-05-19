@@ -7,14 +7,12 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class InboundDto {
-    private long inbIdPk; // 입고 ID
-    private long selIdPk; // 유통업체 ID
-    private long facIdPk; // 제조업체 ID
-    private long whsIdPk; // 창고 ID
-    private long inbItemIdPk; // 화장품 ID
+    private long inbPk; // 입고 ID
+    private long selPk; // 유통업체 ID
+    private long facPk; // 제조업체 ID
+    private long whsPk; // 창고 ID
+    private long inbItemPk; // 화장품 ID
     private int inbItemCatPk; // 제품 품목 ID
     private String inbItemNM; // 화장품 제품명
     private int inbItemVol; // 제품 용량
@@ -33,11 +31,11 @@ public class InboundDto {
     @Override
     public String toString() {
         return "InboundDto{" +
-                "inbIdPk=" + inbIdPk +
-                ", selIdPk=" + selIdPk +
-                ", facIdPk=" + facIdPk +
-                ", whsIdPk=" + whsIdPk +
-                ", inbItemIdPk=" + inbItemIdPk +
+                "inbPk=" + inbPk +
+                ", selPk=" + selPk +
+                ", facPk=" + facPk +
+                ", whsPk=" + whsPk +
+                ", inbItemPk=" + inbItemPk +
                 ", inbItemNM=" + inbItemNM +
                 ", inbItemCatPk=" + inbItemCatPk +
                 ", inbItemVol=" + inbItemVol +
