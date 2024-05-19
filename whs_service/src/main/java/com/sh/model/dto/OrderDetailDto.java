@@ -9,31 +9,7 @@ import java.lang.ref.PhantomReference;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDetailDto {
-    private String itemName;
-    private int itemVol;
-    private int itemCnt;
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public int getItemVol() {
-        return itemVol;
-    }
-
-    public void setItemVol(int itemVol) {
-        this.itemVol = itemVol;
-    }
-
-    public int getItemCnt() {
-        return itemCnt;
-    }
-
-    public void setItemCnt(int itemCnt) {
-        this.itemCnt = itemCnt;
-    }
+    private String productName;
+    private int productVolume;
+    private int productCount;
 }
