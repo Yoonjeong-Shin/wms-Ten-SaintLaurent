@@ -4,27 +4,25 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.LocateMapper">
     <select id="searchLpn" resultType="locateDto">
-        select
+        SELECT
             *
-        from
-            <!--locate_tb-->
+        FROM
             LOCATE_TB
-        where
-            whs_pk = #{whs_pk}
-          and
-            locate_item_cnt = 0
-        order by
-            locate_lpn_code
+        WHERE
+            WHS_PK = #{whs_pk}
+          AND
+            LOCATE_ITEM_CNT = 0
+        ORDER BY
+            LOCATE_LPN_CODE
     </select>
 
     <select id="searchItemLpn" resultType="locateDto">
-        select
+        SELECT
             *
-        from
-            <!--locate_tb lt join item_detail_tb idt-->
-            LOCATE_TB lt join ITEM_DETAIL_TB idt
-                on lt.locate_pk = idt.locate_pk
-        where
-            item_pk = #{itemPk}
+        FROM
+            LOCATE_TB LT JOIN ITEM_DETAIL_TB IDT
+                ON LT.LOCATE_PK = IDT.LOCATE_PK
+        WHERE
+            ITEM_PK = #{itemPk}
     </select>
 </mapper>

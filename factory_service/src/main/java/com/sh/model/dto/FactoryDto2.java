@@ -13,5 +13,4 @@ public class FactoryDto2 {
     private int serialNum;
     private int itemState;
     private int itemId;
-
 }

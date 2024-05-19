@@ -3,66 +3,59 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.SupervisionMapper">
-    <select id="searchItemInfo" resultType="searchItemDto">
-        select
+    <select id="searchiteminfo" resultType="searchitemdto">
+        SELECT
             *
-        from
-<!--            item_tb it right join item_detail_tb idt--> <!-- 도현이 DB 사용하기 위한 작업 -->
-            ITEM_TB it right join ITEM_DETAIL_TB idt
-                using (ITEM_PK)
+        FROM
+            ITEM_TB IT RIGHT JOIN ITEM_DETAIL_TB IDT
+                USING (ITEM_PK)
     </select>
 
     <select id="searchItemCnt" resultType="int">
         select
-            count(*)
+            COUNT(*)
         from
-            <!--item_tb it right join item_detail_tb idt-->
-            ITEM_TB it right join ITEM_DETAIL_TB idt
-                using (ITEM_PK)
+            ITEM_TB IT RIGHT JOIN ITEM_DETAIL_TB IDT
+                USING (item_pk)
         where
-            it.item_pk = #{itemPk}
+            it.ITEM_PK = #{itempk}
     </select>
 
     <select id="searchItemIdNNm" resultType="itemDto">
-        select
+        SELECT
             *
-        from
-            <!--item_tb-->
+        FROM
             ITEM_TB
     </select>
-    
+
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemPk">
-        insert into
-            <!--item_tb-->
+        INSERT INTO
             ITEM_TB
-        values
+        VALUES
             <foreach collection="list" item="item" separator=",">
                 (null, #{item.itemNm}, #{item.itemVol}, #{item.itemCatPk})
             </foreach>
     </insert>
 
     <insert id="insertDetailItem" useGeneratedKeys="true" keyProperty="itemDetailPk">
-        insert into
-            <!--item_detail_tb-->
+        INSERT INTO
             ITEM_DETAIL_TB
         values (
             null, #{itemDetailSerialNum}, #{itemPk}, #{itemDetailStatus}, #{locatePk}, #{itemDetailExpirationDt}
         )
     </insert>
-    
+
     <select id="searchItemCat" resultType="int">
-        select
-            count(*)
-        from
-            <!--item_cat_tb-->
+        SELECT
+            COUNT(*)
+        FROM
             ITEM_CAT_TB
-        where
-            item_cat_nm = #{itemCatNm}
+        WHERE
+            ITEM_CAT_NM = #{itemCatNm}
     </select>
 
     <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">
-        insert into
-            <!--item_cat_tb-->
+        INSERT INTO
             ITEM_CAT_TB
         values
             <foreach collection="list" item="item" separator=",">
@@ -71,12 +64,11 @@
     </insert>
 
     <select id="searchDefItem" resultType="itemDetailDto">
-        select
+        SELECT
             *
-        from
-            <!--item_detail_tb-->
+        FROM
             ITEM_DETAIL_TB
-        where
+        WHERE
             ITEM_DETAIL_STATUS in (2, 3)
         or
             <![CDATA[
@@ -105,49 +97,44 @@
 <!--    </insert>-->
 
     <insert id="insertGbgDetail" useGeneratedKeys="true" keyProperty="gbgDetailPk">
-        insert into
-            <!--gbg_detail_tb-->
+        INSERT INTO
             GBG_DETAIL_TB
-        values (
+        VALUES (
             null, #{itemPk}, #{itemState}, #{gbgSerialNum}
         )
     </insert>
 
-    <delete id="deleteDetailItem" parameterType="int">
-        delete from
-            <!--item_detail_tb-->
+    <delete id="deleteDetailItem">
+        DELETE FROM
             ITEM_DETAIL_TB
-        where
+        WHERE
             item_detail_pk = #{itemDetailPk}
     </delete>
 
     <select id="searchCheckItemNm" resultType="int">
-        select
-            count(*)
-        from
-            <!--item_tb-->
+        SELECT
+            COUNT(*)
+        FROM
             ITEM_TB
-        where
-            item_nm = #{itemNm}
+        WHERE
+            ITEM_NM = #{itemNm}
     </select>
 
     <select id="searchItemId" resultType="long">
-        select
-            item_pk
-        from
-            <!--item_tb-->
+        SELECT
+            ITEM_PK
+        FROM
             ITEM_TB
-        where
-            item_nm = #{itemNm}
+        WHERE
+            ITEM_NM = #{itemNm}
     </select>
 
     <select id="searchSameItemLpn" resultType="locateDto">
-        select
+        SELECT
             *
-        from
-            <!--item_detail_tb idt left join locate_tb lt-->
-            ITEM_DETAIL_TB idt left join LOCATE_TB lt
-                using (LOCATE_PK)
+        FROM
+            ITEM_DETAIL_TB IDT LEFT JOIN LOCATE_TB LT
+                USING (LOCATE_PK)
         where
             ITEM_PK = #{itemPk}
     </select>

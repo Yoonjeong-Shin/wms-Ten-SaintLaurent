@@ -22,20 +22,5 @@ public class InbJsonDto {
     private LocalDate expirationDate;
     List<InbDetailJsonDto> itemsDetail;
 
-    @Override
-    public String toString() {
-        return "InbJsonDto{" +
-                "sellerName='" + sellerName + '\'' +
-                ", sellerLoc='" + sellerLoc + '\'' +
-                ", factoryName='" + factoryName + '\'' +
-                ", factoryLoc='" + factoryLoc + '\'' +
-                ", cat='" + cat + '\'' +
-                ", itemName='" + itemName + '\'' +
-                ", vol=" + vol +
-                ", price=" + price +
-                ", itemCount=" + itemCount +
-                ", expirationDate=" + expirationDate +
-                ", itemsDetail=" + itemsDetail +
-                '}';
-    }
+
 }
