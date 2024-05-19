@@ -5,14 +5,41 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class whsApp {
     public static final Object lock = new Object();
+    public static final long whsPk = 1;
+    private static final String USER_ID = "admin";
+    private static final String PASSWORD = "password123";
     public static void main(String[] args) {
 
         List<Socket> Sockets = new ArrayList<Socket>();
         try {
             ServerSocket serverSocket = new ServerSocket(8889, 3);
+            while (true) {
+                Scanner scanner = new Scanner(System.in);
+
+                System.out.println("로그인 하세요");
+
+                // 사용자로부터 아이디 입력받기
+                System.out.print("아이디: ");
+                String inputId = scanner.nextLine();
+
+                // 사용자로부터 비밀번호 입력받기
+                System.out.print("비밀번호: ");
+                String inputPassword = scanner.nextLine();
+
+                // 입력된 아이디와 비밀번호가 미리 정의된 값과 일치하는지 확인
+                if (authenticate(inputId, inputPassword)) {
+                    System.out.println("로그인 성공!");
+                    break;
+                } else {
+                    System.out.println("로그인 실패. 아이디 또는 비밀번호가 올바르지 않습니다.");
+                }
+
+                scanner.close();
+            }
             System.out.println("=> 서버 실행중....");
 
             while (true) {
@@ -39,7 +66,11 @@ public class whsApp {
         catch (IOException e) {
         e.printStackTrace();
     }
-        
+
+    }
+    // 입력된 아이디와 비밀번호가 올바른지 확인하는 메서드
+    private static boolean authenticate(String inputId, String inputPassword) {
+        return USER_ID.equals(inputId) && PASSWORD.equals(inputPassword);
     }
 }
 

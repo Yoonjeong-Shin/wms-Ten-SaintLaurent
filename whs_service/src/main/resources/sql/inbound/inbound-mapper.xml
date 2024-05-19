@@ -16,15 +16,15 @@
 
     <!-- 입고 승인 -->
     <!-- JSON 데이터를 dto로 바꿔서 INB_TB에 넣기 -->
-    <insert id="insertInbToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
+    <insert id="insertInbToINB" useGeneratedKeys="true">
         INSERT INTO INB_TB
         values (
             null, (SELECT SEL_PK FROM SEL_TB WHERE SEL_NM = #{selNm}),
             (SELECT FAC_PK FROM FAC_TB WHERE FAC_NM = #{facNm}),
-            (SELECT WHS_PK FROM WHS_TB WHERE WHS_NM = #{whsNm}),
+            #{whsPk},
             (SELECT ITEM_PK FROM ITEM_TB WHERE ITEM_NM = #{itemNm}),
             (SELECT ITEM_CAT_PK FROM ITEM_CAT_TB WHERE ITEM_CAT_NM = #{itemCatNm}),
-            #{inbItemNm}, #{inbItemVol}, #{inbItemPrice},#{inbItemCnt}, #{inbItemExpirationDt}
+            #{itemNm}, #{inbItemVol}, #{inbItemPrice},#{inbItemCnt}, #{inbItemExpirationDt}
         )
     </insert>
 

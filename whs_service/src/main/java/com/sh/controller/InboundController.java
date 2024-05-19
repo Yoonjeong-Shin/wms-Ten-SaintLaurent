@@ -3,7 +3,7 @@ package com.sh.controller;
 import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 import com.sh.model.service.InboundService;
-import com.sh.view.InboundResultView;
+//import com.sh.view.InboundResultView;
 import org.w3c.dom.ls.LSOutput;
 
 public class InboundController {
@@ -35,7 +35,7 @@ public class InboundController {
     public void findByInbId(int inbIdPk) {
         try {
             InboundDto inboundDto = inboundService.findByInbId(inbIdPk);
-            InboundResultView.displayInb(inboundDto);
+//            InboundResultView.displayInb(inboundDto);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -6,6 +6,7 @@ import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
 import com.sh.model.dto.json.InbJsonDto;
 import com.sh.model.dto.json.SelInboundOrder;
+import com.sh.whsApp;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ public class InboundView {
         InboundView inboundView = new InboundView();
         SelInboundOrder order1 = new SelInboundOrder();
         order1.setId(1L);
-        order1.setSellerName("Seller1");
-        order1.setFactoryName("Factory1");
+        order1.setSellerName("Seller A");
+        order1.setFactoryName("Factory A");
         order1.setCategory("스킨케어");
-        order1.setItemName("제품1");
+        order1.setItemName("제품3");
         order1.setVolume(10);
         order1.setExpirationDate(LocalDate.of(2024, 12, 31));
         order1.setPrice(100);
@@ -28,10 +29,10 @@ public class InboundView {
 
         SelInboundOrder order2 = new SelInboundOrder();
         order2.setId(2L);
-        order2.setSellerName("Seller2");
-        order2.setFactoryName("Factory2");
+        order2.setSellerName("Seller A");
+        order2.setFactoryName("Factory A");
         order2.setCategory("스킨케어");
-        order2.setItemName("제품1");
+        order2.setItemName("제품2");
         order2.setVolume(20);
         order2.setExpirationDate(LocalDate.of(2025, 1, 15));
         order2.setPrice(200);
@@ -39,8 +40,8 @@ public class InboundView {
 
         SelInboundOrder order3 = new SelInboundOrder();
         order3.setId(3L);
-        order3.setSellerName("Seller3");
-        order3.setFactoryName("Factory3");
+        order3.setSellerName("Seller A");
+        order3.setFactoryName("Factory A");
         order3.setCategory("스킨케어");
         order3.setItemName("제품1");
         order3.setVolume(15);
@@ -87,18 +88,27 @@ public class InboundView {
     // 쿼리에 전달하는 객체는 무조건 1개여야 하는데 여러 객체를 한 번에 테이블에 어떻게 넣어야 할지 힘들다.
     public InboundDto inputInb(List<SelInboundOrder> inbJsonDtos) {
         InboundDto inboundDto = new InboundDto();
+
+        String inbSelName;
+        String inbFactoryName;
+        String inbWhsName;
+        String inbCategory;
         String inbItemNM;
         int inbItemVol;
         int inbItemPrice;
         int inbItemCnt;
         LocalDate inbItemExpirationDt;
         for (int i=0; i<inbJsonDtos.size(); i++) {
+            inbSelName = inbJsonDtos.get(i).getSellerName();
+            inbFactoryName = inbJsonDtos.get(i).getFactoryName();
+            inbCategory = inbJsonDtos.get(i).getCategory();
+
             inbItemNM = inbJsonDtos.get(i).getItemName();
             inbItemVol = inbJsonDtos.get(i).getVolume();
             inbItemPrice = inbJsonDtos.get(i).getPrice();
             inbItemCnt = inbJsonDtos.get(i).getProductCount();
             inbItemExpirationDt = inbJsonDtos.get(i).getExpirationDate();
-            inboundDto = new InboundDto(inbItemNM, inbItemVol, inbItemPrice, inbItemCnt, inbItemExpirationDt);
+            inboundDto = new InboundDto(inbSelName,inbFactoryName, whsApp.whsPk,inbCategory,inbItemNM, inbItemVol, inbItemPrice, inbItemCnt, inbItemExpirationDt);
             inboundController.insertInbToINB(inboundDto);
         }
         return inboundDto;
@@ -121,7 +131,7 @@ public class InboundView {
             for(int j=0; j<inbJsonDtos.get(i).getItemsDetail().size(); j++) {
                 if (inbJsonDtos.get(i).getItemsDetail().get(j).getState() != 1) {
                     gbgDetailDto = new GbgDetailDto(inbJsonDtos.get(i).getItemsDetail().get(j).getState(), inbJsonDtos.get(i).getItemsDetail().get(j).getItemSerialNum());
-                    InboundResultView.displayDefective(gbgDetailDto);
+//                    InboundResultView.displayDefective(gbgDetailDto);
                     // insert를 여러 번 하기 위해 서비스를 여러번 호출하자
                     inboundController.insertInbToGbgDetail(gbgDetailDto);
                 }
