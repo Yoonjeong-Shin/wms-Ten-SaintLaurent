@@ -156,4 +156,27 @@ public class SupervisionService {
             sqlSession.close();
         }
     }
+
+    public int updareLocateCnt(int itemCnt, String locateLpnCode) {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        try {
+            int result = superMapper.updareLocateCnt(itemCnt, locateLpnCode);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    public int searchWhsLoc(String facLoc) {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        int whsId = superMapper.searchWhsLoc(facLoc);
+        sqlSession.close();
+        return whsId;
+    }
 }

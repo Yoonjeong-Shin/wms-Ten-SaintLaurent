@@ -1,6 +1,7 @@
 package com.sh.model.dao;
 
 import com.sh.model.dto.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Set;
@@ -50,4 +51,8 @@ public interface SupervisionMapper {
 
     // item_tb에서 itemNm과 일치하는 것이 몇개인지 체크(1개 이상일 수 없음)
     int searchCheckItemNm(String itemNm);
+
+    int updareLocateCnt(@Param("itemCnt") int itemCnt, @Param("locateLpnCode") String locateLpnCode);
+
+    int searchWhsLoc(String facLoc);
 }
