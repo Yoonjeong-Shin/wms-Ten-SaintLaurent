@@ -35,7 +35,7 @@ public class InboundService {
             sqlSession.close();
         }
     }
-    // state가 1인 정상 제품은 item_tb와 item_detail_tb에 insert
+    // JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert
     public int insertInbToItemTb(InboundDto inboundDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
@@ -78,7 +78,7 @@ public class InboundService {
     }
 
     // 입고 검수
-    // state가 2,3인 불량품은 gbg_detail_tb에 insert
+    // JSON에서 얻은 state가 2,3인 불량품은 GBG_DETAIL_TB에 insert
     public int insertInbToGbgDetail(GbgDetailDto gbgDetailDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
@@ -94,7 +94,7 @@ public class InboundService {
             sqlSession.close();
         }
     }
-    // gbg_detail_tb에 insert한 불량품은 item_detail_tb에서 delete
+    // GBG_DETAIL_TB에 insert한 불량품은 item_detail_tb에서 delete
     public int deleteItemDetail() {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
@@ -111,19 +111,40 @@ public class InboundService {
         }
     }
 
-//    public int updateInbCnt(InboundDto inboundDto) {
-//        SqlSession sqlSession = getSqlSession();
-//        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
-//        try {
-//            // dao 메세지 전달
-//            int result = inboundMapper.updateInbCnt(inboundDto);
-//            sqlSession.commit();
-//            return result;
-//        } catch (Exception e) {
-//            sqlSession.rollback();
-//            throw new RuntimeException(e);
-//        } finally {
-//            sqlSession.close();
-//        }
-//    }
+    // 재고에 있는 상품이 또 들어오면 재고 수량 더하기 update
+    // INB_TB에서 수량 가져오기
+    public void updateCntWithSum(int inbItemPk) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        try {
+            // INB_TB에서 수량 가져오기
+            int result = inboundMapper.getItemCnt(inbItemPk);
+            // ITEM_TB의 수량에 위의 값 더하기
+            inboundMapper.updateItemCntWithSum(inbItemPk, result);
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    // ITEM_DETIAL_TB에서 state가 2,3인 불량품이 들어오면 재고 수량 빼기 update
+    public void updateCntWithMinus(int itemDetailPk) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        try {
+            // ITEM_DETAIL_TB에서 상태가 불량품만 count
+            int result = inboundMapper.getItemDetailState();
+            // ITEM_DETAIL_TB의 pk와 같은 ITEM_TB의 수량에 위의 값 빼기
+            inboundMapper.updateItemCntWithMinus(itemDetailPk, result);
+            sqlSession.commit();
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            sqlSession.close();
+        }
+    }
 }

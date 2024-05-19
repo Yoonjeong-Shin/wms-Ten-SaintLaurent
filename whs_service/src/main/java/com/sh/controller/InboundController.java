@@ -22,7 +22,7 @@ public class InboundController {
         inboundService.insertInbToINB(inboundDto);
     }
 
-    // state가 1인 정상 제품은 item_tb와 item_detail_tb에 insert
+    // JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert
     public void insertInbToItemTb(InboundDto inboundDto) {
         inboundService.insertInbToItemTb(inboundDto);
     }
@@ -41,18 +41,22 @@ public class InboundController {
         }
     }
 
-
     // 입고 검수
-    // state가 2,3인 불량품은 gbg_detail_tb에 insert
+    // JSON에서 얻은 state가 2,3인 불량품은 GBG_DETAIL_TB에 insert
     public void insertInbToGbgDetail(GbgDetailDto gbgDetailDto){
         inboundService.insertInbToGbgDetail(gbgDetailDto);
     }
-    // gbg_detail_tb에 insert한 불량품은 item_detail_tb에서 delete
+    // GBG_DETAIL_TB에 insert한 불량품은 ITEM_DETAIL_TB에서 delete
     public void deleteItemDetail() {
         inboundService.deleteItemDetail();
     }
 
-//    public void updateInbCnt(InboundDto inboundDto){
-//        inboundService.updateInbCnt(inboundDto);
-//    }
+    // 재고에 있는 상품이 또 들어오면 재고 수량 더하기 update
+    public void updateCntWithSum(int inbItemPk){
+        inboundService.updateCntWithSum(inbItemPk);
+    }
+    // ITEM_DETIAL_TB에서 state가 2,3인 불량품이 들어오면 재고 수량 빼기 update
+    public void updateCntWithMinus(int itemDetailPk) {
+        inboundService.updateCntWithMinus(itemDetailPk);
+    }
 }
