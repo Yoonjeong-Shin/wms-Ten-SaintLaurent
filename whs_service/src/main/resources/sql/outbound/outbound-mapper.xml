@@ -6,7 +6,7 @@
 <mapper namespace="com.sh.model.dao.OutboundMapper">
 
     <resultMap id="orderResultMap" type="com.sh.model.dto.OrderDto">
-        <id property="orderId" column="orderId" />
+        <id property="orderId" column="orderid" />
         <result property="orderDate" column="orderDate" />
         <result property="customerName" column="customerName" />
         <result property="customerAdr" column="customerAdr" />
