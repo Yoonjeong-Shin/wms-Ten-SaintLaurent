@@ -1,11 +1,9 @@
 package com.sh.view;
 
-import com.sh.common.InboundRepository;
 import com.sh.controller.SupervisionController;
 import com.sh.model.dto.ItemCatDto;
-import com.sh.model.dto.json.InbJsonDto;
+import com.sh.model.dto.LocateDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,7 +11,6 @@ public class SupervisionView {
 
     public static void main(String[] args) {
         new SupervisionView().itemMenu();
-//        System.out.println(list);
     }
     private SupervisionController superController = new SupervisionController();
 
@@ -45,50 +42,15 @@ public class SupervisionView {
     private void insertItem() {
         // 화장품 품목 테이블 저장
         // json에서 가져온 화장품 품목명 일치 체크하면서 저장
-//        System.out.println("View");
-        List<ItemCatDto> itemCatList = superController.searchItemCat();
-        System.out.println(itemCatList);
+        superController.insertCatItem();
 
-        if(itemCatList != null) {
-            // 화장품 품목이 없는 경우
-            superController.insertCatItem(itemCatList);
-
-            // 화장품 테이블 저장
-            superController.insertItem();
-            // 화장품 디테일 테이블 저장
-            // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-            superController.searchSameItemLpn();
-            // 있다 > 그럼 존재하f는 적재 공간에 여유가 되는가
-            // 된다 > 해당 공간 여유되는만큼만 적재 > 다음 로케이션에 적재
-            // 안된다 > 다음 로케이션에 적재
-
-            // 없다 > 빈 로케이션 조회
-        }else {
-            // 품목이 이미 있다면
-            // item_tb에 적재 시작
-            System.out.println("적재 시작");
-            superController.insertItem();
-
-            // 화장품 디테일 테이블 저장
-            // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-            boolean bool = superController.searchSameItemLpn();
-
-            if(bool) {
-                // 있다 > 그럼 존재하는 적재 공간에 여유가 되는가
-                // 된다 > 해당 공간 여유되는만큼만 적재 > 다음 로케이션에 적재
-                // 안된다 > 다음 로케이션에 적재
-            }else {
-                // 없다 > 빈 로케이션 조회
-                boolean lpnCk = superController.searchLpn();
-//                superController.insertItemDetail();
-            }
-
-        }
-
-
-
-
+        // item_tb에 적재 시작
+        superController.insertItem();
+        // 화장품 디테일 테이블 저장
+        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
+        superController.insertDetailItem();
     }
+
 
     private void deleteItem() {
         superController.deleteItem();
@@ -115,7 +77,10 @@ public class SupervisionView {
                 superController.searchItemLpn(searchItem());
                 break;
             case "4" :
-                superController.searchLpn();
+                List<LocateDto> locateList = superController.searchLpn();
+                if(!locateList.isEmpty()) {
+                    System.out.println("searchLpn" + locateList);
+                }else System.out.println("공간 없음");
                 break;
             default:
                 System.out.println("잘못 입력했습니다. (inputCase)");
@@ -128,12 +93,6 @@ public class SupervisionView {
         superController.searchLpn();
     }
 
-    // 화장품 이름 정보 받음
-//    private int searchItem() {
-//        System.out.println("화장품 아이디를 입력하세요.");
-////        showItemNm();
-//        return sc.nextInt();
-//    }
     private int searchItem() {
         showItemNm();
         System.out.print("화장품 아이디를 입력하세요. : ");

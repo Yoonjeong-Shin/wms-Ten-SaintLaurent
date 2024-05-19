@@ -138,4 +138,22 @@
         where
             ITEM_PK = #{itemPk}
     </select>
+    
+    <update id="updareLocateCnt" parameterType="map">
+        update
+            LOCATE_TB
+        set
+            locate_item_cnt = locate_item_cnt + #{itemCnt}
+        where
+            locate_lpn_code = #{locateLpnCode}
+    </update>
+
+    <select id="searchWhsLoc" resultType="int">
+        select
+            whs_pk
+        from
+            WHS_TB WT
+        where
+            (select LOC_NM from LOC_TB where LOC_PK = WT.LOC_PK) = #{facLoc}
+    </select>
 </mapper>

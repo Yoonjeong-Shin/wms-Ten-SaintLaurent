@@ -6,6 +6,7 @@
     <select id="searchLpn" resultType="locateDto">
         SELECT
             *
+
         FROM
             LOCATE_TB
         WHERE
