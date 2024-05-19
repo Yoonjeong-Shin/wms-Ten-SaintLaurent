@@ -29,6 +29,7 @@ class SupervisionMapperTest {
         this.sqlSession.close();
     }
 
+
 //    @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
 //    @DisplayName("item 테이블에 화장품을 추가한다.")
 //    @Test
@@ -48,6 +49,7 @@ class SupervisionMapperTest {
 //        System.out.println(itemCode);
 //        assertThat(itemCode).isNotZero();
 //    }
+
 
     @Disabled // 실행결과를 보고 싶으면 해당 어노테이션을 주석처리 해야함
     @DisplayName("itemDetail 테이블에 화장품을 추가한다.")
