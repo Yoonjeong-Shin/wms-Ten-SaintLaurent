@@ -1,7 +1,7 @@
 package com.sh;
-import jdk.net.Sockets;
 
-import java.awt.*;
+import com.sh.model.service.SelInboundService;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,14 +10,14 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-public class Main {
+public class InboundReqMain {
     static int id = 0;
     private static final int SERVER_PORT = 8889;
     public static final Object lock = new Object();
     public static void main(String[] args) throws Exception {
         // 키보드에서 데이터를 읽는 스캐너 객체 준비
 // 1) 접속할 서버 주소 입력 받기
-
+        SelInboundService service = new SelInboundService();
         String serverAddress = "localhost";
         List<Socket> sockets= new ArrayList<Socket>();
         // 2) 각 클라이언트별 스레드 생성 및 실행
@@ -37,7 +37,9 @@ public class Main {
 
                     // 6) 키보드 입력 및 서버 전송
                     String message = "접속 주소:inb-insert:";
-                    printer.println("FactoryMessage: " + message);
+
+                    printer.println("SellerMessage: " + service.findAllInboundOrders());
+                    System.out.println("SellerMessage: " + service.findAllInboundOrders());
                     System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버에 메시지 전송 완료!");
 
                     // 7) 서버 응답 수신 및 출력

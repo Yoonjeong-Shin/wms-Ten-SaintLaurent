@@ -16,7 +16,7 @@
     </resultMap>
 
     <select id="findAllOutboundOrders" resultMap="selOutboundOrderResultMap">
-        select * from tensellerdb.SEL_OUTB_ORDER_TB;
+        select * from SEL_OUTB_ORDER_TB;
     </select>
 
 </mapper>

@@ -40,8 +40,13 @@ class whsServerThread extends Thread {
 
                 //응답 반환해주기.
                 String str = in.nextLine(); // 클라이언트로부터 문자열을 한 줄 읽는다.
-                out.println(str); // 클라이언트가 보낸 문자열을 그대로 돌려준다.
-                System.out.println(str);
+                while (in.hasNextLine()) {
+                    String line = in.nextLine();
+                    System.out.println("나온냐?" + line);
+                    out.println(line);
+                }
+                // 클라이언트가 보낸 문자열을 그대로 돌려준다.
+
 
                 in.close();
                 in0.close();
