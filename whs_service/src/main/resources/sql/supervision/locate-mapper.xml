@@ -10,9 +10,11 @@
             <!--locate_tb-->
             LOCATE_TB
         where
-            <!-- 처음 창고 시스템 들어올때 몇번 창고인지 체크한 값으로도 조회 -->
-            <!-- 예) 몇번 창고에 재고가 0개인 로케이션 검색이 되도록 구현 -->
+            whs_pk = #{whs_pk}
+          and
             locate_item_cnt = 0
+        order by
+            locate_lpn_code
     </select>
 
     <select id="searchItemLpn" resultType="locateDto">

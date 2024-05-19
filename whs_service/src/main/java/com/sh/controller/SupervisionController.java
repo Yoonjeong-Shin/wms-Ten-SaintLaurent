@@ -48,8 +48,8 @@ public class SupervisionController {
     }
 
     // 로케이션 빈공간 체크
-    public List<LocateDto> searchLpn() {
-        List<LocateDto> list = superService.searchLpn();
+    public List<LocateDto> searchLpn(long whsPK) {
+        List<LocateDto> list = superService.searchLpn(whsPK);
         return list;
     }
 
@@ -136,15 +136,15 @@ public class SupervisionController {
         System.out.println(result);
     }
 
-    public void insertDetailItem() {
+    public void insertDetailItem() { // 매개 변수로 들어가는 값 -> long whsPk, List<InbJsonDto> inbJsonDtos
         // 적재해야하는 화장품 정보
+        long whsPk = 1; // test 추후 삭제 or 주석 필요
         List<String> itemSerialList = new ArrayList<>();
         List<Long> itemIdList = new ArrayList<>();
         List<Integer> itemStatusList = new ArrayList<>();
         List<String> itemLpnList = new ArrayList<>();
         List<LocalDate> itemExpirationList = new ArrayList<>();
         Map<Long, String> lpnInfo = new HashMap<>();
-        String facLoc = null;
 
         // json에서 가져온 정보를 재가공(itemNm, itemPk, lpn, expiration), 로케이트 적재 수량 업데이트
         for(InbJsonDto item : list) {
@@ -153,40 +153,59 @@ public class SupervisionController {
             itemIdList.add(itemPk);
             itemExpirationList.add(item.getExpirationDate());
             int itemCnt = item.getItemCount();
-            facLoc = item.getFactoryLoc();
+
+            // 시리얼 넘버
+            String serialNum = null;
+            for(int i =0; i < item.getItemsDetail().size(); i++) {
+                serialNum = item.getItemsDetail().get(i).getItemSerialNum();
+                itemStatusList.add(item.getItemsDetail().get(i).getState());
+            }
 
             // 같은 화장품이 적재된 공간이 있는가?
             List<LocateDto> locateInfo = searchSameItemLpn(itemNm);
             // 로케이트 빈공간 체크
-            List<LocateDto> locateList = searchLpn();
+            List<LocateDto> locateList = searchLpn(whsPk);
 
+            Map<String, Integer> updateInfo = new HashMap<>();
             if(!locateInfo.isEmpty()) { // 같은 화장품이 적재된 공간이 있음
                 for(LocateDto locate : locateInfo) { // 같은 아이템의 로케이트 저장 정보
                     int cnt = locate.getLocateItemCnt(); // 로케이트에 적재된 수량
+                    String lpn = locate.getLocateLpnCode();
                     if(cnt < 50) { // 로케이트에 적재 가능
                         if(itemCnt <= 50 - cnt) { // 남은 공간보다 적재할 양이 적은가
-                            lpnInfo.put(itemPk, locate.getLocateLpnCode());
-                            updareLocateCnt(itemCnt, locate.getLocateLpnCode()); // 로케이트 적재 수량 업데이트
+                            String[] newSerialNum = serialNum.split("-");
+                            itemSerialList.add(newSerialNum[0] + "-" + whsPk + "-" + lpn + "-" + newSerialNum[3] + "-" + newSerialNum[4]);
+                            putOrUpdate(updateInfo, lpn, 1); // 로케이트 업데이트를 위한 값 저장
+                            itemCnt -= 1;
                         }else {
-                            lpnInfo.put(itemPk, locate.getLocateLpnCode());
-                            itemCnt -= (50 - cnt);
-                            updareLocateCnt(50 - cnt, locate.getLocateLpnCode()); // 로케이트 적재 수량 업데이트
+                            String[] newSerialNum = serialNum.split("-");
+                            itemSerialList.add(newSerialNum[0] + "-" + whsPk + "-" + lpn + "-" + newSerialNum[3] + "-" + newSerialNum[4]);
+                            putOrUpdate(updateInfo, lpn, 1); // 로케이트 업데이트를 위한 값 저장
+                            itemCnt -= 1;
                         }
                     }else { // 로케이트에 적재 불가능
                         continue;
                     }
                 }
+
                 // 같은 곳에 적재하고 남은 재고가 있다면 비어있는 곳에 적재
                 while(itemCnt > 0) {
                     for(LocateDto locate : locateList) {
+                        String lpn = locate.getLocateLpnCode();
                         if(itemCnt > 50) {
-                            lpnInfo.put(itemPk, locate.getLocateLpnCode());
-                            itemCnt -= 50;
-                            updareLocateCnt(50, locate.getLocateLpnCode()); // 로케이트 적재 수량 업데이트
+                            int cnt = 0;
+                            while(cnt < 50) {
+                                String[] newSerialNum = serialNum.split("-");
+                                itemSerialList.add(newSerialNum[0] + "-" + whsPk + "-" + lpn + "-" + newSerialNum[3] + "-" + newSerialNum[4]);
+                                itemCnt -= 1;
+                                putOrUpdate(updateInfo, lpn, 1); // 로케이트 업데이트를 위한 값 저장
+                                cnt++;
+                            }
                         }else {
-                            lpnInfo.put(itemPk, locate.getLocateLpnCode());
-                            updareLocateCnt(itemCnt, locate.getLocateLpnCode()); // 로케이트 적재 수량 업데이트
-                            itemCnt = 0;
+                            String[] newSerialNum = serialNum.split("-");
+                            itemSerialList.add(newSerialNum[0] + "-" + whsPk + "-" + lpn + "-" + newSerialNum[3] + "-" + newSerialNum[4]);
+                            putOrUpdate(updateInfo, lpn, 1); // 로케이트 업데이트를 위한 값 저장
+                            itemCnt -= 1;
                         }
                     }
                 }
@@ -202,27 +221,36 @@ public class SupervisionController {
                     }
                 }
             }
+
+
+            // 로케이트 적재 수량 업데이트
+            for (Map.Entry<String, Integer> entry : updateInfo.entrySet()) {
+                updareLocateCnt(entry.getValue(), entry.getKey());
+            }
+
+            // 시리얼 번호: 제품명-창고ID-lpn-유통기한-제조번호 ex) 화산송이 클렌징-1-001-231102-0001
+            // lpnInfo 정보
+            System.out.println("lpnInfo: " + lpnInfo);
+            System.out.println("itemSerialList: " + itemSerialList);
+
+    //        for(String serialNum : itemSerialList) {
+    //            String[] ret = serialNum.split("-");
+    //            ret[0] + "-" +  + "-" +  + ret[3] + "-" + ret[4];
+    //        }
+
+            for(int i = 0; i < itemIdList.size(); i++) {
+                System.out.printf("itemDetailDto: 0, %s, %d, %d, %s, %tF",itemSerialList.get(i), itemIdList.get(i), itemStatusList.get(i), itemLpnList.get(i), itemExpirationList.get(i));
+    //            ItemDetailDto itemDetailDto = new ItemDetailDto(0, itemSerialList.get(i), itemIdList.get(i), itemStatusList.get(i), itemLpnList.get(i), itemExpirationList.get(i));
+            }
         }
-        for(InbDetailJsonDto item : detailList) {
-            itemSerialList.add(item.getItemSerialNum());
-            itemStatusList.add(item.getState());
-        }
 
-        // 시리얼 번호: 제품명-창고ID-lpn-유통기한-제조번호 ex) 화산송이 클렌징-1-001-231102-0001
-        // 창고ID 조회
-        int whsId = superService.searchWhsLoc(facLoc);
+    }
 
-        // lpnInfo 정보
-        System.out.println(lpnInfo);
-
-//        for(String serialNum : itemSerialList) {
-//            String[] ret = serialNum.split("-");
-//            ret[0] + "-" +  + "-" +  + ret[3] + "-" + ret[4];
-//        }
-
-        for(int i = 0; i < itemIdList.size(); i++) {
-            System.out.printf("itemDetailDto: 0, %s, %d, %d, %s, %tF",itemSerialList.get(i), itemIdList.get(i), itemStatusList.get(i), itemLpnList.get(i), itemExpirationList.get(i));
-//            ItemDetailDto itemDetailDto = new ItemDetailDto(0, itemSerialList.get(i), itemIdList.get(i), itemStatusList.get(i), itemLpnList.get(i), itemExpirationList.get(i));
+    private void putOrUpdate(Map<String, Integer> map, String key, int value) {
+        if (map.containsKey(key)) {
+            map.put(key, map.get(key) + value);
+        } else {
+            map.put(key, value);
         }
     }
 
