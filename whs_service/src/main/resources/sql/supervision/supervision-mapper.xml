@@ -7,7 +7,8 @@
         select
             *
         from
-            item_tb it right join item_detail_tb idt
+<!--            item_tb it right join item_detail_tb idt--> <!-- 도현이 DB 사용하기 위한 작업 -->
+            ITEM_TB it right join ITEM_DETAIL_TB idt
                 using (ITEM_PK)
     </select>
 
@@ -15,7 +16,8 @@
         select
             count(*)
         from
-            item_tb it right join item_detail_tb idt
+            <!--item_tb it right join item_detail_tb idt-->
+            ITEM_TB it right join ITEM_DETAIL_TB idt
                 using (ITEM_PK)
         where
             it.item_pk = #{itemPk}
@@ -25,12 +27,14 @@
         select
             *
         from
-            item_tb
+            <!--item_tb-->
+            ITEM_TB
     </select>
     
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="itemPk">
         insert into
-            item_tb
+            <!--item_tb-->
+            ITEM_TB
         values
             <foreach collection="list" item="item" separator=",">
                 (null, #{item.itemNm}, #{item.itemVol}, #{item.itemCatPk})
@@ -39,7 +43,8 @@
 
     <insert id="insertDetailItem" useGeneratedKeys="true" keyProperty="itemDetailPk">
         insert into
-            item_detail_tb
+            <!--item_detail_tb-->
+            ITEM_DETAIL_TB
         values (
             null, #{itemDetailSerialNum}, #{itemPk}, #{itemDetailStatus}, #{locatePk}, #{itemDetailExpirationDt}
         )
@@ -49,14 +54,16 @@
         select
             count(*)
         from
-            item_cat_tb
+            <!--item_cat_tb-->
+            ITEM_CAT_TB
         where
             item_cat_nm = #{itemCatNm}
     </select>
 
     <insert id="insertCatItem" useGeneratedKeys="true" keyProperty="itemCatPk">
         insert into
-            item_cat_tb
+            <!--item_cat_tb-->
+            ITEM_CAT_TB
         values
             <foreach collection="list" item="item" separator=",">
                 (null, #{item.itemCatNm})
@@ -67,7 +74,8 @@
         select
             *
         from
-            item_detail_tb
+            <!--item_detail_tb-->
+            ITEM_DETAIL_TB
         where
             ITEM_DETAIL_STATUS in (2, 3)
         or
@@ -98,15 +106,17 @@
 
     <insert id="insertGbgDetail" useGeneratedKeys="true" keyProperty="gbgDetailPk">
         insert into
-            gbg_detail_tb
+            <!--gbg_detail_tb-->
+            GBG_DETAIL_TB
         values (
             null, #{itemPk}, #{itemState}, #{gbgSerialNum}
         )
     </insert>
 
-    <delete id="deleteDetailItem">
+    <delete id="deleteDetailItem" parameterType="int">
         delete from
-            item_detail_tb
+            <!--item_detail_tb-->
+            ITEM_DETAIL_TB
         where
             item_detail_pk = #{itemDetailPk}
     </delete>
@@ -115,7 +125,8 @@
         select
             count(*)
         from
-            item_tb
+            <!--item_tb-->
+            ITEM_TB
         where
             item_nm = #{itemNm}
     </select>
@@ -124,7 +135,8 @@
         select
             item_pk
         from
-            item_tb
+            <!--item_tb-->
+            ITEM_TB
         where
             item_nm = #{itemNm}
     </select>
@@ -133,9 +145,28 @@
         select
             *
         from
-            item_detail_tb idt left join locate_tb lt
+            <!--item_detail_tb idt left join locate_tb lt-->
+            ITEM_DETAIL_TB idt left join LOCATE_TB lt
                 using (LOCATE_PK)
         where
             ITEM_PK = #{itemPk}
+    </select>
+    
+    <update id="updareLocateCnt" parameterType="map">
+        update
+            LOCATE_TB
+        set
+            locate_item_cnt = locate_item_cnt + #{itemCnt}
+        where
+            locate_lpn_code = #{locateLpnCode}
+    </update>
+
+    <select id="searchWhsLoc" resultType="int">
+        select
+            whs_pk
+        from
+            WHS_TB WT
+        where
+            (select LOC_NM from LOC_TB where LOC_PK = WT.LOC_PK) = #{facLoc}
     </select>
 </mapper>

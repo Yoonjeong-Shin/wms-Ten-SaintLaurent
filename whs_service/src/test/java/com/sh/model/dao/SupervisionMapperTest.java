@@ -214,4 +214,12 @@ class SupervisionMapperTest {
         List<LocateDto> locateList= superMapper.searchSameItemLpn(itemId);
         System.out.println(locateList);
     }
+
+    @DisplayName("창고ID 조회")
+    @Test
+    void searchWhsLoc() {
+        String facLoc = "서울시 강남구";
+        int whsId = superMapper.searchWhsLoc(facLoc);
+        System.out.println(whsId);
+    }
 }
