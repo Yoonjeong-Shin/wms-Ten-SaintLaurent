@@ -20,24 +20,24 @@
     <!-- 입고 승인 - 빈 로케이트 찾기 -->
     <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
     <select id="findEmptyLocate" resultType="int">
-        select
-            count(*)
-        from
-            locate_tb
-        where
+        SELECT
+            COUNT(*)
+        FROM
+            LOCATE_TB
+        WHERE
             LOCATE_ITEM_CNT = 0;
     </select>
 
     <!-- 입고 승인 -->
     <!-- JSON 데이터를 dto로 바꿔서 INB_TB에 넣기 -->
     <insert id="insertInbToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
-        insert into inb_tb
+        INSERT INTO INB_TB
         values (
-            null, (select SEL_PK from sel_tb where SEL_NM = #{selNm}),
-            (select FAC_PK from fac_tb where FAC_NM = #{facNm}),
-            (select WHS_PK from whs_tb where WHS_NM = #{whsNm}),
-            (select ITEM_PK from item_tb where ITEM_NM = #{itemNm}),
-            (select ITEM_CAT_PK from item_cat_tb where ITEM_CAT_NM = #{itemCatNm}),
+            null, (SELECT SEL_PK FROM SEL_TB WHERE SEL_NM = #{selNm}),
+            (SELECT FAC_PK FROM FAC_TB WHERE FAC_NM = #{facNm}),
+            (SELECT WHS_PK FROM WHS_TB WHERE WHS_NM = #{whsNm}),
+            (SELECT ITEM_PK FROM ITEM_TB WHERE ITEM_NM = #{itemNm}),
+            (SELECT ITEM_CAT_PK FROM ITEM_CAT_TB WHERE ITEM_CAT_NM = #{itemCatNm}),
             #{inbItemNm}, #{inbItemVol}, #{inbItemPrice},#{inbItemCnt}, #{inbItemExpirationDt}
         )
     </insert>
@@ -45,46 +45,46 @@
     <!-- 입고 정보 조회 -->
     <!-- INB_TB의 PK로 한 데이터의 모든 정보를 조회, 입고 승인과 입고 확정 때 쓰인다 -->
     <select id="findByInbId" resultType="InboundDto">
-        select *
-        from inb_tb
+        SELECT *
+        FROM INB_TB
         where INB_PK = #{inbPk}
     </select>
 
     <!-- 입고 승인 -->
     <!-- 재고 관리의 일인지 확인, state가 1인 정상 제품은 item_tb와 item_detail_tb에 insert -->
     <insert id="insertInbToItemTb" useGeneratedKeys="true" keyProperty="ITEM_PK">
-        insert into item_tb
+        INSERT INTO ITEM_TB
         values (
-        null, (select INB_ITEM_NM from inb_tb where INB_ITEM_PK = #{inbItemPk}),
-        (select INB_ITEM_VOL from inb_tb where INB_ITEM_PK = #{inbItemPk}),
-        (select ITEM_CAT_PK from item_cat_tb where ITEM_CAT_PK = #{itemCatPk})
+        null, (SELECT INB_ITEM_NM FROM INB_TB WHERE INB_ITEM_PK = #{inbItemPk}),
+        (SELECT INB_ITEM_VOL FROM INB_TB WHERE INB_ITEM_PK = #{inbItemPk}),
+        (SELECT ITEM_CAT_PK FROM ITEM_CAT_TB WHERE ITEM_CAT_PK = #{itemCatPk})
         )
     </insert>
     <insert id="insertInbToItemDetailTb" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_PK">
-        insert into item_detail_tb
+        INSERT INTO ITEM_DETAIL_TB
         values (
         null, #{itemDetailSerialNum},
-        (select ITEM_PK from item_tb where ITEM_PK = #{itemPk}),
+        (SELECT ITEM_PK FROM ITEM_TB WHERE ITEM_PK = #{itemPk}),
         #{ITEM_DETAIL_STATUS},
-        (select LOCATE_PK from locate_tb where LOCATE_PK = #{locatePk}),
-        (select INB_ITEM_EXPIRATION_DT from inb_tb where INB_ITEM_PK = #{inbItemPk})
+        (SELECT LOCATE_PK FROM LOCATE_TB WHERE LOCATE_PK = #{locatePk}),
+        (SELECT INB_ITEM_EXPIRATION_DT FROM INB_TB WHERE INB_ITEM_PK = #{inbItemPk})
         )
     </insert>
 
     <!-- 입고 검수 -->
     <!-- state가 2,3인 불량품은 gbg_detail_tb에 insert -->
     <insert id="insertInbToGbgDetail" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_SERIAL_NUM">
-        insert into
-            gbg_detail_tb
+        INSERT INTO
+            GBG_DETAIL_TB
         values (
-        null, (select ITEM_PK from item_tb where ITEM_PK = #{itemPk}), #{itemState}, #{gbgSerialNum}
+        null, (SELECT ITEM_PK FROM ITEM_TB WHERE ITEM_PK = #{itemPk}), #{itemState}, #{gbgSerialNum}
         )
     </insert>
 
     <!-- gbg_detail_tb에 insert한 불량품은 item_detail_tb에서 delete -->
     <delete id="deleteItemDetail">
-        delete from item_detail_tb
-        where (select ITEM_PK from gbg_detail_tb where ITEM_PK = #{itemPk})
+        DELETE FROM ITEM_DETAIL_TB
+        WHERE (SELECT ITEM_PK FROM GBG_DETAIL_TB WHERE ITEM_PK = #{itemPk})
     </delete>
 
     <!-- item_tb에는 재고 수량이 없고, inb_tb는 입고지시서이므로 수량을 update하면 안될 것 같다. 어떻게 구현해야할지 확인 필요-->

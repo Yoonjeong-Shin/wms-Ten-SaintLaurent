@@ -4,23 +4,23 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.LocateMapper">
     <select id="searchLpn" resultType="locateDto">
-        select
+        SELECT
             *
-        from
-            locate_tb
-        where
+        FROM
+            LOCATE_TB
+        WHERE
             <!-- 처음 창고 시스템 들어올때 몇번 창고인지 체크한 값으로도 조회 -->
             <!-- 예) 몇번 창고에 재고가 0개인 로케이션 검색이 되도록 구현 -->
-            locate_item_cnt = 0
+            LOCATE_ITEM_CNT = 0
     </select>
 
     <select id="searchItemLpn" resultType="locateDto">
-        select
+        SELECT
             *
-        from
-            locate_tb lt join item_detail_tb idt
-                on lt.locate_pk = idt.locate_pk
-        where
-            item_pk = #{itemPk}
+        FROM
+            LOCATE_TB LT JOIN ITEM_DETAIL_TB IDT
+                ON LT.LOCATE_PK = IDT.LOCATE_PK
+        WHERE
+            ITEM_PK = #{itemPk}
     </select>
 </mapper>
