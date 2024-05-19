@@ -91,6 +91,7 @@
         c.OUT_CART_PK asc;
     </select>
 
+<!--    <&#45 수정필요 &#45;-->
     <select id="outboundPicking" resultType="com.sh.model.dto.OutboundDto">
         SELECT
         d.out_item_detail_pk AS serialNumber,
