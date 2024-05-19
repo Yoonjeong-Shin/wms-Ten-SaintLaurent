@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.model.dao.FactoryMapper">
+    <resultMap id="FactoryDtoResultMap" type="com.sh.model.dto.FactoryDto">
+        <id property="itemId" column="FAC_ITEM_PK"/>
+        <result property="sellerNm" column="FAC_ITEM_SELLER_NM"/>
+        <result property="itemCat" column="FAC_ITEM_CAT"/>
+        <result property="itemNm" column="FAC_ITEM_NM"/>
+        <result property="itemVol" column="FAC_ITEM_VOL"/>
+        <result property="expirationDate" column="FAC_ITEM_EXPIRATION_DT"/>
+        <result property="itemPrice" column="FAC_ITEM_PRICE"/>
+        <result property="prodCnt" column="FAC_ITEM_PROD_CNT"/>
+        <result property="field" column="Field"/>
+        <collection property="factoryDto2" ofType="com.sh.model.dto.FactoryDto2">
+            <id property="serialNum" column="ITEM_DETAIL_SERIAL_NUM"/>
+            <result property="itemState" column="ITEM_STATE"/>
+            <result property="itemId" column="FAC_ITEM_PK"/>
+        </collection>
+    </resultMap>
+    <select id="searchFactory" resultMap="FactoryDtoResultMap">
+        SELECT
+        f.FAC_ITEM_PK,
+        f.FAC_ITEM_SELLER_NM,
+        f.FAC_ITEM_CAT,
+        f.FAC_ITEM_NM,
+        f.FAC_ITEM_VOL,
+        f.FAC_ITEM_EXPIRATION_DT,
+        f.FAC_ITEM_PRICE,
+        f.FAC_ITEM_PROD_CNT,
+        f.Field,
+        d.ITEM_DETAIL_SERIAL_NUM,
+        d.ITEM_STATE
+        FROM
+        fac_item_tb f
+        LEFT JOIN
+        fac_item_detail_tb d ON f.FAC_ITEM_PK = d.FAC_ITEM_PK
+        ORDER BY
+        f.FAC_ITEM_PK DESC;
+    </select>
+</mapper>
