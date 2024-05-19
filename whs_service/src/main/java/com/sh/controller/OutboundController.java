@@ -1,8 +1,6 @@
 package com.sh.controller;
 
-import com.sh.model.dto.OrderDto;
-import com.sh.model.dto.OutboundDto;
-import com.sh.model.dto.PurchaseListDto;
+import com.sh.model.dto.*;
 import com.sh.model.service.OutboundService;
 import com.sh.view.OutboundResultView;
 
@@ -12,6 +10,8 @@ import java.util.List;
 public class OutboundController {
     private OutboundService outboundService = new OutboundService();
 
+
+    //== 출고 조회  -> 주문서 뽑아옴 ==//
     public void searchOutbound(){
         try {
             List<OrderDto> list = outboundService.searchOutbound();
@@ -20,7 +20,6 @@ public class OutboundController {
             e.printStackTrace();
         }
     }
-
 
     public void printOutBoundReport(){
         try {
@@ -31,40 +30,35 @@ public class OutboundController {
         }
     }
 
-    public void assignCart(OutboundDto outboundDto){
-        int result = outboundService.assignCart(outboundDto);
-        OutboundResultView.displayAssignCart(result);
+    public void assignCart(){
+        List<OutBoundCartDto> outBoundCartDto = outboundService.assignCart();
+        OutboundResultView.displayAssignCart(outBoundCartDto);
     }
 
-//    public void outboundPicking(){
-//        try {
-//            List<OutboundDto> list = outboundService.outboundPicking();
-//            OutboundResultView.displayPickingCount(list);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void outboundPicking(){
+        try {
+            List<OutBoundPickDto> list = outboundService.outboundPicking();
+            OutboundResultView.displayPickingCount(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-//    public void checkOutbound(OutboundDto outboundDto){
-//        try {
-//            int result = outboundService.checkOutbound(outboundDto);
-//            OutboundResultView.displayResult("출고 검수", result ? 1 : 0);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void confirmOutbound(){
-//        try {
-//            int result = outboundService.confirmOutbound();
-//            OutboundResultView.displayResult("출고 확정", result ? 1 : 0);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void checkOutbound(OutboundCheckDto outboundCheckDto){
+        try {
+            int check = outboundService.checkOutbound(outboundCheckDto);
+            OutboundResultView.displayCheckStatus(check);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void updateOutCnt(OutboundDto outboundDto) {
-        int result = outboundService.updateOutCnt(outboundDto);
-        OutboundResultView.displayOutCntResult("출고 후 재고수량", result);
+    public void confirmOutbound(LocateDto locateDto){
+        try {
+            int update = outboundService.confirmOutbound(locateDto);
+            OutboundResultView.displayCheckStatus(update);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

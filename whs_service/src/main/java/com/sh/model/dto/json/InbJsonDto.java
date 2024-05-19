@@ -9,8 +9,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class InbJsonDto {
     private String sellerName;
     private String sellerLoc;
