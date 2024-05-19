@@ -1,13 +1,9 @@
 package com.sh.model.service;
 
-import com.sh.model.dao.InboundMapper;
 import com.sh.model.dao.OutboundMapper;
-import com.sh.model.dto.OrderDto;
-import com.sh.model.dto.OutboundDto;
-import com.sh.model.dto.PurchaseListDto;
+import com.sh.model.dto.*;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.sh.common.MyBatisTemplate.getSqlSession;
@@ -28,13 +24,13 @@ public class OutboundService {
         return list;
     }
 
-    public int assignCart(OutboundDto outboundDto) {
+    //== assignCart 여기서부터 ==//
+    public List<OutBoundCartDto> assignCart() {
         SqlSession sqlSession = getSqlSession();
         OutboundMapper outboundMapper = sqlSession.getMapper(OutboundMapper.class);
         try {
-            int result = outboundMapper.assignCart(outboundDto);
-            sqlSession.commit();
-            return result;
+            List<OutBoundCartDto> outBoundCartDto = outboundMapper.assignCart();
+            return outBoundCartDto;
         } catch (Exception e) {
             sqlSession.rollback();
             throw new RuntimeException(e);
@@ -43,22 +39,23 @@ public class OutboundService {
         }
     }
 
-    public List<OutboundDto> outboundPicking() {
+
+    public List<OutBoundPickDto> outboundPicking() {
         SqlSession sqlSession = getSqlSession();
         OutboundMapper outboundMapper = sqlSession.getMapper(OutboundMapper.class);
-        List<OutboundDto> list = outboundMapper.OutboundPicking();
+        List<OutBoundPickDto> list = outboundMapper.OutboundPicking();
         sqlSession.close();
         return list;
     }
-// 출고 검수
-    public int checkOutbound(OutboundDto outboundDto) {
+    // 출고 검수
+    public int checkOutbound(OutboundCheckDto outBoundPickDto) {
         SqlSession sqlSession = getSqlSession();
         OutboundMapper outboundMapper = sqlSession.getMapper(OutboundMapper.class);
         try {
             // dao 메세지 전달
-            int result = outboundMapper.checkOutbound(outboundDto);
+            int pick = outboundMapper.checkOutbound(outBoundPickDto);
             sqlSession.commit();
-            return result;
+            return pick;
         } catch (Exception e) {
             sqlSession.rollback();
             throw new RuntimeException(e);
@@ -67,17 +64,14 @@ public class OutboundService {
         }
     }
 
-    public int confirmOutbound() {
-        return 0;
-    }
-    public int updateOutCnt(OutboundDto outboundDto) {
+    public int confirmOutbound(LocateDto locateDto) {
         SqlSession sqlSession = getSqlSession();
         OutboundMapper outboundMapper = sqlSession.getMapper(OutboundMapper.class);
         try {
             // dao 메세지 전달
-            int result = outboundMapper.updateOutCnt(outboundDto);
+            int update = outboundMapper.confirmOutbound(locateDto);
             sqlSession.commit();
-            return result;
+            return update;
         } catch (Exception e) {
             sqlSession.rollback();
             throw new RuntimeException(e);
@@ -86,3 +80,4 @@ public class OutboundService {
         }
     }
 }
+

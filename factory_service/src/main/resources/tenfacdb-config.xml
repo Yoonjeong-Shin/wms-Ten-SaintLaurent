@@ -17,16 +17,13 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://mysql.coffit.today/tendb"/>
-                <property name="username" value="ten"/>
-                <property name="password" value="ten"/>
+                <property name="url" value="jdbc:mysql://mysql.coffit.today/tenfacdb"/>
+                <property name="username" value="tenfac"/>
+                <property name="password" value="tenfac"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
-        <mapper resource="sql/inbound/inbound-mapper.xml"/>
-        <mapper resource="sql/supervision/locate-mapper.xml"/>
-        <mapper resource="sql/supervision/supervision-mapper.xml"/>
-        <mapper resource="sql/outbound/outbound-mapper.xml"/>
+        <mapper resource="sql/factory/factory-mapper.xml"/>
     </mappers>
 </configuration>

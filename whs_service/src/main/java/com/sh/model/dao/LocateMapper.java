@@ -7,5 +7,5 @@ import java.util.List;
 public interface LocateMapper {
     List<LocateDto> searchLpn();
 
-    List<LocateDto> searchItemLpn(int itemPk);
+    List<LocateDto> searchItemLpn(long itemPk);
 }
