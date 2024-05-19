@@ -16,6 +16,7 @@
 <!--        <result property="inbItemCnt" column="INB_ITEM_CNT"/>-->
 <!--        <result property="inbItemExpirationDt" column="INB_ITEM_EXPIRATION_DT"/>-->
 <!--    </resultMap>-->
+
     <!-- 입고 승인 - 빈 로케이트 찾기 -->
     <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
     <select id="findEmptyLocate" resultType="int">
@@ -26,8 +27,6 @@
         where
             LOCATE_ITEM_CNT = 0;
     </select>
-
-    <!-- 지영 작업 시작 -->
 
     <!-- 입고 승인 -->
     <!-- JSON 데이터를 dto로 바꿔서 INB_TB에 넣기 -->
@@ -92,6 +91,4 @@
     <!-- 같은 상품이 기존에 창고에서 재고가 몇이었는지 ITEM_DETAIL_TB의 같은 화장품 ID를 count하여 수량 구하기 (int) - 재고 조회 -->
     <!-- 같은 상품이 또 들어오면 3번으로 얻은 값과 json에서 얻은 count값을 더해서 재고 수량 update -->
     <!-- state가 2,3인 불량품은 위에서 더하기 대신 빼기로 재고 수량 update -->
-
-    <!-- 지영 작업 끝 -->
 </mapper>
