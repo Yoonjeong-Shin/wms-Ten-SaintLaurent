@@ -1,18 +1,14 @@
 package com.sh.model.dao;
 
-import com.sh.model.dto.OrderDto;
-import com.sh.model.dto.OutboundDto;
-import com.sh.model.dto.PurchaseListDto;
+import com.sh.model.dto.*;
 
 import java.util.List;
 
 public interface OutboundMapper {
     List<OrderDto> searchOutbound();
     List<PurchaseListDto> printOutBoundReport();
-    int assignCart(OutboundDto outboundDto);
-    List<OutboundDto> OutboundPicking();
-    int checkOutbound(OutboundDto outboundDto);
-    int confirmOutbound();
-    int updateOutCnt(OutboundDto inboundDto);
-
+    List<OutBoundCartDto> assignCart();
+    List<OutBoundPickDto> OutboundPicking();
+    int checkOutbound(OutboundCheckDto outboundCheckDto);
+    int confirmOutbound(LocateDto locateDto);
 }

@@ -12,14 +12,14 @@ import java.util.List;
 
 public class OutboundDto {
     private int itemCnt;
-    private int cartId;
+    private Long cartId;
     private List<PurchaseListDto> purchaseListDto;
 
-    public int getCartId() {
+    public Long getCartId() {
         return cartId;
     }
 
-    public void setCartId(int cartId) {
+    public void setCartId(Long cartId) {
         this.cartId = cartId;
     }
 

@@ -1,4 +1,4 @@
-package com.sh.model.repository;
+package com.sh.common;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;

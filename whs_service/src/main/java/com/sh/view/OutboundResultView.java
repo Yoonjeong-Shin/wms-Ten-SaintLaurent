@@ -1,8 +1,6 @@
 package com.sh.view;
 
-import com.sh.model.dto.OrderDetailDto;
-import com.sh.model.dto.OrderDto;
-import com.sh.model.dto.PurchaseListDto;
+import com.sh.model.dto.*;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,11 +22,9 @@ public class OutboundResultView {
                 );
                 System.out.println("Order Details:");
                 for (OrderDetailDto detail : orderDto.getOrderDetailDtoList()) {
-                    System.out.printf("s\t%d\t%d\n",
-                            detail.getItemName(),
-                            detail.getItemVol(),
-                            detail.getItemCnt()
-                    );
+                    System.out.println(detail.getProductName());
+                    System.out.println(detail.getProductVolume());
+                    System.out.println(detail.getProductCount());
                 }
                 System.out.println("-------------------------------------------------------------------");
             }
@@ -40,37 +36,38 @@ public class OutboundResultView {
         if (list.isEmpty()) {
             System.out.println("> 😅😅😅 작성된 출고지시서가 없습니다. 😅😅😅");
         } else {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             System.out.println("-----------------------------------------------");
-            System.out.printf("%s\t%s\t%s\t%s\t%s\t%s\n", "OrderId", "UserId", "ItemName","PickCnt","OutboundId","OutboundDate");
+            System.out.printf("%s\t%s\t%s\t%s\t%s\t%s\n", "OrderId", "UserId", "ItemName", "PickCnt", "OutboundId", "OutboundDate");
             System.out.println("-----------------------------------------------");
-            for (PurchaseListDto purchaseListDto: list) {
+            for (PurchaseListDto purchaseListDto : list) {
                 String formattedDate = dateFormat.format(purchaseListDto.getOutboundDate());
-                System.out.printf("%d\t%d\t%s\t%d\t%d\t%s\n",
-                        purchaseListDto.getOrderId(),
-                        purchaseListDto.getUserId(),
-                        purchaseListDto.getItemDto(),
-                        purchaseListDto.getPickCnt(),
-                        purchaseListDto.getOutboundId(),
-                        formattedDate
-                );
+                for (ItemDto itemDto : purchaseListDto.getItemDtoList()) {
+                    System.out.printf("%d\t%d\t%s\t%d\t%d\t%s\n",
+                            purchaseListDto.getOrderId(),
+                            purchaseListDto.getUserId(),
+                            itemDto.getItemNm(),
+                            purchaseListDto.getPickCnt(),
+                            purchaseListDto.getOutboundId(),
+                            formattedDate
+                    );
+                }
             }
             System.out.println("-----------------------------------------------");
         }
-
     }
 
     //카트할당
-    public static void displayAssignCart(int result) {
-        System.out.println(result > 0 ? "카트할당" : "할당실패");
+    public static void displayAssignCart(List<OutBoundCartDto> result) {
+        System.out.println(result);
     }
 
-    public static void displayOutCntResult(String type, int result) {
-        System.out.println("> 📢📢📢 " + type + " " + (result > 0 ? "성공!" : "실패!") + "📢📢📢");
+
+    public static void displayPickingCount(List<OutBoundPickDto> list) {
+        System.out.println(list);
     }
 
-    public static void displayPickingCount() {
-        System.out.println("> 😅😅😅 작성된 출고지시서가 없습니다. 😅😅😅");
-        System.out.printf("");
+    public static void displayCheckStatus(int check) {
+        System.out.println(check);
     }
 }

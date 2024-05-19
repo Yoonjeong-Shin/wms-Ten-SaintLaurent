@@ -19,10 +19,7 @@ public class InboundService {
         return result;
     }
 
-    /* 지영 작업 시작 */
-
-    // 입고 승인
-    // INB_TB에 JSON 데이터 넣기
+    // 입고 승인 - JSON 데이터를 dto로 바꿔서 INB_TB에 넣기
     public int insertInbToINB(InboundDto inboundDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
@@ -38,9 +35,40 @@ public class InboundService {
             sqlSession.close();
         }
     }
+    // state가 1인 정상 제품은 item_tb와 item_detail_tb에 insert
+    public int insertInbToItemTb(InboundDto inboundDto) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        try {
+            // dao 메세지 전달
+            int result = inboundMapper.insertInbToItemTb(inboundDto);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            sqlSession.close();
+        }
+    }
+    public int insertInbToItemDetailTb(InboundDto inboundDto) {
+        SqlSession sqlSession = getSqlSession();
+        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+        try {
+            // dao 메세지 전달
+            int result = inboundMapper.insertInbToItemDetailTb(inboundDto);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            sqlSession.close();
+        }
+    }
 
-    // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
-    // INB_TB의 한 데이터의 모든 정보를 INB_ID_PK로 조회
+    // 입고 정보 조회
+    // INB_TB의 PK로 한 데이터의 모든 정보를 조회, 입고 승인과 입고 확정 때 쓰인다
     public InboundDto findByInbId(int inbIdPk) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
@@ -50,6 +78,7 @@ public class InboundService {
     }
 
     // 입고 검수
+    // state가 2,3인 불량품은 gbg_detail_tb에 insert
     public int insertInbToGbgDetail(GbgDetailDto gbgDetailDto) {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
@@ -65,13 +94,13 @@ public class InboundService {
             sqlSession.close();
         }
     }
-
-    public int updateInbCnt(InboundDto inboundDto) {
+    // gbg_detail_tb에 insert한 불량품은 item_detail_tb에서 delete
+    public int deleteItemDetail() {
         SqlSession sqlSession = getSqlSession();
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
         try {
             // dao 메세지 전달
-            int result = inboundMapper.updateInbCnt(inboundDto);
+            int result = inboundMapper.deleteItemDetial();
             sqlSession.commit();
             return result;
         } catch (Exception e) {
@@ -82,5 +111,19 @@ public class InboundService {
         }
     }
 
-    /* 지영 작업 끝 */
+//    public int updateInbCnt(InboundDto inboundDto) {
+//        SqlSession sqlSession = getSqlSession();
+//        InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
+//        try {
+//            // dao 메세지 전달
+//            int result = inboundMapper.updateInbCnt(inboundDto);
+//            sqlSession.commit();
+//            return result;
+//        } catch (Exception e) {
+//            sqlSession.rollback();
+//            throw new RuntimeException(e);
+//        } finally {
+//            sqlSession.close();
+//        }
+//    }
 }

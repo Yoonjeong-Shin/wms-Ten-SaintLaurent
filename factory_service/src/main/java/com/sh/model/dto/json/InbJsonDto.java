@@ -1,6 +1,5 @@
 package com.sh.model.dto.json;
 
-import com.sh.model.dto.json.InbDetailJsonDto;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -9,6 +8,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class InbJsonDto {
     private String sellerName;
     private String sellerLoc;
