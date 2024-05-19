@@ -52,7 +52,7 @@ public class SupervisionView {
         superController.insertItem();
         // 화장품 디테일 테이블 저장
         // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-        superController.insertDetailItem(); // 매개인자로 줘야할 값 -> whsPk, inbJsonDtos
+        superController.insertDetailItem(); // 매개인자줘야할 값 -> whsPk, inbJsonDtos
     }
 
 
