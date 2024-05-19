@@ -7,6 +7,7 @@ import com.sh.model.dto.json.InbDetailJsonDto;
 import com.sh.model.dto.json.InbJsonDto;
 import com.sh.model.dto.json.SelInboundOrder;
 import com.sh.model.dto.json.SelOutboundOrder;
+import com.sh.view.InboundView;
 import lombok.Synchronized;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ class whsServerThread extends Thread {
     private final Socket socket;
     public static int testInt;
     public static final Object lock = new Object();
-
+    public InboundView inboundView = new InboundView();
     public whsServerThread(Socket socket) {
         this.socket = socket;
     }
@@ -57,6 +58,7 @@ class whsServerThread extends Thread {
                 System.out.println(apiNm);
                 if(apiNm.equals("facOutbOrder")) {
                     List<InbJsonDto> orders = parseFacOrders(line);//
+
                     System.out.println("facOutbOrder" + orders);
                 }
                 if(apiNm.equals("selOutbOrder")) {
@@ -65,6 +67,7 @@ class whsServerThread extends Thread {
                 }
                 if(apiNm.equals("selInbOrder")) {
                     List<SelInboundOrder> orders = parseInbOrders(line);//
+                    inboundView.inputInb(orders);
                     System.out.println("selInbOrder" + orders);
                 }
 

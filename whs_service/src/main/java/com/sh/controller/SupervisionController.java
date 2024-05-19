@@ -27,6 +27,7 @@ public class SupervisionController {
             int result = superService.insertCatItem(itemCatList);
             System.out.println("insertCatItem result : " + result);
         }
+
     }
 
     // 화장품의 모든 정보
@@ -136,7 +137,7 @@ public class SupervisionController {
         System.out.println(result);
     }
 
-    public void insertDetailItem() {
+    public void insertDetailItem(List<InbJsonDto> inbJsonDtos) {
         // 적재해야하는 화장품 정보
         List<String> itemSerialList = new ArrayList<>();
         List<Long> itemIdList = new ArrayList<>();
@@ -146,7 +147,28 @@ public class SupervisionController {
         Map<Long, String> lpnInfo = new HashMap<>();
         String facLoc = null;
 
-        // json에서 가져온 정보를 재가공(itemNm, itemPk, lpn, expiration), 로케이트 적재 수량 업데이트
+
+//        lpnList = 같은 재고 있는공간 서치한 리스트;
+//        List<ItemDetailDto> itemDetailList = new ArrayList<>();
+//        for(InbJsonDto item : inbJsonDtos) {
+//            int tempCnt = 0;
+//                for(i = 0; i < lpnList.size(); ++i){
+//                    if (((50 - lpn.재고()) - (item.getItemCount(40))) >= 0) {
+//                        for( itemdetail :item.getItemsDetail()) {
+//                            lpn만들어서 매핑
+//                        }
+//                        itemDetailList.addAll(item.getItemsDetail());
+//                        itemdetail.재고(6더하기);
+//                        break;
+//                    }
+//                }
+//
+//                if(i == lpnList.size()){
+//                    새로운 로케이션 할당
+//                }
+//
+//        }
+
         for(InbJsonDto item : list) {
             String itemNm = item.getItemName();
             long itemPk = searchItemId(item.getItemName());
