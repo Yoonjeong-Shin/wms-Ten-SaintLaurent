@@ -11,11 +11,11 @@ public class InboundResultView {
         }
         else {
             System.out.println("----------------------------");
-            System.out.println("INB_ID_PK : " + inboundDto.getInbIdPk());
-            System.out.println("SEL_ID_PK : " + inboundDto.getSelIdPk());
-            System.out.println("FAC_ID_PK : " + inboundDto.getFacIdPk());
-            System.out.println("WHS_ID_PK : " + inboundDto.getWhsIdPk());
-            System.out.println("INB_ITEM_ID_PK : " + inboundDto.getInbItemIdPk());
+            System.out.println("INB_ID_PK : " + inboundDto.getInbPk());
+            System.out.println("SEL_ID_PK : " + inboundDto.getSelPk());
+            System.out.println("FAC_ID_PK : " + inboundDto.getFacPk());
+            System.out.println("WHS_ID_PK : " + inboundDto.getWhsPk());
+            System.out.println("INB_ITEM_ID_PK : " + inboundDto.getInbItemPk());
             System.out.println("INB_ITEM_CAT_PK : " + inboundDto.getInbItemCatPk());
             System.out.println("INB_ITEM_NM : " + inboundDto.getInbItemNM());
             System.out.println("INB_ITEM_VOL : " + inboundDto.getInbItemVol());
