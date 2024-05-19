@@ -3,27 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sh.model.dao.InboundMapper">
-<!--    <resultMap id="inbTBMap" type="com.sh.model.dto.InboundDto">-->
-<!--        <id property="inbIdPk" column="INB_PK"/>-->
-<!--        <result property="selIdPk" column="SEL_PK"/>-->
-<!--        <result property="facIdPk" column="FAC_PK"/>-->
-<!--        <result property="whsIdPk" column="WHS_PK"/>-->
-<!--        <result property="inbItemIdPk" column="INB_ITEM_PK"/>-->
-<!--        <result property="inbItemCatPk" column="INB_ITEM_CAT_PK"/>-->
-<!--        <result property="inbItemNM" column="INB_ITEM_NM"/>-->
-<!--        <result property="inbItemVol" column="INB_ITEM_VOL"/>-->
-<!--        <result property="inbItemPrice" column="INB_ITEM_PRICE"/>-->
-<!--        <result property="inbItemCnt" column="INB_ITEM_CNT"/>-->
-<!--        <result property="inbItemExpirationDt" column="INB_ITEM_EXPIRATION_DT"/>-->
-<!--    </resultMap>-->
-
     <!-- 입고 승인 - 빈 로케이트 찾기 -->
     <!-- LOCATE_TB에서 LOCATE_ITEM_CNT 찾기 -->
     <select id="findEmptyLocate" resultType="int">
         select
             count(*)
         from
-            locate_tb
+            LOCATE_TB
         where
             LOCATE_ITEM_CNT = 0;
     </select>
@@ -31,64 +17,105 @@
     <!-- 입고 승인 -->
     <!-- JSON 데이터를 dto로 바꿔서 INB_TB에 넣기 -->
     <insert id="insertInbToINB" useGeneratedKeys="true" keyProperty="INB_ID_PK">
-        insert into inb_tb
+        insert into INB_TB
         values (
-            null, (select SEL_PK from sel_tb where SEL_NM = #{selNm}),
-            (select FAC_PK from fac_tb where FAC_NM = #{facNm}),
-            (select WHS_PK from whs_tb where WHS_NM = #{whsNm}),
-            (select ITEM_PK from item_tb where ITEM_NM = #{itemNm}),
-            (select ITEM_CAT_PK from item_cat_tb where ITEM_CAT_NM = #{itemCatNm}),
+            null, (select SEL_PK from SEL_TB where SEL_NM = #{selNm}),
+            (select FAC_PK from FAC_TB where FAC_NM = #{facNm}),
+            (select WHS_PK from WHS_TB where WHS_NM = #{whsNm}),
+            (select ITEM_PK from ITEM_TB where ITEM_NM = #{itemNm}),
+            (select ITEM_CAT_PK from ITEM_CAT_TB where ITEM_CAT_NM = #{itemCatNm}),
             #{inbItemNm}, #{inbItemVol}, #{inbItemPrice},#{inbItemCnt}, #{inbItemExpirationDt}
         )
     </insert>
 
     <!-- 입고 정보 조회 -->
     <!-- INB_TB의 PK로 한 데이터의 모든 정보를 조회, 입고 승인과 입고 확정 때 쓰인다 -->
-    <select id="findByInbId" resultType="InboundDto">
+<!--    <resultMap id="InbTBMap" type="com.sh.model.dto.InboundDto">-->
+<!--        <id property="inbPk" column="INB_PK"/>-->
+<!--        <result property="selPk" column="SEL_PK"/>-->
+<!--        <result property="facPk" column="FAC_PK"/>-->
+<!--        <result property="whsPk" column="WHS_PK"/>-->
+<!--        <result property="inbItemPk" column="INB_ITEM_PK"/>-->
+<!--        <result property="inbItemCatPk" column="INB_ITEM_CAT_PK"/>-->
+<!--        <result property="inbItemNM" column="INB_ITEM_NM"/>-->
+<!--        <result property="inbItemVol" column="INB_ITEM_VOL"/>-->
+<!--        <result property="inbItemPrice" column="INB_ITEM_PRICE"/>-->
+<!--        <result property="inbItemCnt" column="INB_ITEM_CNT"/>-->
+<!--        <result property="inbItemExpirationDt" column="INB_ITEM_EXPIRATION_DT"/>-->
+<!--    </resultMap>-->
+    <select id="findByInbId" parameterType="int" resultType="com.sh.model.dto.InboundDto">
         select *
-        from inb_tb
+        from INB_TB
         where INB_PK = #{inbPk}
     </select>
 
     <!-- 입고 승인 -->
-    <!-- 재고 관리의 일인지 확인, state가 1인 정상 제품은 item_tb와 item_detail_tb에 insert -->
+    <!-- 재고 관리의 일인지 확인, JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert -->
     <insert id="insertInbToItemTb" useGeneratedKeys="true" keyProperty="ITEM_PK">
-        insert into item_tb
+        insert into ITEM_TB
         values (
-        null, (select INB_ITEM_NM from inb_tb where INB_ITEM_PK = #{inbItemPk}),
-        (select INB_ITEM_VOL from inb_tb where INB_ITEM_PK = #{inbItemPk}),
-        (select ITEM_CAT_PK from item_cat_tb where ITEM_CAT_PK = #{itemCatPk})
+        null, (select INB_ITEM_NM from INB_TB where INB_ITEM_PK = #{inbItemPk}),
+        (select INB_ITEM_VOL from INB_TB where INB_ITEM_PK = #{inbItemPk}),
+        (select ITEM_CAT_PK from ITEM_CAT_TB where ITEM_CAT_PK = #{itemCatPk})
         )
     </insert>
     <insert id="insertInbToItemDetailTb" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_PK">
-        insert into item_detail_tb
+        insert into ITEM_DETAIL_TB
         values (
         null, #{itemDetailSerialNum},
-        (select ITEM_PK from item_tb where ITEM_PK = #{itemPk}),
+        (select ITEM_PK from ITEM_TB where ITEM_PK = #{itemPk}),
         #{ITEM_DETAIL_STATUS},
-        (select LOCATE_PK from locate_tb where LOCATE_PK = #{locatePk}),
-        (select INB_ITEM_EXPIRATION_DT from inb_tb where INB_ITEM_PK = #{inbItemPk})
+        (select LOCATE_PK from LOCATE_TB where LOCATE_PK = #{locatePk}),
+        (select INB_ITEM_EXPIRATION_DT from INB_TB where INB_ITEM_PK = #{inbItemPk})
         )
     </insert>
 
     <!-- 입고 검수 -->
-    <!-- state가 2,3인 불량품은 gbg_detail_tb에 insert -->
+    <!-- JSON에서 얻은 state가 2,3인 불량품은 GBG_DETAIL_TB에 insert -->
     <insert id="insertInbToGbgDetail" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_SERIAL_NUM">
         insert into
-            gbg_detail_tb
+            GBG_DETAIL_TB
         values (
-        null, (select ITEM_PK from item_tb where ITEM_PK = #{itemPk}), #{itemState}, #{gbgSerialNum}
+        null, (select ITEM_PK from ITEM_TB where ITEM_PK = #{itemPk}), #{itemState}, #{gbgSerialNum}
         )
     </insert>
 
-    <!-- gbg_detail_tb에 insert한 불량품은 item_detail_tb에서 delete -->
+    <!-- GBG_DETAIL_TB에 insert한 불량품은 ITEM_DETAIL_TB에서 delete -->
     <delete id="deleteItemDetail">
-        delete from item_detail_tb
-        where (select ITEM_PK from gbg_detail_tb where ITEM_PK = #{itemPk})
+        delete from ITEM_DETAIL_TB
+        where (select ITEM_PK from GBG_DETAIL_TB where ITEM_PK = #{itemPk})
     </delete>
 
-    <!-- item_tb에는 재고 수량이 없고, inb_tb는 입고지시서이므로 수량을 update하면 안될 것 같다. 어떻게 구현해야할지 확인 필요-->
-    <!-- 같은 상품이 기존에 창고에서 재고가 몇이었는지 ITEM_DETAIL_TB의 같은 화장품 ID를 count하여 수량 구하기 (int) - 재고 조회 -->
-    <!-- 같은 상품이 또 들어오면 3번으로 얻은 값과 json에서 얻은 count값을 더해서 재고 수량 update -->
-    <!-- state가 2,3인 불량품은 위에서 더하기 대신 빼기로 재고 수량 update -->
+    <!-- 재고에 있는 상품이 또 들어오면 재고 수량 더하기 update -->
+    <!-- INB_TB에서 수량 가져오기 -->
+    <select id="getItemCnt" parameterType="int" resultType="int">
+        select INB_ITEM_CNT
+        from INB_TB
+        where INB_ITEM_PK = #{inbItemPk}
+    </select>
+    <!-- ITEM_TB의 수량에 위의 값 더하기 -->
+    <update id="updateItemCntWithSum" parameterType="map">
+        update ITEM_TB
+        set ITEM_CNT = ITEM_CNT + #{inbItemCnt}
+        where ITEM_PK = #{itemPk}
+    </update>
+
+    <!-- ITEM_DETAIL_TB에서 state가 2,3인 불량품이 들어오면 재고 수량 빼기 update -->
+    <!-- ITEM_DETAIL_TB에서 상태가 불량품만 count -->
+    <select id="getItemDetailState" resultType="int">
+        select count(*)
+        from ITEM_DETAIL_TB
+        where ITEM_DETAIL_STATUS = 2 or ITEM_DETAIL_STATUS = 3
+    </select>
+    <!-- ITEM_DETAIL_TB의 pk와 같은 ITEM_TB의 수량에 위의 값 빼기 -->
+    <update id="updateItemCntWithMinus" parameterType="map">
+        update ITEM_TB
+        set ITEM_CNT = <![CDATA[
+            case
+                when ITEM_CNT - #{faultyItemCnt} < 0 then 0
+                else ITEM_CNT - #{faultyItemCnt}
+            end
+        ]]>
+        where ITEM_PK = (select ITEM_DETAIL_PK from ITEM_DETAIL_TB where ITEM_DETAIL_PK = #{itemDetailPk})
+    </update>
 </mapper>
