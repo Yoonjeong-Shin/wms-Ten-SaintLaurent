@@ -10,8 +10,8 @@ import java.util.Scanner;
 public class whsApp {
     public static final Object lock = new Object();
     public static final long whsPk = 1;
-    private static final String USER_ID = "admin";
-    private static final String PASSWORD = "password123";
+    private static final String USER_ID = "";
+    private static final String PASSWORD = "";
     public static void main(String[] args) {
 
         List<Socket> Sockets = new ArrayList<Socket>();

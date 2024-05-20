@@ -5,15 +5,11 @@ import com.sh.model.dto.ItemCatDto;
 import com.sh.model.dto.LocateDto;
 import com.sh.model.dto.json.InbJsonDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class SupervisionView {
 
-    public static void main(String[] args) {
-        new SupervisionView().itemMenu();
-    }
     private SupervisionController superController = new SupervisionController();
 
     Scanner sc = new Scanner(System.in);
@@ -41,26 +37,17 @@ public class SupervisionView {
         }
     }
 
-    private void insertItem(List<InbJsonDto> inbJsonDtoList) {
+    public void insertItem(List<InbJsonDto> inbJsonDtoList) {
         // 화장품 품목 테이블 저장
 
-//        int forCnt = inbJsonDtoList.size()/50;
-//        List<List<InbJsonDto>> inbJsonDtoLists = new ArrayList<>();
-//
-//        for (int i = 0; i < forCnt; i++) {
-//            inbJsonDtoLists = inbJsonDtoLists(inbJsonDtoList, 50);
-//        }
-//
-//        for(inbJsonDtoList1(50) : inbJsonDtoLists(300)){
-//            // json에서 가져온 화장품 품목명 일치 체크하면서 저장
-////        superController.insertCatItem(inbJsonDtoList1(50)); // 있으면 암것도 안함, 없으면 넣음.
-////        // item_tb에 적재 시작
-////        superController.insertItem(inbJsonDtoList1);// 있으면 암것도 안함, 없으면 넣음
-////        // 화장품 디테일 테이블 저장
-////        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-////        superController.insertDetailItem(inbJsonDtoList1);//
-//
-//        }
+        // json에서 가져온 화장품 품목명 일치 체크하면서 저장
+//        superController.insertCatItem(inbJsonDtoList); // 있으면 암것도 안함, 없으면 넣음.
+//        // item_tb에 적재 시작
+//        superController.insertItem(inbJsonDtoList);// 있으면 암것도 안함, 없으면 넣음
+//        // 화장품 디테일 테이블 저장
+//        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
+        superController.insertDetailItem(inbJsonDtoList);//
+
     }
 
 

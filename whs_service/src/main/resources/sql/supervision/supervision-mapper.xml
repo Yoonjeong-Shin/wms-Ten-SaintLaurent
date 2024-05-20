@@ -37,7 +37,7 @@
             </foreach>
     </insert>
 
-    <insert id="insertDetailItem" useGeneratedKeys="true" keyProperty="itemDetailPk">
+    <insert id="insertDetailItem" useGeneratedKeys="true">
         INSERT INTO
             ITEM_DETAIL_TB
         values (
@@ -147,6 +147,15 @@
         where
             locate_lpn_code = #{locateLpnCode}
     </update>
+    <update id="updareItemCnt" parameterType="map">
+        update
+        ITEM_TB
+        set
+        ITEM_CNT = ITEM_CNT + #{itemCnt}
+        where
+        ITEM_PK = #{itemPk}
+    </update>
+
 
     <select id="searchWhsLoc" resultType="int">
         select

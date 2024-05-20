@@ -54,5 +54,7 @@ public interface SupervisionMapper {
 
     int updareLocateCnt(@Param("itemCnt") int itemCnt, @Param("locateLpnCode") String locateLpnCode);
 
+    int updareItemCnt(@Param("itemCnt") int itemCnt, @Param("itemPk") long itemPk);
+
     int searchWhsLoc(String facLoc);
 }

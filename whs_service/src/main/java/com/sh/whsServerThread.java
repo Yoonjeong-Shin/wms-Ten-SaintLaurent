@@ -8,6 +8,7 @@ import com.sh.model.dto.json.InbJsonDto;
 import com.sh.model.dto.json.SelInboundOrder;
 import com.sh.model.dto.json.SelOutboundOrder;
 import com.sh.view.InboundView;
+import com.sh.view.SupervisionView;
 import lombok.Synchronized;
 
 import java.io.IOException;
@@ -58,7 +59,8 @@ class whsServerThread extends Thread {
                 System.out.println(apiNm);
                 if(apiNm.equals("facOutbOrder")) {
                     List<InbJsonDto> orders = parseFacOrders(line);//
-
+                    SupervisionView sv = new SupervisionView();
+                    sv.insertItem(orders);
                     System.out.println("facOutbOrder" + orders);
                 }
                 if(apiNm.equals("selOutbOrder")) {
