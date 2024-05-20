@@ -41,10 +41,10 @@ public class SupervisionService {
     }
 
     // 로케이션 빈공간 조회
-    public List<LocateDto> searchLpn() {
+    public List<LocateDto> searchLpn(long whsPK) {
         SqlSession sqlSession = getSqlSession();
         LocateMapper locateMapper = sqlSession.getMapper(LocateMapper.class);
-        List<LocateDto> list = locateMapper.searchLpn();
+        List<LocateDto> list = locateMapper.searchLpn(whsPK);
         sqlSession.close();
         return list;
     }

@@ -3,6 +3,7 @@ package com.sh.view;
 import com.sh.controller.SupervisionController;
 import com.sh.model.dto.ItemCatDto;
 import com.sh.model.dto.LocateDto;
+import com.sh.model.dto.json.InbJsonDto;
 
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +16,9 @@ public class SupervisionView {
     private SupervisionController superController = new SupervisionController();
 
     Scanner sc = new Scanner(System.in);
+
+    // test 추후 주석 필요
+    long whsPk =1;
 
     // 화장품 관리 메뉴
     public void itemMenu() {
@@ -48,7 +52,7 @@ public class SupervisionView {
         superController.insertItem();
         // 화장품 디테일 테이블 저장
         // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-        superController.insertDetailItem();
+        superController.insertDetailItem(); // 매개인자줘야할 값 -> whsPk, inbJsonDtos
     }
 
 
@@ -77,7 +81,7 @@ public class SupervisionView {
                 superController.searchItemLpn(searchItem());
                 break;
             case "4" :
-                List<LocateDto> locateList = superController.searchLpn();
+                List<LocateDto> locateList = superController.searchLpn(whsPk);
                 if(!locateList.isEmpty()) {
                     System.out.println("searchLpn" + locateList);
                 }else System.out.println("공간 없음");
@@ -88,9 +92,9 @@ public class SupervisionView {
     }
 
     // 로케이션 비어있는 공간 조회
-    private void searchLpn() {
+    private void searchLpn(long whsPk) {
         // 창고 번호 넘겨줘야함
-        superController.searchLpn();
+        superController.searchLpn(whsPk);
     }
 
     private int searchItem() {
