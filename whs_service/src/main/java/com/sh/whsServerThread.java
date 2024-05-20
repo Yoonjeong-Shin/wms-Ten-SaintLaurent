@@ -20,6 +20,7 @@ import java.net.Socket;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 class whsServerThread extends Thread {
     private final Socket socket;
@@ -60,7 +61,9 @@ class whsServerThread extends Thread {
                 if(apiNm.equals("facOutbOrder")) {
                     List<InbJsonDto> orders = parseFacOrders(line);//
                     SupervisionView sv = new SupervisionView();
-                    sv.insertItem(orders);
+                    assert orders != null;
+                    orders = InbCheck(orders);
+                    //sv.insertItem(orders);
                     System.out.println("facOutbOrder" + orders);
                 }
                 if(apiNm.equals("selOutbOrder")) {
@@ -94,6 +97,19 @@ class whsServerThread extends Thread {
             }
         }
     } // 동기화 블록 종료
+    public List<InbJsonDto> InbCheck(List<InbJsonDto> orders) { //입고검수
+        for (InbJsonDto inbJsonDto : orders) {
+            Iterator<InbDetailJsonDto> iterator = inbJsonDto.getItemsDetail().iterator();
+            while (iterator.hasNext()) {
+                InbDetailJsonDto detail = iterator.next();
+                if (detail.getState() == 0 || inbJsonDto.getExpirationDate().isBefore(LocalDate.now())) {
+                    iterator.remove();
+                }
+            }
+        }
+        return orders;
+    }
+
     public static List<SelOutboundOrder> parseOutbOrders(String input) {
         List<SelOutboundOrder> orders = new ArrayList<>();
 

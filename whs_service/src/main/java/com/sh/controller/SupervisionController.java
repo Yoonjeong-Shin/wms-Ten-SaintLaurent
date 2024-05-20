@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 public class SupervisionController {
     private SupervisionService superService = new SupervisionService();
-    int max = 6;
+    int max = 50;
     // json 파일 가져오기
     //
     public void insertCatItem(List<InbJsonDto> inbJsonDtoList) {
