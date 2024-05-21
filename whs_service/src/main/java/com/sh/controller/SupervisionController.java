@@ -140,7 +140,7 @@ public class SupervisionController {
             // 같은 화장품이 적재된 공간이 있는가?
             List<LocateDto> sameLocateList = searchSameItemLpn(itemNm);
             // 로케이트 빈공간 체크
-            List<LocateDto> locateNullList = searchLpn();
+            List<LocateDto> locateNullList = searchLpn(whsApp.whsPk);
             System.out.println("pk는??" + itemPk);
             itemIdList.add(itemPk);
             itemExpirationList.add(item.getExpirationDate());
