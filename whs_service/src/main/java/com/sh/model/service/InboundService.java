@@ -45,10 +45,11 @@ public class InboundService {
         try {
             // dao 메세지 전달
             if(chckSeller(selNm) == 0)
-                inboundMapper.insertSeller(selNm);
+                inboundMapper.insertSeller(selNm); // 유통업체 저장
             sqlSession.commit();
 
         } catch (Exception e) {
+            System.out.println("😓 입고 정보 저장에 실패했습니다 😓");
             sqlSession.rollback();
             throw new RuntimeException(e);
         } finally {
@@ -67,6 +68,7 @@ public class InboundService {
             sqlSession.commit();
 
         } catch (Exception e) {
+            System.out.println("😓 입고 정보 저장에 실패했습니다 😓");
             sqlSession.rollback();
             throw new RuntimeException(e);
         } finally {
@@ -78,17 +80,24 @@ public class InboundService {
         SupervisionMapper supervisionMapper = sqlSession.getMapper(SupervisionMapper.class);
         try {
             // dao 메세지 전달
+            System.out.println("🖋🖋🖋 판매업체 정보 저장중 🖋🖋🖋");
             insertSeller(inboundDto.getSelNm());
+            System.out.println("🖋🖋🖋 제조업체 정보 저장중 🖋🖋🖋");
             insertFac(inboundDto.getFacNm());
+
             if(supervisionMapper.searchCheckItemNm(inboundDto.getItemNm()) == 0) {
                 if (supervisionMapper.searchCheckItemCat(inboundDto.getItemCatNm()) == 0) {
+                    System.out.println("💄💄💄 화장품 품목 정보 저장중 💄💄💄");
                     supervisionMapper.insertCatItemOne(inboundDto.getItemCatNm());
+
                 }
+                System.out.println("💄💄💄 화장품 정보 저장중 💄💄💄");
                 supervisionMapper.insertItemOne(inboundDto.getItemNm(),inboundDto.getInbItemVol(), inboundDto.getItemCatNm());
             }
             sqlSession.commit();
 
         } catch (Exception e) {
+            System.out.println("😓 입고 정보 저장에 실패했습니다 😓");
             sqlSession.rollback();
             throw new RuntimeException(e);
         } finally {
@@ -103,9 +112,11 @@ public class InboundService {
             // dao 메세지 전달
             int result = inboundMapper.insertInbToINB(inboundDto);
             sqlSession.commit();
+            System.out.println("💋💋💋 완료되었습니다 💋💋💋");
             return result;
         } catch (Exception e) {
             sqlSession.rollback();
+            System.out.println("입고 정보 저장에 실패했습니다😓");
             throw new RuntimeException(e);
         } finally {
             sqlSession.close();

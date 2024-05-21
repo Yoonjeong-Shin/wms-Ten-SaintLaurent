@@ -49,7 +49,7 @@ public class SupervisionView {
 //        superController.insertItem(inbJsonDtoList);// 있으면 암것도 안함, 없으면 넣음
 //        // 화장품 디테일 테이블 저장
 //        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-        superController.insertDetailItem(inbJsonDtoList);//
+        superController.insertDetailItem(inbJsonDtoList);
 
     }
 

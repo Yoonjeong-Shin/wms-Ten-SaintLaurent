@@ -23,7 +23,12 @@ public class whsApp {
             while (true) {
                 Scanner scanner = new Scanner(System.in);
 
-                System.out.println("로그인 하세요");
+                System.out.println("""
+                ==================================
+                Ten Saint Laurent 접속
+                ==================================
+                """);
+                System.out.println("관리자 정보를 입력해주세요!");
 
                 // 사용자로부터 아이디 입력받기
                 System.out.print("아이디: ");
@@ -40,7 +45,7 @@ public class whsApp {
                     whsNM = supervisionService.getWhsNm(whsPk);
                     break;
                 } else {
-                    System.out.println("로그인 실패. 아이디 또는 비밀번호가 올바르지 않습니다.");
+                    System.out.println("아이디 또는 비밀번호가 올바르지 않습니다. 다시 입력해주세요😥");
                 }
 
                 scanner.close();

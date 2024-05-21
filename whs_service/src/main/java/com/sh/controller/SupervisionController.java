@@ -84,7 +84,6 @@ public class SupervisionController {
             // 화장품 이름이 이미 들어가있는지 먼저 체크해야함
             String itemNm = item.getItemName();
             int checkItemNm = superService.searchCheckItemNm(itemNm);
-//            System.out.println(checkItemNm);
 
             // 없을 때
             if (checkItemNm == 0) {
@@ -96,9 +95,7 @@ public class SupervisionController {
         }
         List<ItemDto> itemList = itemSet.stream().collect(Collectors.toList());
         if(!itemList.isEmpty()) {
-            System.out.println("itemList : " + itemList);
             int result = superService.insertItem(itemList);
-            System.out.println("result : " + result);
         }
     }
 
@@ -120,28 +117,25 @@ public class SupervisionController {
 
     public void insertDetailItem(List<InbJsonDto> inbJsonDtos) {
         // 적재해야하는 화장품 정보
-        long whsPk = 1; // test 추후 삭제 or 주석 필요
-        List<String> itemSerialList = new ArrayList<>();
         List<Long> itemIdList = new ArrayList<>();
         List<Integer> itemStatusList = new ArrayList<>();
-        List<String> itemLpnList = new ArrayList<>();
         List<LocalDate> itemExpirationList = new ArrayList<>();
         Map<Long, String> lpnInfo = new HashMap<>();
 
         for(InbJsonDto item : inbJsonDtos) {
             String itemNm = item.getItemName();
-            System.out.println(item.getItemName());
             Long itemPk;
             itemPk = searchItemId(item.getItemName());
             if(itemPk == null) {
                 insertItem(inbJsonDtos);
-                System.out.println("아이템 삽입");
             }
+
             // 같은 화장품이 적재된 공간이 있는가?
+            System.out.println("📦📦📦 같은 제품이 적재된 공간 검색중입니다 📦📦📦");
             List<LocateDto> sameLocateList = searchSameItemLpn(itemNm);
             // 로케이트 빈공간 체크
+            System.out.println("📦📦📦 비어있는 로케이트 공간 조회중입니다 📦📦📦");
             List<LocateDto> locateNullList = searchLpn(whsApp.whsPk);
-            System.out.println("pk는??" + itemPk);
             itemIdList.add(itemPk);
             itemExpirationList.add(item.getExpirationDate());
             int itemCnt = item.getItemCount();
@@ -156,11 +150,12 @@ public class SupervisionController {
 
             List<InbDetailJsonDto> itemDetailDtoList = new ArrayList<>(item.getItemsDetail());
             if (!sameLocateList.isEmpty()) {
+                System.out.println("✨✨✨ 같은 화장품이 적재된 공간을 찾았습니다! ✨✨✨");
                 for (LocateDto locate : sameLocateList) {
-                    System.out.println("기존 공간 저장"+itemNm +locate.getLocatePk() +"갯수" + locate.getLocateItemCnt());
+                    System.out.println(itemNm + "이 저장된 로케이트 번호는 " +locate.getLocatePk() +"입니다. 로케이트 안의 제품 개수는 " + locate.getLocateItemCnt() + "개 입니다😃");
                     int cnt = locate.getLocateItemCnt(); // 로케이트에 적재된 수량
                     int spaceLeft = max - cnt; // 남은 공간
-                    System.out.println( locate.getLocateLpnCode());
+//                    System.out.println( locate.getLocateLpnCode());
                     if (spaceLeft <= 0) continue; // 로케이트에 공간이 없으면 다음 로케이트로 넘어감
                     int amountToLoad = 0;
                     if(spaceLeft < itemCnt) continue;
@@ -168,7 +163,6 @@ public class SupervisionController {
 
                     lpnInfo.put(itemPk, locate.getLocateLpnCode());
                     updareLocateCnt(amountToLoad, locate.getLocateLpnCode()); // 로케이트 적재 수량 업데이트
-                    System.out.println(locate.getLocatePk()+"로케이트 피케이");
                     assert itemPk != null;
                     updareItemCnt(amountToLoad, itemPk);
                     for (int i = 0; i < itemCnt && !itemDetailDtoList.isEmpty(); ++i) {
@@ -182,6 +176,7 @@ public class SupervisionController {
                 }
             }
     //새로운 공간에 저장
+
             if (itemCnt > 0) {
                 System.out.println("새로운 공간 저장");
                 for (LocateDto locate : locateNullList) {
@@ -194,7 +189,7 @@ public class SupervisionController {
                     System.out.println( locate.getLocateLpnCode());
                     assert itemPk != null;
                     updareItemCnt(amountToLoad, itemPk);
-                    System.out.println(locate.getLocatePk()+"로케이트 피케이");
+//                    System.out.println(locate.getLocatePk()+"로케이트 피케이");
                     long locPk = locate.getLocatePk();
                     for (int i = 0; i < itemCnt && !itemDetailDtoList.isEmpty(); ++i) {
                         InbDetailJsonDto dto = itemDetailDtoList.get(0);
@@ -211,24 +206,24 @@ public class SupervisionController {
     }
 
     public void insertDetailItem2(InbDetailJsonDto itemDetailDto,Long itemPk,int itemDetailStatus, String itemNM,String whsPk, String lpnCode,long locatePk, LocalDate expirationDate){
-
+        System.out.println("💎💎💎 시리얼 번호 생성중입니다 💎💎💎");
             String serialNum = itemDetailDto.getItemSerialNum(); // 시리얼 번호 가져오기
             String[] ret = serialNum.split("-");
             String manufactureNum = ret[4]; // 제조번호
 
             String completeSerialNum = itemNM + "-" + whsPk + "-" + lpnCode + "-" + expirationDate + "-" + manufactureNum;
-
+        System.out.println("💎💎💎 화장품 적재 중입니다 💎💎💎");
             superService.insertDetailItem(new ItemDetailDto(completeSerialNum,itemPk,itemDetailStatus,locatePk,expirationDate));
 
 
     }
     private void updareLocateCnt(int itemCnt, String locateLpnCode) {
         int result = superService.updareLocateCnt(itemCnt, locateLpnCode); // 로케이트 적재 수량 업데이트
-        System.out.println("updareLocateCnt result : " + result);
+        System.out.println("📦📦📦 로케이트 적재 수량 정보가 업데이트 됐습니다 📦📦📦");
     }
     private void updareItemCnt(int itemCnt, long itemPk) {
         int result = superService.updareItemCnt(itemCnt, itemPk); // 로케이트 적재 수량 업데이트
-        System.out.println("updareItemCnt result : " + result);
+        System.out.println("📦📦📦 화장품 수량이 업데이트 됐습니다 📦📦📦");
     }
 
 //    private void assigningLpn(List<Long> itemIdList) {
