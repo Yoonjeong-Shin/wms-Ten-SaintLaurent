@@ -38,6 +38,7 @@ class whsServerThread extends Thread {
     public void run() {
         synchronized (lock) { // 동기화 블록 시작
             try {
+                int ApiNum = 0;
                 System.out.println("=> 클라이언트 연결 승인!");
                 InputStream in0 = socket.getInputStream();
                 OutputStream out0 = socket.getOutputStream();
@@ -56,10 +57,10 @@ class whsServerThread extends Thread {
                 String str = in.nextLine(); // 클라이언트로부터 문자열을 한 줄 읽는다.
                 while (in.hasNextLine()) {
                     line += in.nextLine();
-                    out.println(line);
+                    out.println("수신 완료");
                 }
                 String apiNm = line.split("#")[1];
-                System.out.println(apiNm);
+
 
 
                 if(apiNm.equals("facOutbOrder")) {
@@ -70,27 +71,19 @@ class whsServerThread extends Thread {
                     sv.insertItem(orders);
                     System.out.println("facOutbOrder" + orders);
                 }
-
-
                 if(apiNm.equals("selOutbOrder")) {
                     List<SelOutboundOrder> orders = parseOutbOrders(line);//
                     System.out.println("selOutbOrder" + orders);
                     outboundController.outbLogic(orders);
                 }
 
-
                 if(apiNm.equals("selInbOrder")) {
                     System.out.println(line);
                     List<SelInboundOrder> orders = parseInbOrders(line);//
                     inboundController.inputInb(orders);
-                    System.out.println("selInbOrder" + orders);
                 }
-
 //              System.out.println(line);
-
                 // 클라이언트가 보낸 문자열을 그대로 돌려준다.
-
-                in.close();
                 in0.close();
                 out.close();
                 out0.close();
@@ -100,6 +93,7 @@ class whsServerThread extends Thread {
             } finally {
                 try {
                     socket.close();
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
