@@ -14,6 +14,9 @@ public class SupervisionView {
 
     Scanner sc = new Scanner(System.in);
 
+    // test 추후 주석 필요
+    long whsPk =1;
+
     // 화장품 관리 메뉴
     public void itemMenu() {
         System.out.print("""
@@ -76,7 +79,7 @@ public class SupervisionView {
                 superController.searchItemLpn(searchItem());
                 break;
             case "4" :
-                List<LocateDto> locateList = superController.searchLpn();
+                List<LocateDto> locateList = superController.searchLpn(whsPk);
                 if(!locateList.isEmpty()) {
                     System.out.println("searchLpn" + locateList);
                 }else System.out.println("공간 없음");
@@ -87,9 +90,9 @@ public class SupervisionView {
     }
 
     // 로케이션 비어있는 공간 조회
-    private void searchLpn() {
+    private void searchLpn(long whsPk) {
         // 창고 번호 넘겨줘야함
-        superController.searchLpn();
+        superController.searchLpn(whsPk);
     }
 
     private int searchItem() {

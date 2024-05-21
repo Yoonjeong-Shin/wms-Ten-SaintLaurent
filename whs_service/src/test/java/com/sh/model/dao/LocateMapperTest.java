@@ -31,8 +31,9 @@ class LocateMapperTest {
     @Test
     void searchLpn() {
         // given
+        long whsPK = 1;
         // when
-        List<LocateDto> list = locateMapper.searchLpn();
+        List<LocateDto> list = locateMapper.searchLpn(whsPK);
         System.out.println(list);
         // then
         // 비어있는 공간이 없을 시 에러 발생

@@ -6,13 +6,14 @@
     <select id="searchLpn" resultType="locateDto">
         SELECT
             *
-
         FROM
             LOCATE_TB
         WHERE
-            <!-- 처음 창고 시스템 들어올때 몇번 창고인지 체크한 값으로도 조회 -->
-            <!-- 예) 몇번 창고에 재고가 0개인 로케이션 검색이 되도록 구현 -->
+            WHS_PK = #{whs_pk}
+          AND
             LOCATE_ITEM_CNT = 0
+        ORDER BY
+            LOCATE_LPN_CODE
     </select>
 
     <select id="searchItemLpn" resultType="locateDto">

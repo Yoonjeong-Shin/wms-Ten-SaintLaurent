@@ -45,8 +45,8 @@ public class SupervisionController {
     }
 
     // 로케이션 빈공간 체크
-    public List<LocateDto> searchLpn() {
-        List<LocateDto> list = superService.searchLpn();
+    public List<LocateDto> searchLpn(long whsPK) {
+        List<LocateDto> list = superService.searchLpn(whsPK);
         return list;
     }
 
@@ -120,13 +120,13 @@ public class SupervisionController {
 
     public void insertDetailItem(List<InbJsonDto> inbJsonDtos) {
         // 적재해야하는 화장품 정보
+        long whsPk = 1; // test 추후 삭제 or 주석 필요
         List<String> itemSerialList = new ArrayList<>();
         List<Long> itemIdList = new ArrayList<>();
         List<Integer> itemStatusList = new ArrayList<>();
         List<String> itemLpnList = new ArrayList<>();
         List<LocalDate> itemExpirationList = new ArrayList<>();
         Map<Long, String> lpnInfo = new HashMap<>();
-        String facLoc = null;
 
         for(InbJsonDto item : inbJsonDtos) {
             String itemNm = item.getItemName();
@@ -145,7 +145,13 @@ public class SupervisionController {
             itemIdList.add(itemPk);
             itemExpirationList.add(item.getExpirationDate());
             int itemCnt = item.getItemCount();
-            facLoc = item.getFactoryLoc();
+
+            // 시리얼 넘버
+            String serialNum = null;
+            for(int i =0; i < item.getItemsDetail().size(); i++) {
+                serialNum = item.getItemsDetail().get(i).getItemSerialNum();
+                itemStatusList.add(item.getItemsDetail().get(i).getState());
+            }
 
 
             List<InbDetailJsonDto> itemDetailDtoList = new ArrayList<>(item.getItemsDetail());
