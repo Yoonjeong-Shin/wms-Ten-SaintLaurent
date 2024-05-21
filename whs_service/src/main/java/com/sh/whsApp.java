@@ -32,17 +32,17 @@ public class whsApp {
                 // 사용자로부터 비밀번호 입력받기
                 System.out.print("비밀번호: ");
                 String inputPassword = scanner.nextLine();
-
+                supervisionService.get_SqlSession();
                 // 입력된 아이디와 비밀번호가 미리 정의된 값과 일치하는지 확인
                 if (supervisionService.getWhsPk(inputId) != null) {
                     System.out.println("로그인 성공!");
                     whsPk = supervisionService.getWhsPk(inputId);
                     whsNM = supervisionService.getWhsNm(whsPk);
+                    supervisionService.setSqlSessionCommitNotClient();
                     break;
                 } else {
                     System.out.println("로그인 실패. 아이디 또는 비밀번호가 올바르지 않습니다.");
                 }
-
                 scanner.close();
             }
             System.out.println("=> 서버 실행중....");
