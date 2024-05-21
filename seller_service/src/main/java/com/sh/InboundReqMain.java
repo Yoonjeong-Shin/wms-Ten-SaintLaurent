@@ -41,7 +41,7 @@ public class InboundReqMain {
                         // 6) 키보드 입력 및 서버 전송
                         String message = "apiNm#selInbOrder#" + service.findAllInboundOrders();
                         printer.println("\n"+message);
-                        System.out.println(message);
+//                        System.out.println(message);
                         System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버에 메시지 전송 완료!");
 
                         // 7) 서버 응답 수신 및 출력

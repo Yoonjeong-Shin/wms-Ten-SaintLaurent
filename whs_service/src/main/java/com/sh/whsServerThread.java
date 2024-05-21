@@ -47,7 +47,7 @@ class whsServerThread extends Thread {
                 }
 
                 //처리로직 넣기.
-                System.out.println(testInt);
+//                System.out.println(testInt);
 
                 Scanner in = new Scanner(in0);
                 PrintStream out = new PrintStream(out0);
@@ -61,15 +61,13 @@ class whsServerThread extends Thread {
                 }
                 String apiNm = line.split("#")[1];
 
-
-
-                if(apiNm.equals("facOutbOrder")) {
-                    List<InbJsonDto> orders = parseFacOrders(line);//
+                if(apiNm.equals("facOutbOrder")) { // 실물재고 입고(공장에서 출고한 재고들이 창고에 입고될 때 apiNm)
+                    System.out.println("---재고 입고---");
+                    List<InbJsonDto> orders = parseFacOrders(line);
                     SupervisionView sv = new SupervisionView();
                     assert orders != null;
                     orders = InbCheck(orders);
                     sv.insertItem(orders);
-                    System.out.println("facOutbOrder" + orders);
                 }
                 if(apiNm.equals("selOutbOrder")) {
                     List<SelOutboundOrder> orders = parseOutbOrders(line);//
@@ -79,7 +77,9 @@ class whsServerThread extends Thread {
 
                 if(apiNm.equals("selInbOrder")) {
                     System.out.println(line);
-                    List<SelInboundOrder> orders = parseInbOrders(line);//
+                    // 화장품 입고 가능한지 공간 확인 후 테이블(카테고리, 아이템, 인바운드)에 입고 정보만 저장
+                    System.out.println("---입고 정보 들어옴---");
+                    List<SelInboundOrder> orders = parseInbOrders(line);
                     inboundController.inputInb(orders);
                 }
 //              System.out.println(line);
@@ -101,6 +101,7 @@ class whsServerThread extends Thread {
         }
     } // 동기화 블록 종료
     public List<InbJsonDto> InbCheck(List<InbJsonDto> orders) { //입고검수
+        System.out.println("🧐🧐🧐 검수중입니다 🧐🧐🧐");
         for (InbJsonDto inbJsonDto : orders) {
             Iterator<InbDetailJsonDto> iterator = inbJsonDto.getItemsDetail().iterator();
             while (iterator.hasNext()) {

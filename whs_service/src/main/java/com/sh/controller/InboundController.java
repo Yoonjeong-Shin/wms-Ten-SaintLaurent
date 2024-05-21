@@ -75,7 +75,9 @@ public class InboundController {
     }
 
     // JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert
+
     public boolean insertInbToItemTb(InboundDto inboundDto) {
+         System.out.println("---------------------------------");
         return inboundService.insertItem(inboundDto);
     }
     public void insertInbToItemDetailTb(InboundDto inboundDto) {

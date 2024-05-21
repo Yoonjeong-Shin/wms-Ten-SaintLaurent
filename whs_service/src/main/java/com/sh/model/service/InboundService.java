@@ -70,6 +70,7 @@ public class InboundService {
             // dao 메세지 전달
             if(chckSeller(selNm) == 0)
                 inboundMapper.insertSeller(selNm);
+        
 
     }
     public void insertFac(String facNm){
@@ -78,16 +79,23 @@ public class InboundService {
             if(check == 0){
                 inboundMapper.insertFac(facNm);
             }
+            
     }
     public boolean insertItem(InboundDto inboundDto){
         SupervisionMapper supervisionMapper = sqlSession.getMapper(SupervisionMapper.class);
             // dao 메세지 전달
+            System.out.println("🖋🖋🖋 판매업체 정보 저장중 🖋🖋🖋");
             insertSeller(inboundDto.getSelNm());
+            System.out.println("🖋🖋🖋 제조업체 정보 저장중 🖋🖋🖋");
             insertFac(inboundDto.getFacNm());
+
             if(supervisionMapper.searchCheckItemNm(inboundDto.getItemNm()) == 0) {
                 if (supervisionMapper.searchCheckItemCat(inboundDto.getItemCatNm()) == 0) {
+                    System.out.println("💄💄💄 화장품 품목 정보 저장중 💄💄💄");
                     supervisionMapper.insertCatItemOne(inboundDto.getItemCatNm());
+
                 }
+                System.out.println("💄💄💄 화장품 정보 저장중 💄💄💄");
                 supervisionMapper.insertItemOne(inboundDto.getItemNm(),inboundDto.getInbItemVol(), inboundDto.getItemCatNm());
             }
             return true;
@@ -97,6 +105,7 @@ public class InboundService {
         InboundMapper inboundMapper = sqlSession.getMapper(InboundMapper.class);
             // dao 메세지 전달
             int result = inboundMapper.insertInbToINB(inboundDto);
+               System.out.println("💋💋💋 완료되었습니다 💋💋💋");
             return true;
     }
     // JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert
