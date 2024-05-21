@@ -15,16 +15,17 @@ public interface SupervisionMapper {
 
     // 아이템 테이블에 인서트
     int insertItem(List<ItemDto> itemDto);
-
+    int insertItemOne(@Param("itemNm") String itemNm,@Param("itemVol") int itemVol,@Param("itemCatNm") String itemCatNm);
     // 아이템 디테일 테이블에 인서트
     int insertDetailItem(ItemDetailDto itemDetailDto);
 
     // 카테고리 테이블에 추가하기 전 같은 품목이 있는지 체크하는 메소드
     int searchItemCat(String itemCatNm);
-
+    long getWhsPk(@Param("adminId") String adminId);
+    String getWhsNm(@Param("whsPk") long whsPk);
     // 화장품 카테고리에 새로 추가
     int insertCatItem(List<ItemCatDto> itemCatDtoList);
-
+    int insertCatItemOne(@Param("catNm") String catNm);
     // 화장품ID와 이름 조회
     List<ItemDto> searchItemIdNNm();
 
@@ -44,15 +45,17 @@ public interface SupervisionMapper {
     int deleteDetailItem(long itemDetailPk);
 
     // item_detail_tb에서 itemNm으로 itemId 조회
-    long searchItemId(String itemNm);
+    Long searchItemId(String itemNm);
 
     // 같은 이름의 화장품이 어디에 적재되어 있는지 조회
     List<LocateDto> searchSameItemLpn(long itemId);
 
     // item_tb에서 itemNm과 일치하는 것이 몇개인지 체크(1개 이상일 수 없음)
     int searchCheckItemNm(String itemNm);
-
+    int searchCheckItemCat(String itemCat);
     int updareLocateCnt(@Param("itemCnt") int itemCnt, @Param("locateLpnCode") String locateLpnCode);
+
+    int updareItemCnt(@Param("itemCnt") int itemCnt, @Param("itemPk") long itemPk);
 
     int searchWhsLoc(String facLoc);
 }

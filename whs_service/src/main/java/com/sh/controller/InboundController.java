@@ -2,9 +2,16 @@ package com.sh.controller;
 
 import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
+import com.sh.model.dto.json.SelInboundOrder;
 import com.sh.model.service.InboundService;
-import com.sh.view.InboundResultView;
+//import com.sh.view.InboundResultView;
 import org.w3c.dom.ls.LSOutput;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.sh.whsApp.whsNM;
+import static com.sh.whsApp.whsPk;
 
 public class InboundController {
     private InboundService inboundService = new InboundService();
@@ -17,6 +24,37 @@ public class InboundController {
         // locate_id받아와서 LPN위치까지 추가해줘야하남..
     }
 
+    public InboundDto inputInb(List<SelInboundOrder> inbJsonDtos) {
+        InboundDto inboundDto = new InboundDto();
+
+        String inbSelName;
+        String inbFactoryName;
+        String inbWhsName;
+        String inbCategory;
+        String inbItemNM;
+        int inbItemVol;
+        int inbItemPrice;
+        int inbItemCnt;
+
+        LocalDate inbItemExpirationDt;
+        for (int i=0; i<inbJsonDtos.size(); i++) {
+            inbSelName = inbJsonDtos.get(i).getSellerName();
+            inbFactoryName = inbJsonDtos.get(i).getFactoryName();
+
+            inbCategory = inbJsonDtos.get(i).getCategory();
+
+            inbItemNM = inbJsonDtos.get(i).getItemName();
+            inbItemVol = inbJsonDtos.get(i).getVolume();
+            inbItemPrice = inbJsonDtos.get(i).getPrice();
+            inbItemCnt = inbJsonDtos.get(i).getProductCount();
+            inbItemExpirationDt = inbJsonDtos.get(i).getExpirationDate();
+            long whspk = whsPk;
+            inboundDto = new InboundDto(inbSelName,inbFactoryName, whsNM,inbCategory,inbItemNM, inbItemVol, inbItemPrice, inbItemCnt, inbItemExpirationDt);
+            insertInbToItemTb(inboundDto);
+            insertInbToINB(inboundDto);
+        }
+        return inboundDto;
+    }
     // JSON 데이터를 dto로 바꿔서 INB_TB에 넣기
     public void insertInbToINB(InboundDto inboundDto) {
         inboundService.insertInbToINB(inboundDto);
@@ -24,7 +62,7 @@ public class InboundController {
 
     // JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert
     public void insertInbToItemTb(InboundDto inboundDto) {
-        inboundService.insertInbToItemTb(inboundDto);
+        inboundService.insertItem(inboundDto);
     }
     public void insertInbToItemDetailTb(InboundDto inboundDto) {
         inboundService.insertInbToItemDetailTb(inboundDto);
@@ -35,7 +73,7 @@ public class InboundController {
     public void findByInbId(int inbIdPk) {
         try {
             InboundDto inboundDto = inboundService.findByInbId(inbIdPk);
-            InboundResultView.displayInb(inboundDto);
+//            InboundResultView.displayInb(inboundDto);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -6,42 +6,29 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+
 public class InboundDto {
-    private long inbPk; // 입고 ID
-    private long selPk; // 유통업체 ID
-    private long facPk; // 제조업체 ID
-    private long whsPk; // 창고 ID
-    private long inbItemPk; // 화장품 ID
-    private int inbItemCatPk; // 제품 품목 ID
-    private String inbItemNM; // 화장품 제품명
+    private String selNm; // 유통업체 nm
+    private String facNm; // 제조업체 nm
+    private String whsNm; // 창고 nm
+    private String itemCatNm; // 제품 품목 ID
+    private String itemNm; // 화장품 제품명
     private int inbItemVol; // 제품 용량
     private int inbItemPrice; // 제품 단가
     private int inbItemCnt; // 제품 수량
     private LocalDate inbItemExpirationDt; // 제품 유통기한
 
-    public InboundDto(String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, LocalDate inbItemExpirationDt) {
-        this.inbItemNM = inbItemNM;
+    public InboundDto(String selNm, String facNm, String whsNm, String inbItemCatNM, String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, LocalDate inbItemExpirationDt) {
+        this.selNm = selNm;
+        this.facNm = facNm;
+        this.whsNm = whsNm;
+        this.itemNm = inbItemNM;
+        this.itemCatNm = inbItemCatNM;
         this.inbItemVol = inbItemVol;
         this.inbItemPrice = inbItemPrice;
         this.inbItemCnt = inbItemCnt;
         this.inbItemExpirationDt = inbItemExpirationDt;
     }
 
-    @Override
-    public String toString() {
-        return "InboundDto{" +
-                "inbPk=" + inbPk +
-                ", selPk=" + selPk +
-                ", facPk=" + facPk +
-                ", whsPk=" + whsPk +
-                ", inbItemPk=" + inbItemPk +
-                ", inbItemNM=" + inbItemNM +
-                ", inbItemCatPk=" + inbItemCatPk +
-                ", inbItemVol=" + inbItemVol +
-                ", inbItemPrice=" + inbItemPrice +
-                ", inbItemCnt=" + inbItemCnt +
-                ", inbItemExpirationDt=" + inbItemExpirationDt
-                ;
-    }
+
 }

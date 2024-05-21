@@ -2,6 +2,7 @@ package com.sh.model.dao;
 
 import com.sh.model.dto.GbgDetailDto;
 import com.sh.model.dto.InboundDto;
+import org.apache.ibatis.annotations.Param;
 
 public interface InboundMapper {
 
@@ -10,11 +11,15 @@ public interface InboundMapper {
     int insertInbToINB(InboundDto inboundDto); // JSON 데이터를 dto로 바꿔서 INB_TB에 넣기
     int insertInbToItemTb(InboundDto inboundDto); // state가 1인 정상 제품 ITEM_TB에 insert
     int insertInbToItemDetailTb(InboundDto inboundDto); // state가 1인 정상 제품 ITEM_DETAIL_TB에 insert
-
+    void insertSeller(@Param("selNm") String selNm);
     // 입고 정보 조회 (입고 승인과 입고 확정 때 쓰인다)
     InboundDto findByInbId(int inbIdPk); // INB_TB의 PK로 한 데이터의 모든 정보를 조회
-
+    int chckSeller(@Param("selNm") String selNm);
+    void insertCat(@Param("catNm") String catNm);
+    int chackFac(@Param("facNm") String facNm);
+    void insertFac(@Param("facNm") String facNm);
     // 입고 검수
+
     int insertInbToGbgDetail(GbgDetailDto gbgDetailDto); // GBG_DETAIL_TB에 state가 2,3인 불량 제품을 insert
     int deleteItemDetial(); // GBG_DETAIL_TB에 insert한 불량품은 ITEM_DETAIL_TB에서 delete
 

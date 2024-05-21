@@ -13,6 +13,7 @@
         <result column="SEL_OUTB_ORDER_EXPIRATION_DT" property="expirationDate"/>
         <result column="SEL_OUTB_ORDER_PRICE" property="price"/>
         <result column="SEL_OUTB_ORDER_PROD_CNT" property="productCount"/>
+        <result column="CUS_NM" property="cusNM"/>
     </resultMap>
 
     <select id="findAllOutboundOrders" resultMap="selOutboundOrderResultMap">

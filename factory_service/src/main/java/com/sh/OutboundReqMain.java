@@ -28,7 +28,7 @@ public class OutboundReqMain {
         String serverAddress = "localhost";
         List<Socket> sockets= new ArrayList<Socket>();
         // 2) 각 클라이언트별 스레드 생성 및 실행
-        for (int i = 0; i < 10; i++) { // 10개의 스레드 생성
+        for (int i = 0; i < 1; i++) { // 10개의 스레드 생성
             synchronized (lock){
             Thread thread = new Thread(() -> {
                 try (Socket socket = new Socket(serverAddress, SERVER_PORT)) {
