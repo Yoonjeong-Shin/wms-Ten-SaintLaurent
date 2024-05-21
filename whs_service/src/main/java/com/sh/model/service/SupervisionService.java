@@ -5,14 +5,15 @@ import com.sh.model.dao.SupervisionMapper;
 import com.sh.model.dto.*;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 
 public class SupervisionService {
-
+//    public static void main(String[] args) {
+//        SupervisionService supervisionService = new SupervisionService();
+//        supervisionService.searchSameItemLpn()
+//    }
     // 화장품 정보 전체 조회
     public List<SearchItemDto> searchItemInfo() {
         SqlSession sqlSession = getSqlSession();
@@ -39,6 +40,16 @@ public class SupervisionService {
         sqlSession.close();
         return list;
     }
+    public LocateDto searchItemDetailLpn(long itemDetailPk) {
+        SqlSession sqlSession = getSqlSession();
+        LocateMapper locateMapper = sqlSession.getMapper(LocateMapper.class);
+        LocateDto lpn = locateMapper.searchItemDetailLpn(itemDetailPk);
+        SupervisionMapper SupervisionMapper = sqlSession.getMapper(SupervisionMapper.class);
+
+        sqlSession.close();
+        return lpn;
+    }
+
 
     // 로케이션 빈공간 조회
     public List<LocateDto> searchLpn(long whsPK) {
@@ -101,18 +112,69 @@ public class SupervisionService {
             sqlSession.close();
         }
     }
-
-    // item_detail_tb에서 itemNm으로 itemId 조회
-    public long searchItemId(String itemNm) {
+    public Long getWhsPk(String adminId) {
         SqlSession sqlSession = getSqlSession();
         SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
-        long itemId = superMapper.searchItemId(itemNm);
+        try {
+            long pk = superMapper.getWhsPk(adminId);
+            sqlSession.commit();
+            return pk;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            sqlSession.close();
+        }
+    }
+    public String getWhsNm(long adminId) {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        try {
+            String whsNm = superMapper.getWhsNm(adminId);
+            sqlSession.commit();
+            return whsNm;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            sqlSession.close();
+        }
+    }
+
+    public void insertDetailItem(ItemDetailDto itemDetailDto) {
+            SqlSession sqlSession = getSqlSession();
+            SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+            try {
+                int result = superMapper.insertDetailItem(itemDetailDto);
+                sqlSession.commit();
+
+            } catch (Exception e) {
+                sqlSession.rollback();
+                e.printStackTrace();
+                throw new RuntimeException();
+            } finally {
+                sqlSession.close();
+            }
+
+
+    }
+
+    // item_detail_tb에서 itemNm으로 itemId 조회
+    public Long searchItemId(String itemNm) {
+
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        Long itemId = superMapper.searchItemId(itemNm);
         sqlSession.close();
+
         return itemId;
     }
 
     public List<LocateDto> searchSameItemLpn(long itemId) {
         SqlSession sqlSession = getSqlSession();
+        System.out.println(itemId + " 아이템아이디 서비스");
         SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
         List<LocateDto> locateList = superMapper.searchSameItemLpn(itemId);
         sqlSession.close();
@@ -145,8 +207,8 @@ public class SupervisionService {
             // 화장품 폐기
             int result = 0;
             for(ItemDetailDto item : itemDetail) {
-                long itemDetailPk = item.getItemDetailPk();
-                result = superMapper.deleteDetailItem(itemDetailPk);
+//                long itemDetailPk = item.getItemDetailPk();
+//                result = superMapper.deleteDetailItem(itemDetailPk);
             }
             return result;
         } catch (Exception e) {
@@ -171,6 +233,20 @@ public class SupervisionService {
             sqlSession.close();
         }
     }
+    public int updareItemCnt(int itemCnt, long itemPk) {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        try {
+            int result = superMapper.updareItemCnt(itemCnt, itemPk);
+            sqlSession.commit();
+            return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            throw new RuntimeException();
+        } finally {
+            sqlSession.close();
+        }
+    }
 
     public int searchWhsLoc(String facLoc) {
         SqlSession sqlSession = getSqlSession();
@@ -179,4 +255,5 @@ public class SupervisionService {
         sqlSession.close();
         return whsId;
     }
+
 }

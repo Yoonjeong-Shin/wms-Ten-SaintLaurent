@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDetailDto {
-    private long itemDetailPk;
     private String itemDetailSerialNum;
     private long itemPk;
     private int itemDetailStatus;

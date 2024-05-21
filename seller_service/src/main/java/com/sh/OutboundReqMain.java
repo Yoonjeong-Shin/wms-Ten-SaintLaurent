@@ -23,50 +23,52 @@ public class OutboundReqMain {
         String serverAddress = "localhost";
         List<Socket> sockets= new ArrayList<Socket>();
         // 2) 각 클라이언트별 스레드 생성 및 실행
-        for (int i = 0; i < 10; i++) { // 10개의 스레드 생성
-            synchronized (lock){
+        for (int i = 0; i < 1; i++) { // 10개의 스레드 생성
+
             Thread thread = new Thread(() -> {
-                try (Socket socket = new Socket(serverAddress, SERVER_PORT)) {
-                    System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 소켓 객체 생성 완료!");
-                    sockets.add(socket);
-                    // 4) 입출력 스트림 준비
-                    InputStream in = socket.getInputStream();
-                    OutputStream out = socket.getOutputStream();
+                synchronized (lock) {
+                    try (Socket socket = new Socket(serverAddress, SERVER_PORT)) {
+                        System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 소켓 객체 생성 완료!");
+                        sockets.add(socket);
+                        // 4) 입출력 스트림 준비
+                        InputStream in = socket.getInputStream();
+                        OutputStream out = socket.getOutputStream();
 
-                    // 5) 스트림 객체에 입출력 보조 객체 연결
-                    Scanner scanner = new Scanner(in);
-                    PrintStream printer = new PrintStream(out);
+                        // 5) 스트림 객체에 입출력 보조 객체 연결
+                        Scanner scanner = new Scanner(in);
+                        PrintStream printer = new PrintStream(out);
 
-                    // 6) 키보드 입력 및 서버 전송
-                    String message = "apiNm#selOutbOrder#" + service.findAllOutboundOrders();
-                    printer.println("\n"+message);
-                    System.out.println(message);
-                    System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버에 메시지 전송 완료!");
+                        // 6) 키보드 입력 및 서버 전송
+                        String message = "apiNm#selOutbOrder#" + service.findAllOutboundOrders();
+                        printer.println("\n" + message);
+                        System.out.println(message);
+                        System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버에 메시지 전송 완료!");
 
-                    // 7) 서버 응답 수신 및 출력
-                    String response = scanner.nextLine();
-                    System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버로부터 메시지 수신 완료!");
-                    System.out.println(response);
-                    socket.close();
-                    // 8) 스트림 및 소켓 닫기
-                    scanner.close();
-                    printer.close();
-                } catch (IOException e) {
-                    for (int u = 0; u < sockets.size(); ++u) {
-                        try {
-                            sockets.get(u).close();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
+                        // 7) 서버 응답 수신 및 출력
+                        String response = scanner.nextLine();
+                        System.out.println("=> 스레드 " + Thread.currentThread().getId() + ": 서버로부터 메시지 수신 완료!");
+                        System.out.println(response);
+                        socket.close();
+                        // 8) 스트림 및 소켓 닫기
+                        scanner.close();
+                        printer.close();
+                    } catch (IOException e) {
+                        for (int u = 0; u < sockets.size(); ++u) {
+                            try {
+                                sockets.get(u).close();
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
+                        e.printStackTrace();
                     }
-                    e.printStackTrace();
                 }
             });
 
+
             thread.start(); // 스레드 시작
-            thread.join();
         }
-        }
+
 
         for (int u = 0; u < sockets.size(); ++u) {
             try {

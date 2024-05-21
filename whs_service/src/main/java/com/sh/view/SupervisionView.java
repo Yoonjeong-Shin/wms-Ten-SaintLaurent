@@ -10,9 +10,6 @@ import java.util.Scanner;
 
 public class SupervisionView {
 
-    public static void main(String[] args) {
-        new SupervisionView().itemMenu();
-    }
     private SupervisionController superController = new SupervisionController();
 
     Scanner sc = new Scanner(System.in);
@@ -35,7 +32,7 @@ public class SupervisionView {
             // 조회
             case "1" : inputCase(); break;
             // 상품 추가
-            case "2" : insertItem(); break;
+//            case "2" : insertItem(); break;
             // 폐기
             case "3" : deleteItem(); break;
             default:
@@ -43,16 +40,17 @@ public class SupervisionView {
         }
     }
 
-    private void insertItem() {
+    public void insertItem(List<InbJsonDto> inbJsonDtoList) {
         // 화장품 품목 테이블 저장
-        // json에서 가져온 화장품 품목명 일치 체크하면서 저장
-        superController.insertCatItem();
 
-        // item_tb에 적재 시작
-        superController.insertItem();
-        // 화장품 디테일 테이블 저장
-        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
-        superController.insertDetailItem(); // 매개인자줘야할 값 -> whsPk, inbJsonDtos
+        // json에서 가져온 화장품 품목명 일치 체크하면서 저장
+//        superController.insertCatItem(inbJsonDtoList); // 있으면 암것도 안함, 없으면 넣음.
+//        // item_tb에 적재 시작
+//        superController.insertItem(inbJsonDtoList);// 있으면 암것도 안함, 없으면 넣음
+//        // 화장품 디테일 테이블 저장
+//        // 화장품 적재 시 같은 제품이 적재된 곳이 있는가 조회
+        superController.insertDetailItem(inbJsonDtoList);//
+
     }
 
 
