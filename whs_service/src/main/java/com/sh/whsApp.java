@@ -1,5 +1,7 @@
 package com.sh;
 
+import com.sh.model.service.SupervisionService;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -9,11 +11,12 @@ import java.util.Scanner;
 
 public class whsApp {
     public static final Object lock = new Object();
-    public static final long whsPk = 1;
+    public static long whsPk = 0;
+    public static String whsNM = "";
     private static final String USER_ID = "";
     private static final String PASSWORD = "";
     public static void main(String[] args) {
-
+        SupervisionService supervisionService = new SupervisionService();
         List<Socket> Sockets = new ArrayList<Socket>();
         try {
             ServerSocket serverSocket = new ServerSocket(8889, 3);
@@ -31,8 +34,10 @@ public class whsApp {
                 String inputPassword = scanner.nextLine();
 
                 // 입력된 아이디와 비밀번호가 미리 정의된 값과 일치하는지 확인
-                if (authenticate(inputId, inputPassword)) {
+                if (supervisionService.getWhsPk(inputId) != null) {
                     System.out.println("로그인 성공!");
+                    whsPk = supervisionService.getWhsPk(inputId);
+                    whsNM = supervisionService.getWhsNm(whsPk);
                     break;
                 } else {
                     System.out.println("로그인 실패. 아이디 또는 비밀번호가 올바르지 않습니다.");
@@ -68,9 +73,6 @@ public class whsApp {
     }
 
     }
-    // 입력된 아이디와 비밀번호가 올바른지 확인하는 메서드
-    private static boolean authenticate(String inputId, String inputPassword) {
-        return USER_ID.equals(inputId) && PASSWORD.equals(inputPassword);
-    }
+
 }
 

@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class InboundDto {
     private String selNm; // 유통업체 nm
     private String facNm; // 제조업체 nm
-    private long whsPk; // 창고 nm
+    private String whsNm; // 창고 nm
     private String itemCatNm; // 제품 품목 ID
     private String itemNm; // 화장품 제품명
     private int inbItemVol; // 제품 용량
@@ -18,10 +18,10 @@ public class InboundDto {
     private int inbItemCnt; // 제품 수량
     private LocalDate inbItemExpirationDt; // 제품 유통기한
 
-    public InboundDto(String selNm,String facNm,long whsNm,String inbItemCatNM,String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, LocalDate inbItemExpirationDt) {
+    public InboundDto(String selNm, String facNm, String whsNm, String inbItemCatNM, String inbItemNM, int inbItemVol, int inbItemPrice, int inbItemCnt, LocalDate inbItemExpirationDt) {
         this.selNm = selNm;
         this.facNm = facNm;
-        this.whsPk = whsNm;
+        this.whsNm = whsNm;
         this.itemNm = inbItemNM;
         this.itemCatNm = inbItemCatNM;
         this.inbItemVol = inbItemVol;

@@ -33,8 +33,14 @@
             ITEM_TB
         VALUES
             <foreach collection="list" item="item" separator=",">
-                (null, #{item.itemNm}, #{item.itemVol}, #{item.itemCatPk})
+                (null, #{item.itemNm}, #{item.itemVol}, #{item.itemCatPk},0)
             </foreach>
+    </insert>
+    <insert id="insertItemOne">
+        INSERT INTO
+        ITEM_TB
+        VALUES
+            (null, #{itemNm}, #{itemVol}, (select ITEM_CAT_PK from ITEM_CAT_TB where ITEM_CAT_NM = #{itemCatNm}),0)
     </insert>
 
     <insert id="insertDetailItem" useGeneratedKeys="true">
@@ -44,6 +50,20 @@
             null, #{itemDetailSerialNum}, #{itemPk}, #{itemDetailStatus}, #{locatePk}, #{itemDetailExpirationDt}
         )
     </insert>
+
+    <select id="getWhsPk" resultType="long">
+        SELECT
+            WHS_PK
+        FROM WHS_ADMIN_TB
+        WHERE WHS_EMAIL = #{adminId}
+    </select>
+
+    <select id="getWhsNm" resultType="String">
+        SELECT
+        WHS_NM
+        FROM WHS_TB
+        WHERE WHS_PK = #{whsPk}
+    </select>
 
     <select id="searchItemCat" resultType="int">
         SELECT
@@ -61,6 +81,13 @@
             <foreach collection="list" item="item" separator=",">
                 (null, #{item.itemCatNm})
             </foreach>
+    </insert>
+
+    <insert id="insertCatItemOne">
+        INSERT INTO
+        ITEM_CAT_TB
+        values
+            (null, #{catNm})
     </insert>
 
     <select id="searchDefItem" resultType="itemDetailDto">
@@ -119,8 +146,15 @@
         WHERE
             ITEM_NM = #{itemNm}
     </select>
-
-    <select id="searchItemId" resultType="long">
+    <select id="searchCheckItemCat" resultType="int">
+        SELECT
+        COUNT(*)
+        FROM
+        ITEM_CAT_TB
+        WHERE
+        ITEM_CAT_NM = #{itemCat}
+    </select>
+    <select id="searchItemId" resultType="Long">
         SELECT
             ITEM_PK
         FROM

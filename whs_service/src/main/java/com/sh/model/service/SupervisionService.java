@@ -45,7 +45,7 @@ public class SupervisionService {
         LocateMapper locateMapper = sqlSession.getMapper(LocateMapper.class);
         LocateDto lpn = locateMapper.searchItemDetailLpn(itemDetailPk);
         SupervisionMapper SupervisionMapper = sqlSession.getMapper(SupervisionMapper.class);
-        
+
         sqlSession.close();
         return lpn;
     }
@@ -104,6 +104,36 @@ public class SupervisionService {
             int result = superMapper.insertItem(itemList);
             sqlSession.commit();
             return result;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            sqlSession.close();
+        }
+    }
+    public Long getWhsPk(String adminId) {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        try {
+            long pk = superMapper.getWhsPk(adminId);
+            sqlSession.commit();
+            return pk;
+        } catch (Exception e) {
+            sqlSession.rollback();
+            e.printStackTrace();
+            throw new RuntimeException();
+        } finally {
+            sqlSession.close();
+        }
+    }
+    public String getWhsNm(long adminId) {
+        SqlSession sqlSession = getSqlSession();
+        SupervisionMapper superMapper = sqlSession.getMapper(SupervisionMapper.class);
+        try {
+            String whsNm = superMapper.getWhsNm(adminId);
+            sqlSession.commit();
+            return whsNm;
         } catch (Exception e) {
             sqlSession.rollback();
             e.printStackTrace();
@@ -225,4 +255,5 @@ public class SupervisionService {
         sqlSession.close();
         return whsId;
     }
+
 }

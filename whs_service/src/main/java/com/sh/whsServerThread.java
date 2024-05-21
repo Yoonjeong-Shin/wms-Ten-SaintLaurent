@@ -3,6 +3,8 @@ package com.sh;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.sh.controller.InboundController;
+import com.sh.controller.OutboundController;
 import com.sh.model.dto.json.InbDetailJsonDto;
 import com.sh.model.dto.json.InbJsonDto;
 import com.sh.model.dto.json.SelInboundOrder;
@@ -26,8 +28,8 @@ class whsServerThread extends Thread {
     private final Socket socket;
     public static int testInt;
     public static final Object lock = new Object();
-    public InboundView inboundView = new InboundView();
-
+    public InboundController inboundController = new InboundController();
+    public OutboundController outboundController = new OutboundController();
     public whsServerThread(Socket socket) {
         this.socket = socket;
     }
@@ -73,12 +75,14 @@ class whsServerThread extends Thread {
                 if(apiNm.equals("selOutbOrder")) {
                     List<SelOutboundOrder> orders = parseOutbOrders(line);//
                     System.out.println("selOutbOrder" + orders);
+                    outboundController.outbLogic(orders);
                 }
 
 
                 if(apiNm.equals("selInbOrder")) {
+                    System.out.println(line);
                     List<SelInboundOrder> orders = parseInbOrders(line);//
-                    inboundView.inputInb(orders);
+                    inboundController.inputInb(orders);
                     System.out.println("selInbOrder" + orders);
                 }
 
@@ -140,9 +144,9 @@ class whsServerThread extends Thread {
         for (int i = 1; i < parts.length; i++) {
             String orderString = parts[i].split("}")[0];
             SelInboundOrder order = new SelInboundOrder();
-
             order.setId(Long.parseLong(orderString.split("id=")[1].split(",")[0].trim()));
             order.setSellerName(orderString.split("sellerName='")[1].split("'")[0].trim());
+            order.setFactoryName(orderString.split("factoryName='")[1].split("'")[0].trim());
             order.setCategory(orderString.split("category='")[1].split("'")[0].trim());
             order.setItemName(orderString.split("itemName='")[1].split("'")[0].trim());
             order.setVolume(Integer.parseInt(orderString.split("volume=")[1].split(",")[0].trim()));

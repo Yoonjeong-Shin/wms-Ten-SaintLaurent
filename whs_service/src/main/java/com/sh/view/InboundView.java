@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.sh.whsApp.whsNM;
+import static com.sh.whsApp.whsPk;
+
 public class InboundView {
     public static void main(String[] args) {
         InboundView inboundView = new InboundView();
@@ -54,7 +57,7 @@ public class InboundView {
         orderList.add(order1);
         orderList.add(order2);
         orderList.add(order3);
-        inboundView.inputInb(orderList);
+//        inboundView.inputInb(orderList);
 //        inboundView.inputInb()
     }
     private Scanner sc = new Scanner(System.in);
@@ -86,33 +89,7 @@ public class InboundView {
 
     // 입고 승인 - JSON에서 읽어와 Inb_TB에 넣기
     // 쿼리에 전달하는 객체는 무조건 1개여야 하는데 여러 객체를 한 번에 테이블에 어떻게 넣어야 할지 힘들다.
-    public InboundDto inputInb(List<SelInboundOrder> inbJsonDtos) {
-        InboundDto inboundDto = new InboundDto();
 
-        String inbSelName;
-        String inbFactoryName;
-        String inbWhsName;
-        String inbCategory;
-        String inbItemNM;
-        int inbItemVol;
-        int inbItemPrice;
-        int inbItemCnt;
-        LocalDate inbItemExpirationDt;
-        for (int i=0; i<inbJsonDtos.size(); i++) {
-            inbSelName = inbJsonDtos.get(i).getSellerName();
-            inbFactoryName = inbJsonDtos.get(i).getFactoryName();
-            inbCategory = inbJsonDtos.get(i).getCategory();
-
-            inbItemNM = inbJsonDtos.get(i).getItemName();
-            inbItemVol = inbJsonDtos.get(i).getVolume();
-            inbItemPrice = inbJsonDtos.get(i).getPrice();
-            inbItemCnt = inbJsonDtos.get(i).getProductCount();
-            inbItemExpirationDt = inbJsonDtos.get(i).getExpirationDate();
-            inboundDto = new InboundDto(inbSelName,inbFactoryName, whsApp.whsPk,inbCategory,inbItemNM, inbItemVol, inbItemPrice, inbItemCnt, inbItemExpirationDt);
-            inboundController.insertInbToINB(inboundDto);
-        }
-        return inboundDto;
-    }
 
     // 입고 정보 조회
     // INB_TB의 PK로 한 데이터의 모든 정보를 조회, 입고 승인과 입고 확정 때 쓰인다
