@@ -7,6 +7,7 @@ import com.sh.model.service.InboundService;
 //import com.sh.view.InboundResultView;
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.PrintStream;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,46 +25,60 @@ public class InboundController {
         // locate_id받아와서 LPN위치까지 추가해줘야하남..
     }
 
-    public InboundDto inputInb(List<SelInboundOrder> inbJsonDtos) {
-        InboundDto inboundDto = new InboundDto();
+    public boolean inputInb(List<SelInboundOrder> inbJsonDtos) {
+        try {
+            inboundService.get_SqlSession();
+            InboundDto inboundDto = new InboundDto();
+            String inbSelName;
+            String inbFactoryName;
+            String inbWhsName;
+            String inbCategory;
+            String inbItemNM;
+            int inbItemVol;
+            int inbItemPrice;
+            int inbItemCnt;
 
-        String inbSelName;
-        String inbFactoryName;
-        String inbWhsName;
-        String inbCategory;
-        String inbItemNM;
-        int inbItemVol;
-        int inbItemPrice;
-        int inbItemCnt;
+            LocalDate inbItemExpirationDt;
+            for (int i = 0; i < inbJsonDtos.size(); i++) {
+                inbSelName = inbJsonDtos.get(i).getSellerName();
+                inbFactoryName = inbJsonDtos.get(i).getFactoryName();
 
-        LocalDate inbItemExpirationDt;
-        for (int i=0; i<inbJsonDtos.size(); i++) {
-            inbSelName = inbJsonDtos.get(i).getSellerName();
-            inbFactoryName = inbJsonDtos.get(i).getFactoryName();
+                inbCategory = inbJsonDtos.get(i).getCategory();
 
-            inbCategory = inbJsonDtos.get(i).getCategory();
-
-            inbItemNM = inbJsonDtos.get(i).getItemName();
-            inbItemVol = inbJsonDtos.get(i).getVolume();
-            inbItemPrice = inbJsonDtos.get(i).getPrice();
-            inbItemCnt = inbJsonDtos.get(i).getProductCount();
-            inbItemExpirationDt = inbJsonDtos.get(i).getExpirationDate();
-            long whspk = whsPk;
-            inboundDto = new InboundDto(inbSelName,inbFactoryName, whsNM,inbCategory,inbItemNM, inbItemVol, inbItemPrice, inbItemCnt, inbItemExpirationDt);
-            insertInbToItemTb(inboundDto);
-            insertInbToINB(inboundDto);
+                inbItemNM = inbJsonDtos.get(i).getItemName();
+                inbItemVol = inbJsonDtos.get(i).getVolume();
+                inbItemPrice = inbJsonDtos.get(i).getPrice();
+                inbItemCnt = inbJsonDtos.get(i).getProductCount();
+                inbItemExpirationDt = inbJsonDtos.get(i).getExpirationDate();
+                long whspk = whsPk;
+                inboundDto = new InboundDto(inbSelName, inbFactoryName, whsNM, inbCategory, inbItemNM, inbItemVol, inbItemPrice, inbItemCnt, inbItemExpirationDt);
+                if (!insertInbToItemTb(inboundDto)) {
+                    return false;
+                }
+                if (!insertInbToINB(inboundDto)) {
+                    return false;
+                }
+                ;
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-        return inboundDto;
+        finally {
+            inboundService.setSqlSessionCommit();
+
+        }
+        return true;
     }
     // JSON 데이터를 dto로 바꿔서 INB_TB에 넣기
-    public void insertInbToINB(InboundDto inboundDto) {
-        inboundService.insertInbToINB(inboundDto);
+    public boolean insertInbToINB(InboundDto inboundDto) {
+        return inboundService.insertInbToINB(inboundDto);
     }
 
     // JSON에서 얻은 state가 1인 정상 제품은 ITEM_TB와 ITEM_DETAIL_TB에 insert
-    public void insertInbToItemTb(InboundDto inboundDto) {
-        System.out.println("---------------------------------");
-        inboundService.insertItem(inboundDto);
+
+    public boolean insertInbToItemTb(InboundDto inboundDto) {
+         System.out.println("---------------------------------");
+        return inboundService.insertItem(inboundDto);
     }
     public void insertInbToItemDetailTb(InboundDto inboundDto) {
         inboundService.insertInbToItemDetailTb(inboundDto);
