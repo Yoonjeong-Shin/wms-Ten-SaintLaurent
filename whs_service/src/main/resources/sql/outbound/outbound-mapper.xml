@@ -5,151 +5,66 @@
 
 <mapper namespace="com.sh.model.dao.OutboundMapper">
 
-    <resultMap id="orderResultMap" type="com.sh.model.dto.OrderDto">
-        <id property="orderId" column="orderid" />
-        <result property="orderDate" column="orderDate" />
-        <result property="customerName" column="customerName" />
-        <result property="customerAdr" column="customerAdr" />
-        <!-- orderDetailDtoList 매핑 -->
-        <collection property="orderDetailDtoList" ofType="com.sh.model.dto.OrderDetailDto">
-            <result property="productName" column="productName" />
-            <result property="productVolume" column="productVolume" />
-            <result property="productCount" column="productCount" />
-        </collection>
-    </resultMap>
-
-    <select id="searchOutbound" resultMap="orderResultMap">
-        SELECT
-        o.SEL_ORDER_PK AS orderId,
-        o.SEL_ORDER_DATE_DT AS orderDate,
-        c.CUS_NM AS customerName,
-        c.CUS_ADR AS customerAdr,
-        d.SEL_ORDER_PROD_NM AS productName,
-        d.SEL_ORDER_DETAIL_VOL AS productVolume,
-        d.SEL_ORDER_DETAIL_CNT AS productCount
-        FROM
-        sel_order_tb o
-        JOIN CUS_TB c ON o.CUS_PK = c.CUS_PK
-        JOIN SEL_ORDER_DETAIL_TB d ON o.SEL_ORDER_PK = d.SEL_ORDER_FK
-        ORDER BY
-        o.SEL_ORDER_PK DESC;
+    <select id="selectItems" resultType="com.sh.model.dto.OutItemDetailDto">
+        SELECT * FROM OUT_ITEM_DETAIL_TB WHERE ITEM_NM = #{itemNM}
     </select>
 
-    <resultMap id="PurchaseListDtoResultMap" type="com.sh.model.dto.PurchaseListDto">
-        <!-- id 요소 -->
-        <id property="orderId" column="orderId" />
-        <!-- result 요소 -->
-        <result property="userId" column="userId" />
-        <result property="pickCnt" column="pickCnt" />
-        <result property="outboundId" column="outboundId" />
-        <result property="outboundDate" column="outboundDate" />
-        <!-- collection 요소 -->
-        <collection property="itemDtoList" ofType="com.sh.model.dto.ItemDto">
-            <result property="itemNm" column="itemNm" />
-        </collection>
-    </resultMap>
-    <select id="printOutBoundReport" resultMap="PurchaseListDtoResultMap">
-        SELECT
-        o.SEL_ORDER_PK AS orderId,
-        o.CUS_PK AS userId,
-        d.SEL_ORDER_PROD_NM AS itemNm,
-        od.OUTB_PICKING_CNT AS pickCnt,
-        ob.OUTB_PK AS outboundId,
-        ob.ORDER_DT AS outboundDate
-        FROM
-        OUTB_TB ob
-        JOIN OUTB_DETAIL_TB od ON ob.OUTB_PK = od.OUTB_FK
-        JOIN SEL_ORDER_TB o ON ob.CUS_FK = o.CUS_PK
-        JOIN SEL_ORDER_DETAIL_TB d ON o.SEL_ORDER_PK = d.SEL_ORDER_FK
-        ORDER BY
-        ob.ORDER_DT DESC;
+    <select id="checkItemCount" resultType="int">
+        SELECT COUNT(*) FROM ITEM_DETAIL_TB WHERE ITEM_PK IN (
+        SELECT ITEM_PK FROM ITEM_TB WHERE ITEM_NM = #{itemNM}
+        ) AND ITEM_DETAIL_STATUS != 0
     </select>
 
-    <!--    <insert id="assignCart">-->
-    <!--        INSERT INTO OUT_CART_TB (OUTB_DETAIL_FK, OUTB_CART_CNT)-->
-    <!--        VALUES (#{outboundDetailFk}, #{cartCapacity});-->
-    <!--    </insert>-->
+    <select id="selectForDeleteItemDetail" resultType="long">
+        SELECT ITEM_DETAIL_PK
+        FROM ITEM_DETAIL_TB
+        LEFT JOIN ITEM_TB ON ITEM_DETAIL_TB.ITEM_PK = ITEM_TB.ITEM_PK
+        WHERE ITEM_TB.ITEM_NM = #{itemNM}
+        ORDER BY ITEM_DETAIL_EXPIRATION_DT, ITEM_DETAIL_SERIAL_NUM
+        LIMIT 1;
 
-    <select id="assignCart" resultType="com.sh.model.dto.OutBoundCartDto">
-        SELECT
-        c.OUT_CART_PK as cartId,
-        k.OUTB_FK as outBoundId,
-        i.ITEM_NM as itemName,
-        k.OUTB_PICKING_CNT as pickCnt,
-        c.OUTB_CART_Cnt as cartCnt,
-        d.ITEM_EXPIRATION_DT as expirationDate
-        FROM
-        ITEM_TB i
-        JOIN OUT_ITEM_DETAIL_TB d ON i.ITEM_PK = d.ITEM_PK
-        JOIN OUT_CART_TB c ON d.OUT_CART_PK = c.OUT_CART_PK
-        JOIN Item_detail_tb a on i.ITEM_PK = a.ITEM_PK
-        JOIN locate_tb l on a.LOCATE_PK = l.LOCATE_PK
-        Join outb_detail_tb k on c.OUTB_DETAIL_FK = k.OUTB_FK
-        WHERE
-        l.LOCATE_ITEM_CNT > 0
-        ORDER BY
-        c.OUT_CART_PK asc;
     </select>
 
-<!--    <&#45 수정필요 &#45;-->
-    <select id="outboundPicking" resultType="com.sh.model.dto.OutboundDto">
-        SELECT
-        d.out_item_detail_pk AS serialNumber,
-        d.ITEM_STATE_ AS itemStatus,
-        d.ITEM_PK AS itemId,
-        d.ITEM_EXPIRATION_DT AS itemExpirationDate,
-        d.ITEM_DETAIL_SERIAL_NUM AS detailSerialNumber,
-        c.OUT_CART_PK AS cartId,
-        COUNT(*) AS duplicateCount
-        FROM
-        ITEM_TB i
-        JOIN
-        OUT_ITEM_DETAIL_TB d ON i.ITEM_PK = d.ITEM_PK
-        JOIN
-        OUT_CART_TB c ON d.OUT_CART_PK = c.OUT_CART_PK
-        JOIN
-        ITEM_DETAIL_TB k ON i.ITEM_PK = k.ITEM_PK
-        JOIN
-        LOCATE_TB l ON k.LOCATE_PK = l.LOCATE_PK
-        WHERE
-        l.LOCATE_ITEM_CNT > 0
-        GROUP BY
-        d.out_item_detail_pk,
-        d.ITEM_STATE_,
-        d.ITEM_PK,
-        d.ITEM_EXPIRATION_DT,
-        d.ITEM_DETAIL_SERIAL_NUM,
-        c.OUT_CART_PK
-        ORDER BY
-        d.ITEM_EXPIRATION_DT ASC;
-    </select>
+    <delete id="deleteCNTItemDetailTB">
+        DELETE FROM ITEM_DETAIL_TB
+        WHERE ITEM_DETAIL_PK = #{itemDetailPk}
+    </delete>
 
-    <insert id="insertInbToGbgDetail" useGeneratedKeys="true" keyProperty="ITEM_DETAIL_SERIAL_NUM">
-        insert into
-        gbg_detail_tb
-        values (
-        null, #{itemPk}, #{itemState}, #{gbgSerialNum}
+
+    <insert id="createOutbItemDetailTB">
+        INSERT INTO OUT_ITEM_DETAIL_TB (ITEM_STATE_, ITEM_PK, ITEM_EXPIRATION_DT, ITEM_DETAIL_SERIAL_NUM, OUT_CART_PK)
+        SELECT ITEM_DETAIL_STATUS, ITEM_PK, ITEM_DETAIL_EXPIRATION_DT, ITEM_DETAIL_SERIAL_NUM, #{cartPk}
+        FROM ITEM_DETAIL_TB
+        WHERE ITEM_PK = (
+        SELECT ITEM_PK FROM ITEM_TB WHERE ITEM_NM = #{itemNM}
+        ) AND ITEM_DETAIL_STATUS != 0
+        ORDER BY ITEM_DETAIL_EXPIRATION_DT, ITEM_DETAIL_SERIAL_NUM
+        LIMIT #{itemCNT}
+    </insert>
+
+
+    <insert id="createOutbTB">
+        INSERT INTO OUTB_TB (CUS_FK, ORDER_DT) VALUES (
+        (SELECT CUS_PK FROM CUS_TB WHERE CUS_NM = #{customerNM}),
+        #{NowDay}
         )
     </insert>
-    <update id="confirmOutbound">
-        update
-        LOCATE_TB
-        set
-        LOCATE_ITEM_CNT = #{itemCount}
-        where
-        LOCATE_PK  = #{inbCat}
-    </update>
-    <update id="updateExpiredItemsStatus">
-        INSERT INTO GBG_DETAIL_TB (GBG_DETAIL_PK, ITEM_PK, ITEM_STATE, GBG_SERIAL_NUM)
-        SELECT NULL, ITEM_PK, ITEM_STATE_, ITEM_DETAIL_SERIAL_NUM
-        FROM OUT_ITEM_DETAIL_TB
-        WHERE ITEM_DETAIL_SERIAL_NUM = #{item.itemDetailSerialNum}
-        AND ITEM_EXPIRATION_DT <![CDATA[ < ]]> #{currentDate};
 
-        UPDATE OUT_ITEM_DETAIL_TB
-        SET ITEM_DETAIL_STATUS = 4  -- Assuming 4 represents 'REJECTED'
-        WHERE ITEM_DETAIL_SERIAL_NUM = #{item.itemDetailSerialNum}
-        AND ITEM_EXPIRATION_DT <![CDATA[ < ]]> #{currentDate};
-    </update>
+
+    <insert id="createOutbDetailTB">
+        INSERT INTO OUTB_DETAIL_TB (OUTB_DETAIL_PK,OUTB_FK, ITEM_NM, OUTB_PICKING_CNT)
+        VALUES (
+        null,
+        #{outbPk},
+        #{itemNM},
+        #{itemCNT}
+        )
+    </insert>
+
+
+    <insert id="createOutbCartTB">
+            INSERT INTO OUT_CART_TB (OUT_CART_PK, OUTB_DETAIL_FK, OUTB_CART_CNT)
+            VALUES (null, #{OutDetailPk}, #{itemCNT})
+    </insert>
 
 </mapper>

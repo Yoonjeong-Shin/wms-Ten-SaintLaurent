@@ -5,9 +5,7 @@ import com.sh.model.dao.SupervisionMapper;
 import com.sh.model.dto.*;
 import org.apache.ibatis.session.SqlSession;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static com.sh.common.MyBatisTemplate.getSqlSession;
 
@@ -42,6 +40,16 @@ public class SupervisionService {
         sqlSession.close();
         return list;
     }
+    public LocateDto searchItemDetailLpn(long itemDetailPk) {
+        SqlSession sqlSession = getSqlSession();
+        LocateMapper locateMapper = sqlSession.getMapper(LocateMapper.class);
+        LocateDto lpn = locateMapper.searchItemDetailLpn(itemDetailPk);
+        SupervisionMapper SupervisionMapper = sqlSession.getMapper(SupervisionMapper.class);
+        
+        sqlSession.close();
+        return lpn;
+    }
+
 
     // 로케이션 빈공간 조회
     public List<LocateDto> searchLpn() {

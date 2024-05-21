@@ -27,6 +27,7 @@ class whsServerThread extends Thread {
     public static int testInt;
     public static final Object lock = new Object();
     public InboundView inboundView = new InboundView();
+
     public whsServerThread(Socket socket) {
         this.socket = socket;
     }
@@ -48,7 +49,6 @@ class whsServerThread extends Thread {
                 Scanner in = new Scanner(in0);
                 PrintStream out = new PrintStream(out0);
 
-
                 //응답 반환해주기.
                 String line = "";
                 String str = in.nextLine(); // 클라이언트로부터 문자열을 한 줄 읽는다.
@@ -58,28 +58,33 @@ class whsServerThread extends Thread {
                 }
                 String apiNm = line.split("#")[1];
                 System.out.println(apiNm);
+
+
                 if(apiNm.equals("facOutbOrder")) {
                     List<InbJsonDto> orders = parseFacOrders(line);//
                     SupervisionView sv = new SupervisionView();
                     assert orders != null;
                     orders = InbCheck(orders);
-                    //sv.insertItem(orders);
+                    sv.insertItem(orders);
                     System.out.println("facOutbOrder" + orders);
                 }
+
+
                 if(apiNm.equals("selOutbOrder")) {
                     List<SelOutboundOrder> orders = parseOutbOrders(line);//
                     System.out.println("selOutbOrder" + orders);
                 }
+
+
                 if(apiNm.equals("selInbOrder")) {
                     List<SelInboundOrder> orders = parseInbOrders(line);//
                     inboundView.inputInb(orders);
                     System.out.println("selInbOrder" + orders);
                 }
 
-//                System.out.println(line);
+//              System.out.println(line);
 
                 // 클라이언트가 보낸 문자열을 그대로 돌려준다.
-
 
                 in.close();
                 in0.close();
@@ -112,21 +117,17 @@ class whsServerThread extends Thread {
 
     public static List<SelOutboundOrder> parseOutbOrders(String input) {
         List<SelOutboundOrder> orders = new ArrayList<>();
-
         String[] parts = input.split("SelOutboundOrder\\{");
         for (int i = 1; i < parts.length; i++) {
             String orderString = parts[i].split("}")[0];
             SelOutboundOrder order = new SelOutboundOrder();
-
             order.setId(Long.parseLong(orderString.split("id=")[1].split(",")[0].trim()));
             order.setSellerName(orderString.split("sellerName='")[1].split("'")[0].trim());
             order.setCategory(orderString.split("category='")[1].split("'")[0].trim());
             order.setItemName(orderString.split("itemName='")[1].split("'")[0].trim());
             order.setVolume(Integer.parseInt(orderString.split("volume=")[1].split(",")[0].trim()));
-            order.setExpirationDate(LocalDate.parse(orderString.split("expirationDate=")[1].split(",")[0].trim()));
-            order.setPrice(Integer.parseInt(orderString.split("price=")[1].split(",")[0].trim()));
-            order.setProductCount(Integer.parseInt(orderString.split("productCount=")[1].trim()));
-
+            order.setProductCount(Integer.parseInt(orderString.split("productCount=")[1].split(",")[0].trim()));
+            order.setCusNM(orderString.split("cusNM=")[1].trim());
             orders.add(order);
         }
 

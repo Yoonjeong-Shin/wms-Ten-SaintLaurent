@@ -24,4 +24,14 @@
         WHERE
             ITEM_PK = #{itemPk}
     </select>
+
+    <select id="searchItemDetailLpn"  resultType="locateDto">
+        SELECT
+        *
+        FROM
+        LOCATE_TB LT JOIN ITEM_DETAIL_TB IDT
+        ON LT.LOCATE_PK = IDT.LOCATE_PK
+        WHERE
+        ITEM_DETAIL_PK = #{itemDetailPk}
+    </select>
 </mapper>

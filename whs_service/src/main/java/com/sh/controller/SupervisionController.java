@@ -44,6 +44,7 @@ public class SupervisionController {
         System.out.println("searchItemLpn" + list);
     }
 
+
     // 로케이션 빈공간 체크
     public List<LocateDto> searchLpn() {
         List<LocateDto> list = superService.searchLpn();
