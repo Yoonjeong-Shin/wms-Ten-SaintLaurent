@@ -40,7 +40,7 @@ class InbClientTask implements Runnable {
                 // JSON 문자열로 변환
             String message = "apiNm#selInbOrder#" + selInboundService.findAllInboundOrders();
             printer.println("\n"+message);
-                printer.println("\n" + message);
+            
 
 
 
