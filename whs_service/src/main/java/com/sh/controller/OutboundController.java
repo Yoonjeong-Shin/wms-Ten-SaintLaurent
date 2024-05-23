@@ -28,21 +28,21 @@ public class OutboundController {
                    outbLogicList.add(true);
                    long outbPk = outboundService.createOutbTB(selOutboundOrder.getCusNM());
                    System.out.println("출고서 상세 정보 생성");
-                   System.out.println(outbPk);
+
                    long outbDetailPk = outboundService.createOutbDetailTB(outbPk, selOutboundOrder.getItemName(), selOutboundOrder.getProductCount());
-                   System.out.println(outbDetailPk);
+
                    long outbCartPk = outboundService.createOutbCartTB(outbDetailPk, selOutboundOrder.getProductCount());
-                   System.out.println(outbDetailPk);
+
                    System.out.println("카트 할당중");
                    outboundService.createOutBItemDetailTB(selOutboundOrder.getItemName(), selOutboundOrder.getProductCount(), selOutboundOrder.getProductCount());
                      System.out.println("출고 화장품 상세 생성");
                    long itemId = outboundService.searchItemId(selOutboundOrder.getItemName());
-                   System.out.println(itemId);
+
                    outboundService.updareItemCnt(selOutboundOrder.getProductCount() * -1, itemId);
                        System.out.println("재고 수량 감소");
                    for (int i = 0; i < selOutboundOrder.getProductCount(); i++) {
                        long itemDetailPk = outboundService.selectForDeleteItemDetail(selOutboundOrder.getItemName());
-                       System.out.println(itemDetailPk + "```");
+
                        LocateDto lpn = outboundService.searchItemDetailLpn(itemDetailPk);
                        outboundService.updareLocateCnt(-1, lpn.getLocateLpnCode());
                        outboundService.deleteOutBItemDetailTB(itemDetailPk);
@@ -50,14 +50,13 @@ public class OutboundController {
                }
            }
           }catch (Exception e){
+              outboundService.setSqlSessionRollback();
               e.printStackTrace();
           }finally {
               outboundService.setSqlSessionCommit();
 
               return outbLogicList;
           }
-
-
     }
 
 }

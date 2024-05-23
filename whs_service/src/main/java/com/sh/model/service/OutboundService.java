@@ -24,6 +24,12 @@ public class OutboundService {
             sqlSession = getSqlSession();
         }
     }
+    public void setSqlSessionRollback(){
+        sqlSession.rollback();
+    }
+    public void setSqlSessionClose(){
+        sqlSession.close();
+    }
     public void setSqlSessionCommit(){
         try {
             sqlSession.commit();
