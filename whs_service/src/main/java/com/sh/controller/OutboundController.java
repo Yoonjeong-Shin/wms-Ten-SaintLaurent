@@ -17,13 +17,17 @@ public class OutboundController {
 
     public List<Boolean> outbLogic(List<SelOutboundOrder> selOutboundOrders){
         List<Boolean> outbLogicList = new ArrayList<>();
+        boolean flag = true;
           try {
               outboundService.get_SqlSession();
            for (SelOutboundOrder selOutboundOrder : selOutboundOrders) {
                if (selOutboundOrder.getProductCount() > outboundService.checkItemCount(selOutboundOrder.getItemName())) {
                    outbLogicList.add(false);
+
                    System.out.println("재고없음");
+                   flag = false;
                } else {
+                   flag = true;
                    System.out.println("출고중");
                    outbLogicList.add(true);
                    long outbPk = outboundService.createOutbTB(selOutboundOrder.getCusNM());
@@ -53,7 +57,7 @@ public class OutboundController {
               outboundService.setSqlSessionRollback();
               e.printStackTrace();
           }finally {
-              outboundService.setSqlSessionCommit();
+              outboundService.setSqlSessionCommit(flag);
 
               return outbLogicList;
           }

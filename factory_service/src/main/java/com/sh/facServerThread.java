@@ -11,14 +11,13 @@ import java.util.Scanner;
 class facServerThread extends Thread {
     private final Socket socket;
     public static int testInt;
-    public static final Object lock = new Object();
     public facServerThread(Socket socket) {
         this.socket = socket;
     }
 
     @Override
     public void run() {
-        synchronized (lock) { // 동기화 블록 시작
+
             try {
                 System.out.println("=> 클라이언트 연결 승인!");
                 InputStream in0 = socket.getInputStream();
@@ -66,6 +65,6 @@ class facServerThread extends Thread {
                 }
             }
         }
-    } // 동기화 블록 종료
+
 
 }

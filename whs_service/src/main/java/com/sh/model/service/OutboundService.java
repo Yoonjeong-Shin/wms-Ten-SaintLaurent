@@ -30,10 +30,10 @@ public class OutboundService {
     public void setSqlSessionClose(){
         sqlSession.close();
     }
-    public void setSqlSessionCommit(){
+    public void setSqlSessionCommit(boolean falg1){
         try {
             sqlSession.commit();
-            SelOutResponseClient clientTask2 = new SelOutResponseClient( new Socket("localhost", 8891),true);
+            SelOutResponseClient clientTask2 = new SelOutResponseClient( new Socket("localhost", 8891),falg1);
             clientTask2.run();
         }catch (Exception E){
             sqlSession.rollback();
