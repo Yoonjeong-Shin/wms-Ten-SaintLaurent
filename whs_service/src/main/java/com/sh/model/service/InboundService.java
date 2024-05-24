@@ -52,7 +52,12 @@ public class InboundService {
         }
 
     }
-
+    public void setSqlSessionRollback(){
+        sqlSession.rollback();
+    }
+    public void setSqlSessionClose(){
+        sqlSession.close();
+    }
 
     public int chckSeller(String selNm){
 

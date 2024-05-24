@@ -36,7 +36,7 @@ class whsServerThread extends Thread {
 
     @Override
     public void run() {
-        synchronized (lock) { // 동기화 블록 시작
+
             try {
                 int ApiNum = 0;
                 System.out.println("=> 클라이언트 연결 승인!");
@@ -72,7 +72,9 @@ class whsServerThread extends Thread {
                 if(apiNm.equals("selOutbOrder")) {
                     List<SelOutboundOrder> orders = parseOutbOrders(line);//
                     System.out.println("selOutbOrder" + orders);
-                    outboundController.outbLogic(orders);
+                    synchronized (lock) { // 동기화 블록 시작
+                        outboundController.outbLogic(orders);
+                    }
                 }
 
                 if(apiNm.equals("selInbOrder")) {
@@ -99,7 +101,7 @@ class whsServerThread extends Thread {
                 }
             }
         }
-    } // 동기화 블록 종료
+     // 동기화 블록 종료
     public List<InbJsonDto> InbCheck(List<InbJsonDto> orders) { //입고검수
         System.out.println("🧐🧐🧐 검수중입니다 🧐🧐🧐");
         for (InbJsonDto inbJsonDto : orders) {

@@ -52,6 +52,12 @@ public class SupervisionService {
         }
 
     }
+    public void setSqlSessionRollback(){
+        sqlSession.rollback();
+    }
+    public void setSqlSessionClose(){
+        sqlSession.close();
+    }
     //    public static void main(String[] args) {
 //        SupervisionService supervisionService = new SupervisionService();
 //        supervisionService.searchSameItemLpn()

@@ -62,6 +62,7 @@ public class InboundController {
             }
         }catch (Exception e) {
             e.printStackTrace();
+
         }
         finally {
             inboundService.setSqlSessionCommit();
